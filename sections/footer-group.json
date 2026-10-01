@@ -9,14 +9,14 @@
           "type": "menu",
           "settings": {
             "heading": "Handla",
-            "menu": "main-menu"
+            "menu": "dejour-huvudmeny"
           }
         },
         "menu-info": {
           "type": "menu",
           "settings": {
             "heading": "Information",
-            "menu": "footer"
+            "menu": "dejour-sidfot"
           }
         },
         "text-service": {
@@ -27,7 +27,11 @@
           }
         }
       },
-      "block_order": ["menu-shop", "menu-info", "text-service"],
+      "block_order": [
+        "menu-shop",
+        "menu-info",
+        "text-service"
+      ],
       "settings": {
         "heading": "Tystare lyx. <em>Varje dag.</em>",
         "text": "<p>Få förtur till nästa drop och nyheter från ateljén.</p>",
@@ -43,5 +47,7 @@
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }

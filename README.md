@@ -48,26 +48,23 @@ locales/     sv.json + en.default.json (svenska och engelska)
 Koppla branchen som ett opublicerat tema: **Webbshop → Teman → Lägg till tema →
 Anslut från GitHub** och välj repot och branchen. Det publicerade temat påverkas inte.
 
-## Att ställa in i Shopify-admin
+## Redan gjort i butiken
 
-1. **Droppet** — Temainställningar → Drop: datum (ÅÅÅÅ-MM-DD) och klockslag (TT:MM) i
-   svensk tid. Ge drop-produkten taggen `drop` (Obsidian Black har i dag taggen
-   `kommer-snart`, som bara ger etiketten "Kommer snart").
-2. **Arkivet** — Skapa en automatisk kollektion med handtaget `arkiv`
-   (villkor: Produkttagg är lika med `arkiv`) och välj mallen `arkiv`.
-   Flytta produkter till arkivet genom att ge dem taggen `arkiv`.
-3. **Sidor** — Skapa sidorna och välj mall:
-   `om-oss` → *about*, `faq` → *faq*, `contact` → *contact* (finns redan),
-   `frakt-och-returer` → *shipping*, `kopvillkor` → *terms*,
-   `integritetspolicy` → *privacy*, `drop` → *drop*.
-4. **Menyer** — Lägg till sidorna i huvudmenyn och sidfotsmenyn.
-5. **Bilder** — Ladda upp hero-bild/video (den svarta korthållaren), bilder till
-   detaljsektionen, teaserbilder och sociala inlägg i temaeditorn.
-6. **Filter och "Passar bra med"** — Appen Search & Discovery: aktivera filter
-   (färg, tillgänglighet, pris) och ange kompletterande produkter.
-7. **Fri frakt-gräns** — Temainställningar → Varukorg (standard 499 kr). Gränsen
-   måste också finnas i fraktinställningarna.
-8. **Fyll i** alla texter markerade med `[FYLL I]`.
+- Sidor: `faq`, `frakt-och-returer`, `kopvillkor`, `integritetspolicy` och `drop`
+  är skapade med rätt mall. `om-oss` använder mallen *about*.
+- Kollektionen **Arkivet** (`/collections/arkiv`) är automatisk (produkttagg = `arkiv`),
+  använder mallen *arkiv* och är publicerad i webbshoppen.
+- Obsidian Black har taggen `drop`.
+- Menyerna **De'Jour huvudmeny** och **De'Jour sidfot** är kopplade till temat.
+  Butikens gamla menyer är orörda, så det publicerade temat påverkas inte.
+
+## Kvar att göra i Shopify-admin
+
+1. Temainställningar → Drop: kontrollera datum och klockslag (svensk tid).
+2. Ladda upp hero-bild/video och övriga bilder i temaeditorn.
+3. Fyll i alla texter markerade med `[FYLL I]`, även juridiska texter.
+4. Appen Search & Discovery: aktivera filter och kompletterande produkter.
+5. Kontrollera att fri frakt-gränsen (499 kr) finns i fraktinställningarna.
 
 ### Metafält (valfria)
 

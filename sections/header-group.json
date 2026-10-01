@@ -27,12 +27,16 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": "main-menu",
+        "menu": "dejour-huvudmeny",
         "transparent_home": true,
         "show_account": true,
         "color_scheme": "scheme-1"
       }
     }
   },
-  "order": ["drop-banner", "announcement-bar", "header"]
+  "order": [
+    "drop-banner",
+    "announcement-bar",
+    "header"
+  ]
 }
