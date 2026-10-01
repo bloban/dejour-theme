@@ -1,0 +1,16 @@
+{%- comment -%}
+  Laddningsskärm som bara visas vid första besöket per session
+  (styrs av klassen .show-loader som sätts i <head>).
+{%- endcomment -%}
+<div class="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <div class="loader__mark">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: alt: '', loading: 'eager' }}
+      {%- else -%}
+        <span class="gold-text">{{ settings.wordmark | default: shop.name }}</span>
+      {%- endif -%}
+    </div>
+    <div class="loader__bar"></div>
+  </div>
+</div>

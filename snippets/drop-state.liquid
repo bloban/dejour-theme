@@ -1,0 +1,22 @@
+{%- comment -%}
+  Skriver ut "tillstånd|sekunder kvar", t.ex. "pre|86400", "live|0" eller "invalid|0".
+  Serverns uppskattning för första målningen — webbläsaren tar över direkt.
+  - date: 'ÅÅÅÅ-MM-DD'
+  - time: 'TT:MM'
+{%- endcomment -%}
+{%- capture epoch -%}{%- render 'drop-epoch', date: date, time: time -%}{%- endcapture -%}
+{%- liquid
+  assign epoch = epoch | strip
+  if epoch == blank
+    echo 'invalid|0'
+  else
+    assign drop_s = epoch | plus: 0
+    assign now_s = 'now' | date: '%s' | plus: 0
+    assign left = drop_s | minus: now_s
+    if left > 0
+      echo 'pre|' | append: left
+    else
+      echo 'live|0'
+    endif
+  endif
+-%}

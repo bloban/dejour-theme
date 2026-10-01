@@ -1,0 +1,67 @@
+{%- comment -%}
+  Nedräkningens siffror (DAGAR : TIMMAR : MINUTER : SEKUNDER).
+  Används inuti <drop-countdown>, som räknar och "flippar" siffrorna.
+  - size: 'lg' (standard), 'sm' eller 'xs'
+  - glow: true för pulserande guldkant
+  - remaining: sekunder kvar (serverns uppskattning, för första målningen)
+  - show_seconds: false för att dölja sekunder
+{%- endcomment -%}
+{%- liquid
+  assign size_class = ''
+  if size == 'sm'
+    assign size_class = ' countdown--sm'
+  elsif size == 'xs'
+    assign size_class = ' countdown--xs'
+  endif
+
+  assign secs = remaining | default: 0 | plus: 0 | at_least: 0
+  assign v_days = secs | divided_by: 86400
+  assign v_hours = secs | modulo: 86400 | divided_by: 3600
+  assign v_minutes = secs | modulo: 3600 | divided_by: 60
+  assign v_seconds = secs | modulo: 60
+  assign units = 'days,hours,minutes,seconds' | split: ','
+  if show_seconds == false
+    assign units = 'days,hours,minutes' | split: ','
+  endif
+-%}
+<div
+  class="countdown{{ size_class }}{% if glow %} countdown--glow{% endif %}"
+  role="timer"
+  aria-label="{{ 'drop.countdown_label' | t }}"
+>
+  {%- for unit in units -%}
+    {%- liquid
+      case unit
+        when 'days'
+          assign v = v_days
+        when 'hours'
+          assign v = v_hours
+        when 'minutes'
+          assign v = v_minutes
+        else
+          assign v = v_seconds
+      endcase
+      assign v = v | prepend: '0' | slice: -2, 2
+      if unit == 'days' and v_days > 99
+        assign v = v_days
+      endif
+      if size == 'xs'
+        assign label_key = 'drop.' | append: unit | append: '_short'
+      else
+        assign label_key = 'drop.' | append: unit
+      endif
+    -%}
+    <div class="countdown__unit" data-unit="{{ unit }}">
+      <span class="countdown__card" aria-hidden="true">
+        <span class="countdown__face countdown__face--top-new">{{ v }}</span>
+        <span class="countdown__face countdown__face--bottom-old">{{ v }}</span>
+        <span class="countdown__flap countdown__flap--top">{{ v }}</span>
+        <span class="countdown__flap countdown__flap--bottom">{{ v }}</span>
+      </span>
+      <span class="countdown__label" aria-hidden="true">{{ label_key | t }}</span>
+    </div>
+    {%- unless forloop.last -%}
+      <span class="countdown__sep" aria-hidden="true">:</span>
+    {%- endunless -%}
+  {%- endfor -%}
+</div>

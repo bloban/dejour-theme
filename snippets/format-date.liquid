@@ -1,0 +1,17 @@
+{%- comment -%}
+  Skriver ut ett datum med översatta månadsnamn, t.ex. "14 mars 2026".
+  - date: datum eller datumsträng
+  - style: 'long' (standard) eller 'month' (bara månad och år)
+{%- endcomment -%}
+{%- liquid
+  assign month_names = 'general.month_names' | t | split: ','
+  assign month_index = date | date: '%-m' | minus: 1
+  assign month_name = month_names[month_index] | strip
+  assign day = date | date: '%-d'
+  assign year = date | date: '%Y'
+  if style == 'month'
+    echo month_name | append: ' ' | append: year
+  else
+    echo day | append: ' ' | append: month_name | append: ' ' | append: year
+  endif
+-%}

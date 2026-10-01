@@ -1,0 +1,77 @@
+{%- comment -%}
+  E-postformulär via Shopifys kundformulär. Skapar/uppdaterar en kund med
+  marknadsföringssamtycke och taggar (t.ex. "drop-svart" eller "bevaka-…").
+  - form_id: unikt id (krävs)
+  - tags: kommaseparerade taggar
+  - button_label: knapptext
+  - placeholder: platshållare i fältet
+  - success: meddelande efter skickat formulär
+  - legal: true för att visa integritetstext
+{%- endcomment -%}
+{%- liquid
+  assign label = 'drop.notify_button' | t
+  if button_label != blank
+    assign label = button_label
+  endif
+  assign ph = 'general.email_placeholder' | t
+  if placeholder != blank
+    assign ph = placeholder
+  endif
+-%}
+{%- form 'customer', id: form_id, class: 'notify-form' -%}
+  <input type="hidden" name="contact[tags]" value="{{ tags | escape }}">
+
+  {%- if form.posted_successfully? -%}
+    <p class="form-msg form-msg--success" role="status">
+      {%- render 'icon', name: 'check' -%}
+      <span>
+        {%- if success != blank -%}
+          {{ success | escape }}
+        {%- else -%}
+          {{ 'drop.notify_success' | t }}
+        {%- endif -%}
+      </span>
+    </p>
+  {%- endif -%}
+
+  <div class="inline-form">
+    <label for="{{ form_id }}-email" class="visually-hidden">{{ 'general.email' | t }}</label>
+    <input
+      id="{{ form_id }}-email"
+      type="email"
+      name="contact[email]"
+      value="{{ form.email }}"
+      placeholder="{{ ph | escape }}"
+      autocomplete="email"
+      autocapitalize="off"
+      spellcheck="false"
+      required
+      aria-required="true"
+      {% if form.errors %}
+        aria-invalid="true" aria-describedby="{{ form_id }}-error"
+      {% endif %}
+    >
+    <button type="submit">
+      <span>{{ label | escape }}</span>
+      {%- render 'icon', name: 'arrow-right' -%}
+    </button>
+  </div>
+
+  {%- if form.errors -%}
+    <p id="{{ form_id }}-error" class="form-msg form-msg--error" role="alert">
+      {%- render 'icon', name: 'error' -%}
+      <span>
+        {%- if form.errors contains 'email' -%}
+          {{ form.errors.translated_fields.email | capitalize }}
+          {{ form.errors.messages.email }}
+        {%- else -%}
+          {{ form.errors | default_errors }}
+        {%- endif -%}
+      </span>
+    </p>
+  {%- endif -%}
+
+  {%- if legal -%}
+    <p class="form-legal">{{ 'general.newsletter_legal_html' | t: url: shop.privacy_policy.url }}</p>
+  {%- endif -%}
+{%- endform -%}

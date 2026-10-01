@@ -1,0 +1,146 @@
+{%- comment -%}
+  Produktkort.
+  - card_product: produkt (krävs)
+  - index: position i listan (för fördröjning och eager-laddning)
+  - sizes: sizes-attribut för bilden
+  - mode: 'default' eller 'archive'
+  - parallax: true för parallax på bilden (GSAP)
+  - eager: true för att ladda bilden direkt
+  - context: statistik-kontext ('collection', 'search', 'recommendation')
+  - heading_tag: standard h3
+{%- endcomment -%}
+{%- liquid
+  assign p = card_product
+  assign idx = index | default: 0
+  assign delay = idx | modulo: 4 | times: 0.08
+  assign img_sizes = sizes | default: '(min-width: 990px) 25vw, 50vw'
+  assign tag = heading_tag | default: 'h3'
+
+  assign ratio_class = ''
+  if settings.card_ratio == 'tall'
+    assign ratio_class = ' card--tall'
+  elsif settings.card_ratio == 'square'
+    assign ratio_class = ' card--square'
+  endif
+
+  assign tags_down = p.tags | join: '|' | downcase | split: '|'
+  assign archive_tag = settings.archive_tag | strip | downcase
+  assign drop_tag = settings.drop_product_tag | strip | downcase
+
+  assign is_archived = false
+  if mode == 'archive'
+    assign is_archived = true
+  elsif archive_tag != blank and tags_down contains archive_tag
+    assign is_archived = true
+  endif
+
+  assign is_drop = false
+  if settings.drop_enabled and drop_tag != blank and tags_down contains drop_tag
+    assign is_drop = true
+  endif
+
+  assign release_date = p.metafields.custom.release_date.value | default: p.published_at
+
+  assign primary = p.featured_media.preview_image
+  assign secondary = nil
+  if settings.card_secondary_image and p.media.size > 1
+    assign secondary = p.media[1].preview_image
+  endif
+
+  assign view_context = context | default: 'collection'
+  assign primary_alt = primary.alt | default: p.title
+
+  assign loading = 'lazy'
+  if eager
+    assign loading = 'eager'
+  endif
+-%}
+<product-component
+  class="card-wrap"
+  view-event-payload="{{ p | standard_event_data: 'view', context: view_context | escape }}"
+>
+  <article
+    class="card{{ ratio_class }}{% if is_archived %} card--archive{% endif %}"
+    data-reveal
+    style="--d: {{ delay }}s"
+  >
+    <a href="{{ p.url }}" class="card__link">
+      <div class="card__media"{% if parallax %} data-parallax-trigger{% endif %}>
+        <div
+          class="{% if parallax %}parallax{% else %}card__img-wrap{% endif %}"
+          {% if parallax %}
+            data-gsap="parallax" data-speed="5"
+          {% endif %}
+        >
+          {%- if primary -%}
+            {{
+              primary
+              | image_url: width: 1200
+              | image_tag:
+                class: 'card__img card__img--primary',
+                widths: '300, 450, 600, 800, 1000, 1200',
+                sizes: img_sizes,
+                loading: loading,
+                alt: primary_alt
+            }}
+            {%- if secondary -%}
+              {{
+                secondary
+                | image_url: width: 1200
+                | image_tag:
+                  class: 'card__img card__img--secondary',
+                  widths: '300, 450, 600, 800, 1000, 1200',
+                  sizes: img_sizes,
+                  loading: 'lazy',
+                  alt: ''
+              }}
+            {%- endif -%}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'card__img placeholder' }}
+          {%- endif -%}
+        </div>
+
+        {%- if settings.card_show_badges -%}
+          <div class="card__badges">
+            {%- if is_archived -%}
+              {%- if p.available -%}
+                <span class="badge badge--muted">{{ 'products.badge_previous_drop' | t }}</span>
+              {%- else -%}
+                <span class="badge badge--muted">{{ 'products.sold_out' | t }}</span>
+              {%- endif -%}
+            {%- elsif is_drop -%}
+              <span class="badge badge--solid">{{ 'products.badge_drop' | t }}</span>
+            {%- elsif tags_down contains 'kommer-snart' or tags_down contains 'coming-soon' -%}
+              <span class="badge">{{ 'products.badge_coming_soon' | t }}</span>
+            {%- elsif p.available == false -%}
+              <span class="badge badge--muted">{{ 'products.sold_out' | t }}</span>
+            {%- elsif p.compare_at_price > p.price -%}
+              <span class="badge">{{ 'products.badge_sale' | t }}</span>
+            {%- elsif tags_down contains 'ny' or tags_down contains 'nyhet' or tags_down contains 'new' -%}
+              <span class="badge">{{ 'products.badge_new' | t }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="card__info">
+        {%- if settings.card_show_vendor and p.vendor != blank -%}
+          <span class="card__vendor">{{ p.vendor | escape }}</span>
+        {%- endif -%}
+        <div class="card__row">
+          <{{ tag }} class="card__title">{{ p.title | escape }}</{{ tag }}>
+          {%- unless is_archived and p.available == false -%}
+            <span class="card__price">{% render 'price', product: p %}</span>
+          {%- endunless -%}
+        </div>
+        {%- if is_archived and release_date != blank -%}
+          <span class="card__sub">
+            {{- 'products.released_on' | t -}}
+            {{ ' ' }}
+            {%- render 'format-date', date: release_date -%}
+          </span>
+        {%- endif -%}
+      </div>
+    </a>
+  </article>
+</product-component>

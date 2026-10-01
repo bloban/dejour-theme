@@ -1,1 +1,107 @@
-{%- render 'cart-drawer' -%}
+{%- comment -%}
+  Varukorgspanel. Renderas statiskt i layouten och uppdateras via
+  Section Rendering API (id: cart-drawer).
+{%- endcomment -%}
+<dialog id="CartDrawer" class="drawer cart-drawer" aria-label="{{ 'cart.title' | t }}">
+  <div class="drawer__overlay" data-close></div>
+  <div class="drawer__panel" data-cart-section="{{ section.id }}">
+    <span hidden data-cart-count-value="{{ cart.item_count }}"></span>
+    <div class="drawer__head">
+      <h2 class="drawer__title">
+        {{- 'cart.title' | t }}
+        <span class="label label--accent">({{ cart.item_count }})</span>
+      </h2>
+      <button type="button" class="icon-btn" data-close aria-label="{{ 'general.close' | t }}">
+        {%- render 'icon', name: 'close' -%}
+      </button>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="drawer__body">
+        {%- render 'free-shipping' -%}
+        <ul class="cart-lines" role="list">
+          {%- for item in cart.items -%}
+            {%- render 'cart-line', item: item, index: forloop.index -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="drawer__foot">
+        <form action="{{ routes.cart_url }}" method="post" id="CartDrawerForm" novalidate>
+          {%- if settings.cart_note_enabled -%}
+            <details class="cart-note">
+              <summary>{{ 'cart.note_toggle' | t }}</summary>
+              <label for="CartDrawerNote" class="visually-hidden">{{ 'cart.note' | t }}</label>
+              <textarea id="CartDrawerNote" class="field__input" name="note" data-cart-note placeholder=" ">
+                {{- cart.note -}}
+              </textarea>
+            </details>
+          {%- endif -%}
+
+          <div class="cart-totals">
+            {%- for discount in cart.cart_level_discount_applications -%}
+              <div class="cart-totals__row cart-totals__discount">
+                <span>{{ discount.title | escape }}</span>
+                <span>−{{ discount.total_allocated_amount | money }}</span>
+              </div>
+            {%- endfor -%}
+            <div class="cart-totals__row cart-totals__row--total">
+              <span>{{ 'cart.subtotal' | t }}</span>
+              <span class="cart-totals__value">
+                {%- if settings.currency_code_enabled -%}
+                  {{ cart.total_price | money_with_currency }}
+                {%- else -%}
+                  {{ cart.total_price | money }}
+                {%- endif -%}
+              </span>
+            </div>
+          </div>
+
+          <p class="cart-tax">
+            {%- if cart.duties_included and cart.taxes_included -%}
+              {{ 'cart.duties_and_taxes_included' | t }}
+            {%- elsif cart.taxes_included -%}
+              {{ 'cart.taxes_included' | t }}
+            {%- else -%}
+              {{ 'cart.taxes_at_checkout' | t }}
+            {%- endif -%}
+          </p>
+
+          <button type="submit" name="checkout" class="btn btn--primary btn--block btn--lg">
+            <span class="btn__label">
+              {%- render 'icon', name: 'lock' -%}
+              {{- 'cart.checkout' | t -}}
+            </span>
+          </button>
+
+          {%- if settings.cart_trust_text != blank -%}
+            <p class="cart-trust">{{ settings.cart_trust_text | escape }}</p>
+          {%- endif -%}
+        </form>
+      </div>
+    {%- else -%}
+      <div class="drawer__body">
+        <div class="cart-empty">
+          <span class="label label--accent label--line">{{ 'cart.title' | t }}</span>
+          <p class="h3">{{ 'cart.empty' | t }}</p>
+          <a href="{{ section.settings.empty_link | default: routes.all_products_collection_url }}" class="btn btn--outline">
+            <span class="btn__label">{{ 'cart.continue' | t }}</span>
+          </a>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</dialog>
+
+{% schema %}
+{
+  "name": "Varukorgspanel",
+  "settings": [
+    {
+      "type": "url",
+      "id": "empty_link",
+      "label": "Länk när varukorgen är tom"
+    }
+  ]
+}
+{% endschema %}

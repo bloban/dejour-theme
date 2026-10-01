@@ -1,0 +1,56 @@
+{%- comment -%}
+  Kompakt drop-block (produktsida eller valfri sida).
+  - date, time: tidpunkt (svensk tid)
+  - eyebrow, heading: texter
+  - show_notify: visa 'Påminn mig'
+  - notify_button, tag, form_id
+  - live_label, live_url: knapp när droppet är live (live_url tom = ingen knapp)
+  - show_seconds
+  - attrs: extra attribut (t.ex. block.shopify_attributes)
+{%- endcomment -%}
+{%- capture info -%}{%- render 'drop-state', date: date, time: time -%}{%- endcapture -%}
+{%- liquid
+  assign info = info | strip | split: '|'
+  assign state = info[0]
+  assign remaining = info[1] | plus: 0
+-%}
+<drop-countdown
+  class="drop-compact"
+  data-date="{{ date | escape }}"
+  data-time="{{ time | escape }}"
+  data-drop-state="{{ state }}"
+  {{ attrs }}
+>
+  <div class="drop-compact__head">
+    {%- if eyebrow != blank -%}
+      <span class="label label--accent">{{ eyebrow | escape }}</span>
+    {%- endif -%}
+    {%- if heading != blank -%}
+      <p class="drop-compact__title h4">{{ heading }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- if state == 'invalid' and request.design_mode -%}
+    <p class="drop-editor-note">{{ 'drop.invalid_date' | t }}</p>
+  {%- endif -%}
+
+  <div class="drop-pre">
+    <p class="label" style="margin-bottom: 12px">{{ 'drop.releases_in' | t }}</p>
+    {%- render 'countdown', size: 'sm', remaining: remaining, show_seconds: show_seconds -%}
+  </div>
+
+  {%- if show_notify -%}
+    <div class="drop-pre">
+      {%- render 'notify-form', form_id: form_id, tags: tag, button_label: notify_button -%}
+    </div>
+  {%- endif -%}
+
+  <div class="drop-live">
+    <span class="badge badge--solid badge--live">{{ 'drop.live_badge' | t }}</span>
+    {%- if live_url != blank -%}
+      <a href="{{ live_url }}" class="btn btn--primary btn--block" style="margin-top: 16px">
+        <span class="btn__label">{{ live_label | escape }} {% render 'icon', name: 'arrow-right' %}</span>
+      </a>
+    {%- endif -%}
+  </div>
+</drop-countdown>

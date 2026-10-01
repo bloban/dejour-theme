@@ -1,0 +1,24 @@
+{%- comment -%}
+  Skriver ut droppets tidpunkt som Unix-sekunder (uppskattning på servern).
+  Svensk tid: sommartid (+02:00) april–oktober, annars +01:00.
+  JavaScript räknar alltid om exakt i webbläsaren med Europe/Stockholm.
+  - date: 'ÅÅÅÅ-MM-DD'
+  - time: 'TT:MM'
+{%- endcomment -%}
+{%- liquid
+  assign d = date | strip
+  assign t = time | strip | default: '00:00' | replace: '.', ':'
+  assign parts = d | split: '-'
+  if parts.size == 3
+    assign month = parts[1] | plus: 0
+    assign offset = '+01:00'
+    if month >= 4 and month <= 10
+      assign offset = '+02:00'
+    endif
+    assign stamp = d | append: 'T' | append: t | append: ':00' | append: offset
+    assign epoch = stamp | date: '%s'
+    if epoch != stamp and epoch != blank
+      echo epoch
+    endif
+  endif
+-%}
