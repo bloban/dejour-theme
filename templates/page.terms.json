@@ -1,0 +1,106 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Juridiskt",
+        "heading": "Köp<em>villkor</em>",
+        "text": "<p>Mall — granska och komplettera alla [FYLL I] innan lansering.</p>",
+        "size": "sm",
+        "alignment": "left",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "legal": {
+      "type": "legal-text",
+      "blocks": {
+        "c1": {
+          "type": "clause",
+          "settings": {
+            "heading": "Allmänt",
+            "text": "<p>Dessa villkor gäller när du handlar på dejour.store, som drivs av [FYLL I företagsnamn], org.nr [FYLL I], [FYLL I adress]. Genom att lägga en beställning godkänner du villkoren.</p>"
+          }
+        },
+        "c2": {
+          "type": "clause",
+          "settings": {
+            "heading": "Beställning och avtal",
+            "text": "<p>Avtalet är bindande när du fått en orderbekräftelse via e-post. Vi förbehåller oss rätten att neka eller häva en beställning vid t.ex. uppenbara prisfel eller slutsålda varor. [FYLL I]</p>"
+          }
+        },
+        "c3": {
+          "type": "clause",
+          "settings": {
+            "heading": "Priser och betalning",
+            "text": "<p>Alla priser anges i svenska kronor inklusive moms. Betalning sker via de betalsätt som visas i kassan. [FYLL I]</p>"
+          }
+        },
+        "c4": {
+          "type": "clause",
+          "settings": {
+            "heading": "Drops och begränsade upplagor",
+            "text": "<p>Drop-produkter säljs från den tidpunkt som anges på sajten och i begränsat antal. En vara i varukorgen är inte reserverad förrän beställningen är slutförd. [FYLL I] Eventuell gräns per kund.</p>"
+          }
+        },
+        "c5": {
+          "type": "clause",
+          "settings": {
+            "heading": "Leverans",
+            "text": "<p>Vi skickar med PostNord. Leveranstid och kostnader framgår av sidan <a href=\"/pages/frakt-och-returer\">Frakt & returer</a>. Om leveransen försenas meddelar vi dig.</p>"
+          }
+        },
+        "c6": {
+          "type": "clause",
+          "settings": {
+            "heading": "Ångerrätt",
+            "text": "<p>Du har 14 dagars ångerrätt enligt lagen (2005:59) om distansavtal och avtal utanför affärslokaler. Se <a href=\"/pages/frakt-och-returer\">Frakt & returer</a> för hur du gör.</p>"
+          }
+        },
+        "c7": {
+          "type": "clause",
+          "settings": {
+            "heading": "Reklamation",
+            "text": "<p>Du har rätt att reklamera fel på varan i tre år enligt konsumentköplagen. Kontakta oss inom skälig tid efter att du upptäckt felet. [FYLL I]</p>"
+          }
+        },
+        "c8": {
+          "type": "clause",
+          "settings": {
+            "heading": "Personuppgifter",
+            "text": "<p>Vi behandlar dina personuppgifter enligt vår <a href=\"/pages/integritetspolicy\">integritetspolicy</a>.</p>"
+          }
+        },
+        "c9": {
+          "type": "clause",
+          "settings": {
+            "heading": "Tvister",
+            "text": "<p>Vid tvist försöker vi alltid hitta en lösning tillsammans med dig. Du kan också vända dig till Allmänna reklamationsnämnden (ARN), arn.se, eller EU:s plattform för tvistlösning online.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9"
+      ],
+      "settings": {
+        "updated": "[FYLL I datum]",
+        "intro": "",
+        "show_toc": true,
+        "color_scheme": "scheme-1",
+        "padding_top": "sm",
+        "padding_bottom": "lg"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "legal"
+  ]
+}

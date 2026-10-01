@@ -1,0 +1,138 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Om De'Jour",
+        "heading": "Färre kort. <em>Mindre brus.</em>",
+        "text": "<p>[FYLL I] En mening om varför De'Jour finns.</p>",
+        "size": "lg",
+        "alignment": "left",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "statement": {
+      "type": "brand-statement",
+      "settings": {
+        "eyebrow": "Vår filosofi",
+        "text": "<p>Vi började med en fråga: varför ska det man bär varje dag vara <em>tjockt, högljutt och tillfälligt</em>? [FYLL I]</p>",
+        "signature": "— [FYLL I], grundare",
+        "link_label": "",
+        "alignment": "left",
+        "color_scheme": "scheme-1",
+        "padding_top": "md",
+        "padding_bottom": "md"
+      }
+    },
+    "story-1": {
+      "type": "image-with-text",
+      "settings": {
+        "number": "01",
+        "eyebrow": "Början",
+        "heading": "Född ur en <em>enkel idé</em>",
+        "text": "<p>[FYLL I] Berätta hur De'Jour startade — vem, var och varför.</p>",
+        "ratio": "4 / 5",
+        "layout": "image-left",
+        "button_label": "",
+        "color_scheme": "scheme-1",
+        "padding_top": "md",
+        "padding_bottom": "md"
+      }
+    },
+    "story-2": {
+      "type": "image-with-text",
+      "settings": {
+        "number": "02",
+        "eyebrow": "Hantverket",
+        "heading": "Gjord för att <em>hålla</em>",
+        "text": "<p>[FYLL I] Material, tillverkning och detaljerna som gör skillnad.</p>",
+        "ratio": "4 / 5",
+        "layout": "image-right",
+        "button_label": "Se kollektionen",
+        "button_link": "shopify://collections/all",
+        "color_scheme": "scheme-1",
+        "padding_top": "md",
+        "padding_bottom": "lg"
+      }
+    },
+    "values": {
+      "type": "columns",
+      "blocks": {
+        "column-1": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Hantverk",
+            "text": "<p>[FYLL I] Varför ni väljer material och tillverkare med omsorg.</p>"
+          }
+        },
+        "column-2": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Hållbarhet",
+            "text": "<p>[FYLL I] Hur ni tänker kring livslängd, läder och förpackning.</p>"
+          }
+        },
+        "column-3": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "title": "Tidlös design",
+            "text": "<p>[FYLL I] Varför ni gör färre, bättre produkter.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column-1",
+        "column-2",
+        "column-3"
+      ],
+      "settings": {
+        "eyebrow": "Värderingar",
+        "heading": "Det vi <em>står för</em>",
+        "style": "numbers",
+        "columns": 3,
+        "border_top": false,
+        "color_scheme": "scheme-2",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "DE'JOUR — THE BLACK EDITION —",
+        "speed": 45,
+        "direction": "left",
+        "style": "mixed",
+        "size": "lg",
+        "borders": true,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Inner circle",
+        "heading": "Följ med på <em>resan</em>",
+        "text": "<p>Nyheter från ateljén och förtur till nästa drop.</p>",
+        "button_label": "Gå med",
+        "success": "Välkommen. Vi hör av oss före nästa drop.",
+        "tags": "newsletter",
+        "color_scheme": "scheme-5",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "statement",
+    "story-1",
+    "story-2",
+    "values",
+    "marquee",
+    "newsletter"
+  ]
+}

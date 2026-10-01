@@ -1,23 +1,57 @@
-<style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
-  }
+{%- assign s = section.settings -%}
+<section class="notfound dj-section color-{{ s.color_scheme }}">
+  <div class="container notfound__inner">
+    <p class="notfound__code" aria-hidden="true">404</p>
+    <p class="label label--accent label--line hero__fade" style="--d: .2s">{{ s.eyebrow | escape }}</p>
+    <h1 class="notfound__title hero__fade" style="--d: .3s">{{ s.heading }}</h1>
+    {%- if s.text != blank -%}
+      <div class="lead hero__fade" style="--d: .4s">{{ s.text }}</div>
+    {%- endif -%}
+    <form action="{{ routes.search_url }}" method="get" role="search" class="inline-form notfound__search hero__fade" style="--d: .5s">
+      <label for="NotFoundSearch" class="visually-hidden">{{ 'search.title' | t }}</label>
+      <input id="NotFoundSearch" type="search" name="q" placeholder="{{ 'search.placeholder' | t }}">
+      <button type="submit">{{ 'search.submit' | t }} {% render 'icon', name: 'arrow-right' %}</button>
+    </form>
+    <div class="btn-group hero__fade" style="--d: .6s">
+      <a href="{{ routes.root_url }}" class="btn btn--primary" data-magnetic>
+        <span class="btn__label">{{ 'general.back_home' | t }}</span>
+      </a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--outline" data-magnetic>
+        <span class="btn__label">{{ 'cart.continue' | t }}</span>
+      </a>
+    </div>
+  </div>
+</section>
 
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
+{% schema %}
+{
+  "name": "404-sida",
+  "class": "section-404",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Sidan finns inte"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Den här vägen <em>leder ingenstans</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Sidan kan ha flyttats eller tagits bort. Sök eller gå tillbaka till startsidan.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-5"
     }
-  }
-</style>
-
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
-</div>
+  ]
+}
+{% endschema %}

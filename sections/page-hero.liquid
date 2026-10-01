@@ -1,0 +1,110 @@
+{%- liquid
+  assign s = section.settings
+  assign heading = s.heading
+  if heading == blank and page
+    assign heading = page.title | escape
+  endif
+  assign has_image = false
+  if s.image != blank
+    assign has_image = true
+  endif
+-%}
+<section class="page-hero page-hero--{{ s.size }} page-hero--{{ s.alignment }}{% if has_image %} page-hero--image{% endif %} dj-section color-{{ s.color_scheme }}">
+  {%- if has_image -%}
+    <div class="page-hero__media" aria-hidden="true">
+      <div class="parallax" data-gsap="parallax" data-speed="8">
+        {{
+          s.image
+          | image_url: width: 2400
+          | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', loading: 'eager', fetchpriority: 'high', alt: ''
+        }}
+      </div>
+    </div>
+  {%- endif -%}
+  <div class="container page-hero__inner">
+    {%- if s.eyebrow != blank -%}
+      <p class="label label--accent label--line hero__fade" style="--d: .1s">{{ s.eyebrow | escape }}</p>
+    {%- endif -%}
+    <h1 class="page-hero__title hero__fade" style="--d: .2s">{{ heading }}</h1>
+    {%- if s.text != blank -%}
+      <div class="page-hero__text lead hero__fade" style="--d: .3s">{{ s.text }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sidrubrik",
+  "class": "section-page-hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "info": "Lämna tomt för att använda sidans titel."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Ingress"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Bakgrundsbild"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Storlek",
+      "options": [
+        {
+          "value": "sm",
+          "label": "Liten"
+        },
+        {
+          "value": "md",
+          "label": "Mellan"
+        },
+        {
+          "value": "lg",
+          "label": "Stor"
+        }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Justering",
+      "options": [
+        {
+          "value": "left",
+          "label": "Vänster"
+        },
+        {
+          "value": "center",
+          "label": "Centrerad"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sidrubrik"
+    }
+  ]
+}
+{% endschema %}

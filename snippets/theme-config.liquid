@@ -1,0 +1,49 @@
+{%- comment -%}
+  Inställningar och texter som JavaScript behöver.
+{%- endcomment -%}
+<script>
+  window.DJ = window.DJ || {};
+  window.DJ.config = {
+    routes: {
+      root: {{ routes.root_url | json }},
+      cart: {{ routes.cart_url | json }},
+      cartAdd: {{ routes.cart_add_url | json }},
+      cartChange: {{ routes.cart_change_url | json }},
+      cartUpdate: {{ routes.cart_update_url | json }},
+      search: {{ routes.search_url | json }},
+      predictiveSearch: {{ routes.predictive_search_url | json }},
+      recommendations: {{ routes.product_recommendations_url | json }}
+    },
+    cartType: {{ settings.cart_type | json }},
+    designMode: {{ request.design_mode | json }},
+    motion: {
+      reveal: {{ settings.reveal_enabled | json }},
+      gsap: {{ settings.gsap_enabled | json }},
+      magnetic: {{ settings.magnetic_buttons | json }},
+      script: {{ 'motion.js' | asset_url | json }}
+    },
+    drop: {
+      enabled: {{ settings.drop_enabled | json }},
+      date: {{ settings.drop_date | strip | json }},
+      time: {{ settings.drop_time | strip | json }},
+      liveLabel: {{ settings.drop_live_label | json }}
+    },
+    strings: {
+      addToCart: {{ 'products.add_to_cart' | t | json }},
+      soldOut: {{ 'products.sold_out' | t | json }},
+      unavailable: {{ 'products.unavailable' | t | json }},
+      salePrice: {{ 'products.sale_price' | t | json }},
+      regularPrice: {{ 'products.regular_price' | t | json }},
+      adding: {{ 'products.adding' | t | json }},
+      added: {{ 'products.added' | t | json }},
+      cartError: {{ 'cart.error' | t | json }},
+      cartUpdated: {{ 'cart.updated' | t | json }},
+      searchLoading: {{ 'search.loading' | t | json }},
+      live: {{ 'drop.live_now' | t | json }},
+      days: {{ 'drop.days' | t | json }},
+      hours: {{ 'drop.hours' | t | json }},
+      minutes: {{ 'drop.minutes' | t | json }},
+      seconds: {{ 'drop.seconds' | t | json }}
+    }
+  };
+</script>

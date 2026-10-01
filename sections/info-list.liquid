@@ -1,0 +1,154 @@
+{%- assign s = section.settings -%}
+<section class="info-list dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container info-list__grid">
+    <div class="info-list__intro">
+      {%- if s.eyebrow != blank -%}
+        <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 data-reveal style="--d: .08s">{{ s.heading }}</h2>
+      {%- endif -%}
+      {%- if s.text != blank -%}
+        <div class="rte text-body" data-reveal style="--d: .16s">{{ s.text }}</div>
+      {%- endif -%}
+    </div>
+    <dl class="info-list__rows">
+      {%- for block in section.blocks -%}
+        <div class="info-list__row" data-reveal="fade" {{ block.shopify_attributes }}>
+          <dt>
+            {%- if block.settings.icon != 'none' -%}
+              {%- render 'icon', name: block.settings.icon -%}
+            {%- endif -%}
+            <span>{{ block.settings.label | escape }}</span>
+          </dt>
+          <dd>
+            <span class="info-list__value">{{ block.settings.value }}</span>
+            {%- if block.settings.note != blank -%}
+              <span class="info-list__note text-small text-muted">{{ block.settings.note }}</span>
+            {%- endif -%}
+          </dd>
+        </div>
+      {%- endfor -%}
+    </dl>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Informationslista",
+  "class": "section-info-list",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Frakt"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Leverans med <em>PostNord</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Rad",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ikon",
+          "options": [
+            { "value": "none", "label": "Ingen" },
+            { "value": "truck", "label": "Frakt" },
+            { "value": "clock", "label": "Tid" },
+            { "value": "return", "label": "Retur" },
+            { "value": "gift", "label": "Paket" },
+            { "value": "pin", "label": "Plats" },
+            { "value": "shield", "label": "Garanti" },
+            { "value": "lock", "label": "Säkerhet" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Rubrik",
+          "default": "Leveranstid"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "value",
+          "label": "Värde",
+          "default": "1–3 arbetsdagar"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "note",
+          "label": "Notering"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Informationslista",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "icon": "truck",
+            "label": "Fraktsätt",
+            "value": "PostNord"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "icon": "clock",
+            "label": "Leveranstid",
+            "value": "1–3 arbetsdagar"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

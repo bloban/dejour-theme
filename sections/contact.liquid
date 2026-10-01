@@ -1,0 +1,253 @@
+{%- liquid
+  assign s = section.settings
+  assign form_id = 'ContactForm-' | append: section.id
+  assign success_msg = 'contact.success' | t
+  if s.success != blank
+    assign success_msg = s.success
+  endif
+-%}
+<section class="contact dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container contact__grid">
+    <div class="contact__details">
+      {%- if s.heading != blank -%}
+        <h2 class="h3" data-reveal>{{ s.heading }}</h2>
+      {%- endif -%}
+      {%- if s.text != blank -%}
+        <div class="rte text-body" data-reveal style="--d: .08s">{{ s.text }}</div>
+      {%- endif -%}
+      <ul class="contact__list" role="list">
+        {%- for block in section.blocks -%}
+          <li class="contact__item" data-reveal style="--d: {{ forloop.index | times: 0.06 }}s" {{ block.shopify_attributes }}>
+            <span class="contact__icon">{% render 'icon', name: block.settings.icon %}</span>
+            <span class="contact__item-text">
+              <span class="label">{{ block.settings.label | escape }}</span>
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="contact__value">{{ block.settings.value | escape }}</a>
+              {%- else -%}
+                <span class="contact__value">{{ block.settings.value | escape }}</span>
+              {%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if s.show_social -%}
+        {%- render 'social-icons' -%}
+      {%- endif -%}
+    </div>
+
+    <div class="contact__form-wrap" data-reveal style="--d: .1s">
+      {%- form 'contact', id: form_id, class: 'contact__form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form-msg form-msg--success" role="status" tabindex="-1" autofocus>
+            {%- render 'icon', name: 'check' -%}
+            <span>{{ success_msg | escape }}</span>
+          </p>
+        {%- elsif form.errors -%}
+          <p class="form-msg form-msg--error" role="alert">
+            {%- render 'icon', name: 'error' -%}
+            <span>{{ form.errors | default_errors }}</span>
+          </p>
+        {%- endif -%}
+
+        <div class="form-grid form-grid--2">
+          <div class="field">
+            <input
+              class="field__input"
+              id="{{ form_id }}-name"
+              type="text"
+              name="contact[{{ 'contact.name' | t }}]"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              autocomplete="name"
+              placeholder=" "
+            >
+            <label class="field__label" for="{{ form_id }}-name">{{ 'contact.name' | t }}</label>
+          </div>
+          <div class="field">
+            <input
+              class="field__input"
+              id="{{ form_id }}-email"
+              type="email"
+              name="contact[email]"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              autocomplete="email"
+              autocapitalize="off"
+              spellcheck="false"
+              placeholder=" "
+              required
+              aria-required="true"
+            >
+            <label class="field__label" for="{{ form_id }}-email">{{ 'contact.email' | t }} *</label>
+          </div>
+          <div class="field">
+            <input
+              class="field__input"
+              id="{{ form_id }}-phone"
+              type="tel"
+              name="contact[{{ 'contact.phone' | t }}]"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              autocomplete="tel"
+              placeholder=" "
+            >
+            <label class="field__label" for="{{ form_id }}-phone">{{ 'contact.phone' | t }}</label>
+          </div>
+          <div class="field">
+            <input
+              class="field__input"
+              id="{{ form_id }}-order"
+              type="text"
+              name="contact[{{ 'contact.order' | t }}]"
+              placeholder=" "
+            >
+            <label class="field__label" for="{{ form_id }}-order">{{ 'contact.order' | t }}</label>
+          </div>
+          <div class="field form-grid__full">
+            <textarea
+              class="field__input"
+              id="{{ form_id }}-body"
+              name="contact[body]"
+              rows="6"
+              placeholder=" "
+              required
+              aria-required="true"
+            >
+              {{- form.body -}}
+            </textarea>
+            <label class="field__label" for="{{ form_id }}-body">{{ 'contact.message' | t }} *</label>
+          </div>
+        </div>
+        <div class="contact__submit">
+          <button type="submit" class="btn btn--primary btn--lg" data-magnetic>
+            <span class="btn__label">{{ 'contact.send' | t }} {% render 'icon', name: 'arrow-right' %}</span>
+          </button>
+          <p class="form-legal">{{ 'contact.privacy_html' | t: url: shop.privacy_policy.url }}</p>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Kontaktformulär",
+  "class": "section-contact",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Vi hjälper <em>gärna</em> till"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Vi svarar normalt inom 24 timmar på vardagar.</p>"
+    },
+    {
+      "type": "text",
+      "id": "success",
+      "label": "Bekräftelse",
+      "default": "Tack! Vi återkommer så snart vi kan."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Visa sociala medier",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "sm"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "lg"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Kontaktuppgift",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ikon",
+          "options": [
+            { "value": "mail", "label": "E-post" },
+            { "value": "phone", "label": "Telefon" },
+            { "value": "pin", "label": "Adress" },
+            { "value": "clock", "label": "Öppettider" },
+            { "value": "instagram", "label": "Instagram" },
+            { "value": "tiktok", "label": "TikTok" }
+          ],
+          "default": "mail"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etikett",
+          "default": "E-post"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Uppgift",
+          "default": "[FYLL I]"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Länk",
+          "info": "T.ex. mailto:hej@dejour.store eller tel:+46…"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Kontaktformulär",
+      "blocks": [
+        {
+          "type": "detail",
+          "settings": {
+            "icon": "mail",
+            "label": "E-post",
+            "value": "[FYLL I e-post]"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "icon": "clock",
+            "label": "Kundservice",
+            "value": "Vardagar 9–17"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

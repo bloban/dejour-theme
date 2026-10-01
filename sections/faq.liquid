@@ -1,0 +1,173 @@
+{%- liquid
+  assign s = section.settings
+  assign questions = section.blocks | where: 'type', 'question'
+-%}
+<section class="faq dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container faq__grid">
+    <div class="faq__intro">
+      {%- if s.eyebrow != blank -%}
+        <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 data-reveal style="--d: .08s">{{ s.heading }}</h2>
+      {%- endif -%}
+      {%- if s.text != blank -%}
+        <div class="rte text-body" data-reveal style="--d: .16s">{{ s.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="faq__list">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'group' -%}
+            <h3 class="faq__group label label--accent" {{ block.shopify_attributes }}>{{ block.settings.title | escape }}</h3>
+          {%- when 'question' -%}
+            <details class="accordion__item" data-reveal="fade" {{ block.shopify_attributes }}>
+              <summary>
+                <span>{{ block.settings.question | escape }}</span>
+                <span class="accordion__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="accordion__content rte">{{ block.settings.answer }}</div>
+            </details>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- if s.structured_data and questions.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in questions -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Vanliga frågor",
+  "class": "section-faq",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "FAQ"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Vanliga <em>frågor</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Hittar du inte svaret? <a href=\"/pages/contact\">Kontakta oss</a>.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "structured_data",
+      "label": "Visa frågorna i Googles sökresultat (FAQ-schema)",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "group",
+      "name": "Rubrik för grupp",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Rubrik",
+          "default": "Produkten"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Fråga",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Fråga",
+          "default": "Fråga?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Svar",
+          "default": "<p>[FYLL I]</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vanliga frågor",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "Hur många kort rymmer korthållaren?",
+            "answer": "<p>[FYLL I]</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Hur lång är leveranstiden?",
+            "answer": "<p>Vi skickar med PostNord inom 1–2 arbetsdagar. Leveranstiden är normalt 1–3 arbetsdagar.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,90 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Juridiskt",
+        "heading": "Integritets<em>policy</em>",
+        "text": "<p>Mall — granska och komplettera alla [FYLL I] innan lansering.</p>",
+        "size": "sm",
+        "alignment": "left",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "legal": {
+      "type": "legal-text",
+      "blocks": {
+        "c1": {
+          "type": "clause",
+          "settings": {
+            "heading": "Personuppgiftsansvarig",
+            "text": "<p>[FYLL I företagsnamn], org.nr [FYLL I], är personuppgiftsansvarig för behandlingen av dina personuppgifter. Kontakt: [FYLL I e-post].</p>"
+          }
+        },
+        "c2": {
+          "type": "clause",
+          "settings": {
+            "heading": "Vilka uppgifter vi samlar in",
+            "text": "<p>Namn, adress, e-post, telefonnummer, orderhistorik och betalningsinformation (hanteras av våra betalleverantörer). Om du anmäler dig till nyhetsbrev eller Påminn mig sparar vi din e-postadress och vilket drop eller vilken produkt det gäller.</p>"
+          }
+        },
+        "c3": {
+          "type": "clause",
+          "settings": {
+            "heading": "Varför vi behandlar uppgifterna",
+            "text": "<p>För att leverera din beställning (avtal), uppfylla bokföringslagen (rättslig förpliktelse), skicka nyhetsbrev och påminnelser (samtycke) och förbättra butiken (berättigat intresse). [FYLL I]</p>"
+          }
+        },
+        "c4": {
+          "type": "clause",
+          "settings": {
+            "heading": "Mottagare",
+            "text": "<p>Vi delar uppgifter med leverantörer som behövs för att driva butiken, t.ex. Shopify (e-handelsplattform), PostNord (frakt) och betalleverantörer. [FYLL I]</p>"
+          }
+        },
+        "c5": {
+          "type": "clause",
+          "settings": {
+            "heading": "Lagringstid",
+            "text": "<p>Vi sparar uppgifterna så länge det behövs för ändamålet, t.ex. sju år för bokföringsunderlag. Prenumerationer sparas tills du avregistrerar dig.</p>"
+          }
+        },
+        "c6": {
+          "type": "clause",
+          "settings": {
+            "heading": "Cookies",
+            "text": "<p>Vi använder cookies för att butiken ska fungera och, med ditt samtycke, för statistik och marknadsföring. Du kan ändra dina val via <a href=\"/pages/data-sharing-opt-out\">Dina integritetsval</a>.</p>"
+          }
+        },
+        "c7": {
+          "type": "clause",
+          "settings": {
+            "heading": "Dina rättigheter",
+            "text": "<p>Du har rätt att begära tillgång till, rättelse eller radering av dina uppgifter, att invända mot behandling och att återkalla samtycke. Du kan lämna klagomål till Integritetsskyddsmyndigheten (IMY), imy.se.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7"
+      ],
+      "settings": {
+        "updated": "[FYLL I datum]",
+        "intro": "",
+        "show_toc": true,
+        "color_scheme": "scheme-1",
+        "padding_top": "sm",
+        "padding_bottom": "lg"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "legal"
+  ]
+}

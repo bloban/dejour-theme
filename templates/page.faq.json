@@ -1,0 +1,136 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Hjälp",
+        "heading": "Vanliga <em>frågor</em>",
+        "text": "<p>Allt du behöver veta om produkterna, droppen, frakt och returer.</p>",
+        "size": "sm",
+        "alignment": "left",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "group-1": {
+          "type": "group",
+          "settings": {
+            "title": "Produkten"
+          }
+        },
+        "question-2": {
+          "type": "question",
+          "settings": {
+            "question": "Hur många kort rymmer korthållaren?",
+            "answer": "<p>[FYLL I] T.ex. upp till 6 kort och några vikta sedlar.</p>"
+          }
+        },
+        "question-3": {
+          "type": "question",
+          "settings": {
+            "question": "Har korthållaren RFID-skydd?",
+            "answer": "<p>[FYLL I] Ja/nej — beskriv skyddet.</p>"
+          }
+        },
+        "question-4": {
+          "type": "question",
+          "settings": {
+            "question": "Vilket material är den gjord av?",
+            "answer": "<p>[FYLL I] Material och ursprung.</p>"
+          }
+        },
+        "question-5": {
+          "type": "question",
+          "settings": {
+            "question": "Hur sköter jag lädret?",
+            "answer": "<p>Torka av med en mjuk, torr trasa. Undvik väta och direkt solljus. [FYLL I] Eventuell läderbalsam.</p>"
+          }
+        },
+        "group-6": {
+          "type": "group",
+          "settings": {
+            "title": "Drops"
+          }
+        },
+        "question-7": {
+          "type": "question",
+          "settings": {
+            "question": "Hur fungerar ett drop?",
+            "answer": "<p>Varje drop släpps vid en bestämd tidpunkt i en begränsad upplaga. Klicka på <strong>Påminn mig</strong> så mejlar vi dig när droppet öppnar.</p>"
+          }
+        },
+        "question-8": {
+          "type": "question",
+          "settings": {
+            "question": "Kommer slutsålda modeller tillbaka?",
+            "answer": "<p>Vissa gör det, andra inte. Klicka på <strong>Bevaka</strong> på produktsidan så hör vi av oss om modellen kommer tillbaka.</p>"
+          }
+        },
+        "group-9": {
+          "type": "group",
+          "settings": {
+            "title": "Frakt & returer"
+          }
+        },
+        "question-10": {
+          "type": "question",
+          "settings": {
+            "question": "Hur lång är leveranstiden?",
+            "answer": "<p>Vi skickar med PostNord inom 1–2 arbetsdagar. Leveranstiden är normalt 1–3 arbetsdagar inom Sverige.</p>"
+          }
+        },
+        "question-11": {
+          "type": "question",
+          "settings": {
+            "question": "Vad kostar frakten?",
+            "answer": "<p>Fri frakt på beställningar över 499 kr. Annars kostar frakten [FYLL I] kr.</p>"
+          }
+        },
+        "question-12": {
+          "type": "question",
+          "settings": {
+            "question": "Kan jag ångra mitt köp?",
+            "answer": "<p>Ja. Du har 14 dagars ångerrätt från den dag du tog emot varan, enligt lagen om distansavtal. <a href=\"/pages/frakt-och-returer\">Läs mer om returer</a>.</p>"
+          }
+        },
+        "question-13": {
+          "type": "question",
+          "settings": {
+            "question": "Hur kontaktar jag er?",
+            "answer": "<p>Via <a href=\"/pages/contact\">kontaktformuläret</a> eller på [FYLL I e-post]. Vi svarar inom 24 timmar på vardagar.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "group-1",
+        "question-2",
+        "question-3",
+        "question-4",
+        "question-5",
+        "group-6",
+        "question-7",
+        "question-8",
+        "group-9",
+        "question-10",
+        "question-11",
+        "question-12",
+        "question-13"
+      ],
+      "settings": {
+        "eyebrow": "FAQ",
+        "heading": "Svar på det <em>mesta</em>",
+        "text": "<p>Hittar du inte svaret? <a href=\"/pages/contact\">Kontakta oss</a>.</p>",
+        "structured_data": true,
+        "color_scheme": "scheme-1",
+        "padding_top": "sm",
+        "padding_bottom": "lg"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "faq"
+  ]
+}

@@ -1,14 +1,28 @@
 {
   "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "text": "",
+        "size": "sm",
+        "alignment": "left",
+        "color_scheme": "scheme-1"
+      }
+    },
     "main": {
       "type": "main-page",
       "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
+        "show_title": false,
+        "color_scheme": "scheme-1",
+        "padding_top": "sm",
+        "padding_bottom": "lg"
       }
     }
   },
   "order": [
+    "hero",
     "main"
   ]
 }

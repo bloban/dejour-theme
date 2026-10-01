@@ -1,0 +1,125 @@
+{
+  "sections": {
+    "drop": {
+      "type": "drop-countdown",
+      "settings": {
+        "layout": "hero",
+        "use_global_date": true,
+        "show_seconds": true,
+        "eyebrow": "Drop 01 — The Black Edition",
+        "heading": "Obsidian <em>Black</em>",
+        "heading_tag": "h1",
+        "subheading": "<p>Ultratunn korthållare i helsvart. Begränsad upplaga — släpps bara en gång. [FYLL I]</p>",
+        "show_notify": true,
+        "notify_heading": "Få en påminnelse när droppet startar",
+        "notify_button": "Påminn mig",
+        "live_heading": "LIVE NU",
+        "live_text": "<p>Droppet är öppet. Begränsat antal — när de är slut är de slut.</p>",
+        "product": "black-koi-cardholder",
+        "overlay_opacity": 85,
+        "glow": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "teasers": {
+      "type": "drop-teasers",
+      "blocks": {
+        "teaser-1": {
+          "type": "teaser",
+          "settings": {
+            "caption": "Detalj 01 — Kanten",
+            "size": "wide"
+          }
+        },
+        "teaser-2": {
+          "type": "teaser",
+          "settings": {
+            "caption": "Detalj 02 — Sömmen",
+            "size": "normal"
+          }
+        },
+        "teaser-3": {
+          "type": "teaser",
+          "settings": {
+            "caption": "Detalj 03 — Profilen",
+            "size": "normal"
+          }
+        }
+      },
+      "block_order": [
+        "teaser-1",
+        "teaser-2",
+        "teaser-3"
+      ],
+      "settings": {
+        "eyebrow": "Smygtitt",
+        "heading": "Det du <em>inte</em> får se än",
+        "text": "<p>Detaljerna avtäcks när droppet öppnar.</p>",
+        "blur": true,
+        "color_scheme": "scheme-1",
+        "padding_top": "lg",
+        "padding_bottom": "md"
+      }
+    },
+    "details": {
+      "type": "horizontal-showcase",
+      "blocks": {
+        "panel-1": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Material",
+            "title": "Helsvart <em>läder</em>",
+            "text": "<p>[FYLL I]</p>"
+          }
+        },
+        "panel-2": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Sömmar",
+            "title": "Ton i <em>ton</em>",
+            "text": "<p>[FYLL I]</p>"
+          }
+        },
+        "panel-3": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Upplaga",
+            "title": "Bara <em>[FYLL I] ex</em>",
+            "text": "<p>[FYLL I] Numrerade exemplar.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "panel-1",
+        "panel-2",
+        "panel-3"
+      ],
+      "settings": {
+        "eyebrow": "The Black Edition",
+        "heading": "Svart på <em>svart</em>",
+        "text": "<p>[FYLL I] Vad som gör droppet speciellt.</p>",
+        "color_scheme": "scheme-2"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Inner circle",
+        "heading": "Först in när <em>dörren öppnar</em>",
+        "text": "<p>Anmäl dig så mejlar vi dig i samma sekund som droppet går live.</p>",
+        "button_label": "Påminn mig",
+        "success": "Klart. Vi mejlar dig när droppet startar.",
+        "tags": "newsletter, drop-svart",
+        "color_scheme": "scheme-5",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
+      }
+    }
+  },
+  "order": [
+    "drop",
+    "teasers",
+    "details",
+    "newsletter"
+  ]
+}

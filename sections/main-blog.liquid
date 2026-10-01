@@ -1,142 +1,70 @@
-{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+{{ 'collection.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-{%- paginate blog.articles by 6 -%}
-  <div class="main-blog page-width section-{{ section.id }}-padding">
-    <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      {{ blog.title | escape }}
-    </h1>
-
-    <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
-      {%- for article in blog.articles -%}
-        <div
-          class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-            style="--animation-order: {{ forloop.index }};"
-          {% endif %}
-        >
-          {%- render 'article-card',
-            article: article,
-            media_height: section.settings.image_height,
-            media_aspect_ratio: article.image.aspect_ratio,
-            show_image: section.settings.show_image,
-            show_date: section.settings.show_date,
-            show_author: section.settings.show_author,
-            show_excerpt: true
-          -%}
-        </div>
-      {%- endfor -%}
+{%- assign s = section.settings -%}
+<section class="blog dj-section color-{{ s.color_scheme }} pb-lg">
+  <header class="collection-hero">
+    <div class="container collection-hero__inner">
+      <p class="label label--accent label--line hero__fade">{{ s.eyebrow | escape }}</p>
+      <h1 class="collection-hero__title hero__fade" style="--d: .1s">{{ blog.title | escape }}</h1>
     </div>
+  </header>
 
-    {%- if paginate.pages > 1 -%}
-      {%- render 'pagination', paginate: paginate -%}
-    {%- endif -%}
+  <div class="container">
+    {%- paginate blog.articles by 9 -%}
+      {%- if blog.articles.size > 0 -%}
+        <ul class="grid blog__grid" role="list" style="--cols: 3; --cols-tablet: 2; --cols-mobile: 1">
+          {%- for article in blog.articles -%}
+            <li>
+              <a href="{{ article.url }}" class="article-card" data-reveal style="--d: {{ forloop.index0 | modulo: 3 | times: 0.08 }}s">
+                <span class="article-card__media media">
+                  {%- if article.image -%}
+                    {%- assign article_alt = article.image.alt | default: article.title -%}
+                    {{
+                      article.image
+                      | image_url: width: 1200
+                      | image_tag: widths: '400, 600, 900, 1200', sizes: '(min-width: 990px) 33vw, 100vw', loading: 'lazy', alt: article_alt
+                    }}
+                  {%- else -%}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}
+                  {%- endif -%}
+                </span>
+                <span class="label">{% render 'format-date', date: article.published_at %}</span>
+                <span class="article-card__title">{{ article.title | escape }}</span>
+                <span class="text-small text-muted">
+                  {%- if article.excerpt != blank -%}
+                    {{ article.excerpt | strip_html | truncatewords: 24 }}
+                  {%- else -%}
+                    {{ article.content | strip_html | truncatewords: 24 }}
+                  {%- endif -%}
+                </span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+        {%- render 'paginate-links', paginate: paginate -%}
+      {%- else -%}
+        <p class="text-muted">{{ 'blog.empty' | t }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
   </div>
-{%- endpaginate -%}
+</section>
 
 {% schema %}
 {
-  "name": "t:sections.main-blog.name",
-  "tag": "section",
-  "class": "section",
+  "name": "Blogg",
+  "class": "section-main-blog",
   "settings": [
     {
-      "type": "select",
-      "id": "layout",
-      "options": [
-        {
-          "value": "grid",
-          "label": "t:sections.main-blog.settings.layout.options__1.label"
-        },
-        {
-          "value": "collage",
-          "label": "t:sections.main-blog.settings.layout.options__2.label"
-        }
-      ],
-      "default": "collage",
-      "label": "t:sections.main-blog.settings.layout.label"
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Journal"
     },
     {
-      "type": "checkbox",
-      "id": "show_image",
-      "default": true,
-      "label": "t:sections.main-blog.settings.show_image.label"
-    },
-    {
-      "type": "select",
-      "id": "image_height",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.main-blog.settings.image_height.options__1.label"
-        },
-        {
-          "value": "small",
-          "label": "t:sections.main-blog.settings.image_height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.main-blog.settings.image_height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.main-blog.settings.image_height.options__4.label"
-        }
-      ],
-      "default": "medium",
-      "label": "t:sections.main-blog.settings.image_height.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_date",
-      "default": true,
-      "label": "t:sections.main-blog.settings.show_date.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_author",
-      "default": false,
-      "label": "t:sections.main-blog.settings.show_author.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
     }
   ]
 }

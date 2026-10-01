@@ -1,0 +1,179 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Kundservice",
+        "heading": "Frakt & <em>returer</em>",
+        "text": "<p>Snabb leverans med PostNord och 14 dagars ångerrätt enligt svensk lag.</p>",
+        "size": "sm",
+        "alignment": "left",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "shipping": {
+      "type": "info-list",
+      "blocks": {
+        "row-1": {
+          "type": "row",
+          "settings": {
+            "icon": "truck",
+            "label": "Fraktsätt",
+            "value": "PostNord",
+            "note": "Till ditt ombud eller i brevlådan. [FYLL I]"
+          }
+        },
+        "row-2": {
+          "type": "row",
+          "settings": {
+            "icon": "clock",
+            "label": "Hantering",
+            "value": "1–2 arbetsdagar",
+            "note": "Beställningar före kl. [FYLL I] skickas samma dag."
+          }
+        },
+        "row-3": {
+          "type": "row",
+          "settings": {
+            "icon": "gift",
+            "label": "Leveranstid",
+            "value": "1–3 arbetsdagar",
+            "note": "Inom Sverige."
+          }
+        },
+        "row-4": {
+          "type": "row",
+          "settings": {
+            "icon": "truck",
+            "label": "Fraktkostnad",
+            "value": "[FYLL I] kr",
+            "note": "Fri frakt över 499 kr."
+          }
+        },
+        "row-5": {
+          "type": "row",
+          "settings": {
+            "icon": "pin",
+            "label": "Spårning",
+            "value": "Spårningslänk via e-post",
+            "note": "Skickas när paketet lämnar oss."
+          }
+        }
+      },
+      "block_order": [
+        "row-1",
+        "row-2",
+        "row-3",
+        "row-4",
+        "row-5"
+      ],
+      "settings": {
+        "eyebrow": "Frakt",
+        "heading": "Leverans med <em>PostNord</em>",
+        "text": "<p>Alla beställningar packas för hand och skickas spårbart.</p>",
+        "color_scheme": "scheme-1",
+        "padding_top": "md",
+        "padding_bottom": "md"
+      }
+    },
+    "returns": {
+      "type": "info-list",
+      "blocks": {
+        "row-1": {
+          "type": "row",
+          "settings": {
+            "icon": "return",
+            "label": "Ångerrätt",
+            "value": "14 dagar",
+            "note": "Från den dag du tog emot varan."
+          }
+        },
+        "row-2": {
+          "type": "row",
+          "settings": {
+            "icon": "gift",
+            "label": "Returfrakt",
+            "value": "[FYLL I] Kunden betalar / fri retur",
+            "note": ""
+          }
+        },
+        "row-3": {
+          "type": "row",
+          "settings": {
+            "icon": "clock",
+            "label": "Återbetalning",
+            "value": "Inom 14 dagar",
+            "note": "Efter att vi tagit emot meddelandet om att du ångrar köpet. Vi får vänta tills varan kommit tillbaka."
+          }
+        },
+        "row-4": {
+          "type": "row",
+          "settings": {
+            "icon": "shield",
+            "label": "Reklamation",
+            "value": "3 år",
+            "note": "Enligt konsumentköplagen för fel som fanns vid leveransen."
+          }
+        }
+      },
+      "block_order": [
+        "row-1",
+        "row-2",
+        "row-3",
+        "row-4"
+      ],
+      "settings": {
+        "eyebrow": "Returer",
+        "heading": "14 dagars <em>ångerrätt</em>",
+        "text": "<p>Du har rätt att ångra ditt köp inom 14 dagar enligt lagen (2005:59) om distansavtal och avtal utanför affärslokaler.</p>",
+        "color_scheme": "scheme-2",
+        "padding_top": "md",
+        "padding_bottom": "md"
+      }
+    },
+    "how": {
+      "type": "legal-text",
+      "blocks": {
+        "c1": {
+          "type": "clause",
+          "settings": {
+            "heading": "Så ångrar du ditt köp",
+            "text": "<p>Meddela oss inom 14 dagar från att du tog emot varan via <a href=\"/pages/contact\">kontaktformuläret</a> eller på [FYLL I e-post]. Ange ordernummer och vilka varor du vill returnera. Du kan också använda Konsumentverkets standardblankett för ångerrätt.</p>"
+          }
+        },
+        "c2": {
+          "type": "clause",
+          "settings": {
+            "heading": "Skicka tillbaka varan",
+            "text": "<p>Skicka varan till oss senast 14 dagar efter att du meddelat att du ångrar köpet. Returadress: [FYLL I]. Varan ska vara i väsentligen samma skick som när du fick den. Om varan har hanterats mer än vad som behövts för att fastställa dess egenskaper kan du bli ansvarig för värdeminskningen.</p>"
+          }
+        },
+        "c3": {
+          "type": "clause",
+          "settings": {
+            "heading": "Återbetalning",
+            "text": "<p>Vi betalar tillbaka beloppet, inklusive den ursprungliga standardfrakten, senast 14 dagar efter att vi fått ditt meddelande. Vi får vänta med återbetalningen tills vi fått tillbaka varan eller du visat att den skickats. Återbetalningen sker med samma betalningssätt som du använde.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "updated": "",
+        "show_toc": false,
+        "color_scheme": "scheme-1",
+        "padding_top": "md",
+        "padding_bottom": "lg"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "shipping",
+    "returns",
+    "how"
+  ]
+}

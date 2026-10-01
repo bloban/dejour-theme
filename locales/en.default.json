@@ -76,7 +76,10 @@
     "scroll_to_explore": "Scroll to explore",
     "update": "Update",
     "verified_buyer": "Verified buyer",
-    "read_more": "Read more"
+    "read_more": "Read more",
+    "contents": "Contents",
+    "last_updated": "Last updated",
+    "back_home": "Back to home"
   },
   "newsletter": {
     "label": "Email",
@@ -626,7 +629,8 @@
     "notify_button": "Remind me",
     "notify_success": "Done. We'll email you when the drop goes live.",
     "releases_in": "Releases in",
-    "notify_text": "Get an email the second the drop opens."
+    "notify_text": "Get an email the second the drop opens.",
+    "revealed_at_drop": "Revealed at the drop"
   },
   "header": {
     "account": "My account",
@@ -663,5 +667,32 @@
     "sort_by": "Sort by",
     "remove_filter": "Remove filter",
     "empty": "No products match your selection."
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "order": "Order number",
+    "message": "Message",
+    "send": "Send",
+    "success": "Thank you! We'll get back to you soon.",
+    "privacy_html": "We handle your details according to our <a href=\"{{ url }}\">privacy policy</a>."
+  },
+  "blog": {
+    "empty": "No posts yet.",
+    "back": "Back to {{ title }}",
+    "comments": "{{ count }} comments",
+    "leave_comment": "Leave a comment",
+    "post_comment": "Post comment",
+    "comment_posted": "Thanks! Your comment has been posted.",
+    "comment_moderated": "Thanks! Your comment will appear once approved."
+  },
+  "password": {
+    "enter": "Enter password",
+    "label": "Store password",
+    "placeholder": "Password",
+    "submit": "Enter",
+    "error": "Wrong password. Please try again.",
+    "owner_html": "Are you the store owner? <a href=\"{{ url }}\">Log in here</a>"
   }
 }

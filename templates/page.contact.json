@@ -1,25 +1,62 @@
 {
   "sections": {
-    "main": {
-      "type": "main-page",
+    "hero": {
+      "type": "page-hero",
       "settings": {
-        "padding_top": 36,
-        "padding_bottom": 36
+        "eyebrow": "Kontakt",
+        "heading": "Hör av <em>dig</em>",
+        "text": "<p>Frågor om en beställning, ett drop eller något helt annat? Vi finns här.</p>",
+        "size": "sm",
+        "alignment": "left",
+        "color_scheme": "scheme-1"
       }
     },
-    "form": {
-      "type": "contact-form",
+    "contact": {
+      "type": "contact",
+      "blocks": {
+        "detail-1": {
+          "type": "detail",
+          "settings": {
+            "icon": "mail",
+            "label": "E-post",
+            "value": "[FYLL I e-post]"
+          }
+        },
+        "detail-2": {
+          "type": "detail",
+          "settings": {
+            "icon": "clock",
+            "label": "Kundservice",
+            "value": "Vardagar 9–17"
+          }
+        },
+        "detail-3": {
+          "type": "detail",
+          "settings": {
+            "icon": "pin",
+            "label": "Företag",
+            "value": "[FYLL I företagsnamn, org.nr och ort]"
+          }
+        }
+      },
+      "block_order": [
+        "detail-1",
+        "detail-2",
+        "detail-3"
+      ],
       "settings": {
-        "heading": "",
-        "heading_size": "h1",
+        "heading": "Vi hjälper <em>gärna</em> till",
+        "text": "<p>Vi svarar normalt inom 24 timmar på vardagar. Ange gärna ditt ordernummer.</p>",
+        "success": "Tack! Vi återkommer så snart vi kan.",
+        "show_social": true,
         "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": "sm",
+        "padding_bottom": "lg"
       }
     }
   },
   "order": [
-    "main",
-    "form"
+    "hero",
+    "contact"
   ]
 }

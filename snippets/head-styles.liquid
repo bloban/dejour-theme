@@ -1,0 +1,77 @@
+{%- comment -%}
+  Typsnitt, designtokens från temainställningarna, CSS och theme.js.
+{%- endcomment -%}
+{%- liquid
+  assign heading_font = settings.type_heading_font
+  assign heading_font_italic = heading_font | font_modify: 'style', 'italic'
+  assign body_font = settings.type_body_font
+  assign body_font_medium = body_font | font_modify: 'weight', '500'
+  assign body_font_bold = body_font | font_modify: 'weight', '600'
+-%}
+
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ heading_font_italic | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font_medium | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+
+  {% for scheme in settings.color_schemes -%}
+    {%- if forloop.index == 1 -%}:root,{%- endif %}
+    .color-{{ scheme.id }} {
+      --c-bg: {{ scheme.settings.background }};
+      --c-bg-rgb: {{ scheme.settings.background.rgb | replace: ' ', ',' }};
+      --c-bg-image: {% if scheme.settings.background_gradient != blank %}{{ scheme.settings.background_gradient }}{% else %}none{% endif %};
+      --c-surface: {{ scheme.settings.surface }};
+      --c-text: {{ scheme.settings.text }};
+      --c-text-rgb: {{ scheme.settings.text.rgb | replace: ' ', ',' }};
+      --c-muted: {{ scheme.settings.muted }};
+      --c-accent: {{ scheme.settings.accent }};
+      --c-accent-rgb: {{ scheme.settings.accent.rgb | replace: ' ', ',' }};
+      --c-accent-light: {{ scheme.settings.accent_light }};
+      --c-accent-dark: {{ scheme.settings.accent | color_darken: 18 }};
+      --c-on-accent: {{ scheme.settings.on_accent }};
+    }
+  {% endfor %}
+
+  :root {
+    --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-heading-weight: {{ heading_font.weight }};
+    --font-heading-style: {{ heading_font.style }};
+    --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --font-body-weight: {{ body_font.weight }};
+    --font-body-weight-medium: {% if body_font_medium %}500{% else %}{{ body_font.weight }}{% endif %};
+    --font-body-weight-bold: {% if body_font_bold %}600{% else %}{{ body_font.weight | plus: 200 | at_most: 900 }}{% endif %};
+    --heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+    --body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+    --heading-tracking: {{ settings.heading_tracking | divided_by: 100.0 }}em;
+    --label-tracking: {{ settings.label_tracking | divided_by: 100.0 }}em;
+    --page-width: {{ settings.page_width }}px;
+    --gutter-desktop: {{ settings.page_gutter }}px;
+    --logo-width: {{ settings.logo_width }}px;
+    --grain-opacity: {{ settings.grain_opacity | divided_by: 100.0 }};
+    --c-error: {{ settings.color_error }};
+    --c-success: {{ settings.color_success }};
+  }
+
+  {%- if settings.page_transitions %}
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition { navigation: auto; }
+    }
+  {%- endif %}
+{% endstyle %}
+
+{{ 'dejour.css' | asset_url | stylesheet_tag }}
+
+{%- unless heading_font.system? -%}
+  {% comment %}theme-check-disable AssetPreload{% endcomment %}
+  <link rel="preload" as="font" href="{{ heading_font | font_url }}" type="font/woff2" crossorigin>
+  {% comment %}theme-check-enable AssetPreload{% endcomment %}
+{%- endunless -%}
+{%- unless body_font.system? -%}
+  {% comment %}theme-check-disable AssetPreload{% endcomment %}
+  <link rel="preload" as="font" href="{{ body_font | font_url }}" type="font/woff2" crossorigin>
+  {% comment %}theme-check-enable AssetPreload{% endcomment %}
+{%- endunless -%}
+
+<script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>

@@ -1,0 +1,183 @@
+{%- liquid
+  assign s = section.settings
+  capture drop_info
+    render 'drop-state', date: settings.drop_date, time: settings.drop_time
+  endcapture
+  assign drop_state = drop_info | strip | split: '|' | first
+-%}
+<section class="teasers dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <drop-gate
+    class="container"
+    data-date="{{ settings.drop_date | strip | escape }}"
+    data-time="{{ settings.drop_time | strip | escape }}"
+    data-drop-state="{{ drop_state }}"
+  >
+    <div class="section-head section-head--split">
+      <div class="section-head__text">
+        {%- if s.eyebrow != blank -%}
+          <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 data-reveal style="--d: .08s">{{ s.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if s.text != blank -%}
+        <div class="lead" data-reveal style="--d: .16s">{{ s.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <ul class="teasers__grid{% if s.blur and settings.drop_enabled %} teasers__grid--blur{% endif %}" role="list">
+      {%- for block in section.blocks -%}
+        <li class="teaser teaser--{{ block.settings.size }}" data-reveal style="--d: {{ forloop.index0 | modulo: 3 | times: 0.1 }}s" {{ block.shopify_attributes }}>
+          <div class="teaser__media media">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 1600
+                | image_tag: widths: '400, 700, 1000, 1300, 1600', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'lazy', alt: block.settings.caption
+              }}
+            {%- else -%}
+              {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder' }}
+            {%- endif -%}
+            <span class="teaser__lock drop-pre" aria-hidden="true">
+              {%- render 'icon', name: 'lock' -%}
+              <span>{{ 'drop.revealed_at_drop' | t }}</span>
+            </span>
+          </div>
+          {%- if block.settings.caption != blank -%}
+            <p class="teaser__caption label">{{ block.settings.caption | escape }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </drop-gate>
+</section>
+
+{% schema %}
+{
+  "name": "Teaserbilder",
+  "class": "section-teasers",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Bilderna är suddiga fram till droppet (Temainställningar → Drop) och skärps automatiskt när det startar."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Smygtitt"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Det du <em>inte</em> får se än"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Detaljerna avtäcks när droppet öppnar.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "blur",
+      "label": "Sudda bilderna före droppet",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "teaser",
+      "name": "Bild",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bild"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Bildtext",
+          "default": "Detalj 01"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Storlek",
+          "options": [
+            {
+              "value": "normal",
+              "label": "Normal"
+            },
+            {
+              "value": "wide",
+              "label": "Bred"
+            }
+          ],
+          "default": "normal"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Teaserbilder",
+      "blocks": [
+        {
+          "type": "teaser",
+          "settings": {
+            "caption": "Detalj 01",
+            "size": "wide"
+          }
+        },
+        {
+          "type": "teaser",
+          "settings": {
+            "caption": "Detalj 02"
+          }
+        },
+        {
+          "type": "teaser",
+          "settings": {
+            "caption": "Detalj 03"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

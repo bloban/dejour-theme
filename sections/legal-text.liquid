@@ -1,0 +1,154 @@
+{%- liquid
+  assign s = section.settings
+  assign clauses = section.blocks | where: 'type', 'clause'
+-%}
+<section class="legal dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  {%- liquid
+    assign show_toc = false
+    if s.show_toc and clauses.size > 1
+      assign show_toc = true
+    endif
+  -%}
+  <div class="container legal__grid{% if show_toc %} legal__grid--toc{% endif %}">
+    {%- if show_toc -%}
+      <nav class="legal__toc" aria-label="{{ 'general.contents' | t }}">
+        <p class="label label--accent">{{ 'general.contents' | t }}</p>
+        <ol>
+          {%- for block in clauses -%}
+            <li><a href="#clause-{{ block.id }}">{{ block.settings.heading | escape }}</a></li>
+          {%- endfor -%}
+        </ol>
+      </nav>
+    {%- endif -%}
+
+    <div class="legal__body">
+      {%- if s.updated != blank -%}
+        <p class="label">{{ 'general.last_updated' | t }}: {{ s.updated | escape }}</p>
+      {%- endif -%}
+      {%- if s.intro != blank -%}
+        <div class="rte lead">{{ s.intro }}</div>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'clause' -%}
+            <article class="legal__clause" id="clause-{{ block.id }}" {{ block.shopify_attributes }}>
+              <h2 class="h4">
+                <span class="legal__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                {{ block.settings.heading | escape }}
+              </h2>
+              <div class="rte">{{ block.settings.text }}</div>
+            </article>
+          {%- when 'page' -%}
+            {%- if block.settings.page != blank -%}
+              <div class="rte legal__page" {{ block.shopify_attributes }}>{{ block.settings.page.content }}</div>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Juridisk text",
+  "class": "section-legal",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Mall för villkor och integritetspolicy. Låt en jurist granska texten. Shopify kan också generera policyer under Inställningar → Policyer."
+    },
+    {
+      "type": "text",
+      "id": "updated",
+      "label": "Senast uppdaterad",
+      "default": "[FYLL I datum]"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Inledning"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_toc",
+      "label": "Visa innehållsförteckning",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "sm"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "lg"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "clause",
+      "name": "Avsnitt",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Rubrik",
+          "default": "Avsnitt"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>[FYLL I]</p>"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Innehåll från sida",
+      "settings": [
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Sida"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Juridisk text",
+      "blocks": [
+        {
+          "type": "clause",
+          "settings": {
+            "heading": "Allmänt",
+            "text": "<p>[FYLL I]</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,7 +1,13 @@
 {
   "sections": {
     "main": {
-      "type": "main-404"
+      "type": "main-404",
+      "settings": {
+        "eyebrow": "Sidan finns inte",
+        "heading": "Den här vägen <em>leder ingenstans</em>",
+        "text": "<p>Sidan kan ha flyttats eller tagits bort. Sök eller gå tillbaka till startsidan.</p>",
+        "color_scheme": "scheme-5"
+      }
     }
   },
   "order": [

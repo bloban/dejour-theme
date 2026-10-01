@@ -76,7 +76,10 @@
     "scroll_to_explore": "Scrolla för att utforska",
     "update": "Uppdatera",
     "verified_buyer": "Verifierat köp",
-    "read_more": "Läs mer"
+    "read_more": "Läs mer",
+    "contents": "Innehåll",
+    "last_updated": "Senast uppdaterad",
+    "back_home": "Till startsidan"
   },
   "newsletter": {
     "label": "E-post",
@@ -626,7 +629,8 @@
     "notify_button": "Påminn mig",
     "notify_success": "Klart. Vi mejlar dig när droppet startar.",
     "releases_in": "Släpps om",
-    "notify_text": "Få ett mejl i samma sekund som droppet öppnar."
+    "notify_text": "Få ett mejl i samma sekund som droppet öppnar.",
+    "revealed_at_drop": "Avtäcks vid droppet"
   },
   "header": {
     "account": "Mitt konto",
@@ -663,5 +667,32 @@
     "sort_by": "Sortera efter",
     "remove_filter": "Ta bort filter",
     "empty": "Inga produkter matchar ditt val."
+  },
+  "contact": {
+    "name": "Namn",
+    "email": "E-post",
+    "phone": "Telefon",
+    "order": "Ordernummer",
+    "message": "Meddelande",
+    "send": "Skicka",
+    "success": "Tack! Vi återkommer så snart vi kan.",
+    "privacy_html": "Vi behandlar dina uppgifter enligt vår <a href=\"{{ url }}\">integritetspolicy</a>."
+  },
+  "blog": {
+    "empty": "Inga inlägg ännu.",
+    "back": "Tillbaka till {{ title }}",
+    "comments": "{{ count }} kommentarer",
+    "leave_comment": "Lämna en kommentar",
+    "post_comment": "Skicka kommentar",
+    "comment_posted": "Tack! Din kommentar är publicerad.",
+    "comment_moderated": "Tack! Din kommentar publiceras när den har godkänts."
+  },
+  "password": {
+    "enter": "Ange lösenord",
+    "label": "Butikens lösenord",
+    "placeholder": "Lösenord",
+    "submit": "Gå in",
+    "error": "Fel lösenord. Försök igen.",
+    "owner_html": "Äger du butiken? <a href=\"{{ url }}\">Logga in här</a>"
   }
 }
