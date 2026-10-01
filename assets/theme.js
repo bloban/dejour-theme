@@ -128,7 +128,8 @@
         requestAnimationFrame(() => this.update());
       };
       window.addEventListener('scroll', this.onScroll, { passive: true });
-      this.update();
+      // Första läsningen av scrollY väntar till nästa bildruta (ingen tvingad layout vid start)
+      this.onScroll();
 
       this.dropdowns = $$('details[data-hover]', this);
       this.dropdowns.forEach((d) => {
@@ -474,14 +475,21 @@
   /* ------------------------------------------------------------------
      Drop — tid i Europe/Stockholm, nedräkning, låsning av köp
      ------------------------------------------------------------------ */
+  let stockholmFmt;
+  const epochCache = new Map();
   const Drop = {
     toEpoch(date, time) {
+      const key = `${date}|${time}`;
+      if (!epochCache.has(key)) epochCache.set(key, this.computeEpoch(date, time));
+      return epochCache.get(key);
+    },
+    computeEpoch(date, time) {
       const d = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(String(date || '').trim());
       const t = /^(\d{1,2})[:.](\d{2})$/.exec(String(time || '00:00').trim());
       if (!d || !t) return NaN;
       const guess = Date.UTC(+d[1], +d[2] - 1, +d[3], +t[1], +t[2]);
       const offsetAt = (ts) => {
-        const parts = new Intl.DateTimeFormat('en-US', {
+        stockholmFmt ||= new Intl.DateTimeFormat('en-US', {
           timeZone: 'Europe/Stockholm',
           hourCycle: 'h23',
           year: 'numeric',
@@ -490,7 +498,8 @@
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
-        }).formatToParts(new Date(ts));
+        });
+        const parts = stockholmFmt.formatToParts(new Date(ts));
         const get = (type) => Number(parts.find((p) => p.type === type).value);
         return Date.UTC(get('year'), get('month') - 1, get('day'), get('hour') % 24, get('minute'), get('second')) - ts;
       };

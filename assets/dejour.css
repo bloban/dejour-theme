@@ -329,8 +329,10 @@ h3 em,
   -webkit-text-fill-color: transparent;
 }
 
-.motion-ok .has-shimmer .gold-text {
-  animation: shimmer 7s linear infinite;
+@media (min-width: 990px) {
+  .motion-ok .has-shimmer .gold-text {
+    animation: shimmer 7s linear infinite;
+  }
 }
 
 @keyframes shimmer {
@@ -2628,8 +2630,10 @@ details.accordion__item[open]::details-content {
   perspective: 600px;
 }
 
-.motion-ok .countdown--glow .countdown__card {
-  animation: glow 4s ease-in-out infinite;
+@media (min-width: 990px) {
+  .motion-ok .countdown--glow .countdown__card {
+    animation: glow 4s ease-in-out infinite;
+  }
 }
 
 @keyframes glow {
