@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "eyebrow": "Arkivet",
+        "show_image": true,
+        "show_description": true,
+        "per_page": 24,
+        "columns": 4,
+        "columns_mobile": "2",
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "archive_mode": true,
+        "color_scheme": "scheme-2",
+        "padding_bottom": "lg"
+      }
+    },
+    "statement": {
+      "type": "brand-statement",
+      "settings": {
+        "eyebrow": "Tidigare drops",
+        "text": "<p>Varje drop släpps en gång, i en begränsad upplaga. Bevaka favoriten — <em>ibland kommer de tillbaka.</em></p>",
+        "signature": "",
+        "link_label": "Till aktuella kollektionen",
+        "link": "shopify://collections/all",
+        "alignment": "left",
+        "color_scheme": "scheme-1",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Inner circle",
+        "heading": "Missa inte <em>nästa drop</em>",
+        "text": "<p>Få förtur innan nästa begränsade upplaga släpps.</p>",
+        "button_label": "Gå med",
+        "success": "Välkommen. Vi hör av oss före nästa drop.",
+        "tags": "newsletter",
+        "color_scheme": "scheme-5",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
+      }
+    }
+  },
+  "order": ["main", "statement", "newsletter"]
+}

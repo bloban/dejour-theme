@@ -3,15 +3,12 @@
     "main": {
       "type": "main-list-collections",
       "settings": {
-        "title": "Collections",
-        "sort": "alphabetical",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "columns_mobile": "2"
+        "eyebrow": "Utforska",
+        "heading": "Kollektioner",
+        "columns": 3,
+        "color_scheme": "scheme-1"
       }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }

@@ -1,0 +1,92 @@
+{%- comment -%}
+  Verktygsrad för kollektion/sök: filterknapp, antal, sortering och aktiva filter.
+  - results: collection eller search
+  - section_id
+  - count: antal produkter
+  - show_filter, show_sort
+{%- endcomment -%}
+{%- liquid
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  assign active_count = 0
+  for filter in results.filters
+    if filter.type == 'price_range'
+      if filter.min_value.value != null or filter.max_value.value != null
+        assign active_count = active_count | plus: 1
+      endif
+    else
+      assign active_count = active_count | plus: filter.active_values.size
+    endif
+  endfor
+-%}
+<div class="toolbar">
+  <div class="toolbar__left">
+    {%- if show_filter and results.filters.size > 0 -%}
+      <button
+        type="button"
+        class="toolbar__filter link"
+        data-open="FacetDrawer-{{ section_id }}"
+        aria-controls="FacetDrawer-{{ section_id }}"
+        aria-expanded="false"
+      >
+        {%- render 'icon', name: 'layers' -%}
+        {{ 'collections.filter' | t }}
+        {%- if active_count > 0 %} ({{ active_count }}){% endif -%}
+      </button>
+    {%- endif -%}
+    <span class="toolbar__count" role="status" data-count="{{ count }}">
+      {%- if count == 1 -%}
+        {{ 'collections.product_count_one' | t: count: count }}
+      {%- else -%}
+        {{ 'collections.product_count' | t: count: count }}
+      {%- endif -%}
+    </span>
+  </div>
+
+  {%- if show_sort and results.sort_options.size > 0 -%}
+    <div class="select toolbar__sort">
+      <label for="Sort-{{ section_id }}" class="visually-hidden">{{ 'collections.sort_by' | t }}</label>
+      <select id="Sort-{{ section_id }}" name="sort_by" form="FacetForm-{{ section_id }}" data-sort>
+        {%- for option in results.sort_options -%}
+          <option
+            value="{{ option.value | escape }}"
+            {% if option.value == sort_by %}
+              selected
+            {% endif %}
+          >
+            {{ option.name | escape }}
+          </option>
+        {%- endfor -%}
+      </select>
+      {%- render 'icon', name: 'chevron-down' -%}
+    </div>
+  {%- endif -%}
+</div>
+
+{%- if active_count > 0 -%}
+  <ul class="active-filters" role="list">
+    {%- for filter in results.filters -%}
+      {%- for value in filter.active_values -%}
+        <li>
+          <a href="{{ value.url_to_remove }}" class="chip" data-facet-link>
+            <span>{{ filter.label | escape }}: {{ value.label | escape }}</span>
+            {%- render 'icon', name: 'close' -%}
+            <span class="visually-hidden">{{ 'collections.remove_filter' | t }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+      {%- if filter.type == 'price_range' -%}
+        {%- if filter.min_value.value != null or filter.max_value.value != null -%}
+          <li>
+            <a href="{{ filter.url_to_remove }}" class="chip" data-facet-link>
+              <span>
+                {{- filter.min_value.value | default: 0 | money_without_trailing_zeros }} – {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros -}}
+              </span>
+              {%- render 'icon', name: 'close' -%}
+              <span class="visually-hidden">{{ 'collections.remove_filter' | t }}</span>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

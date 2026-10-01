@@ -75,7 +75,8 @@
     "scroll": "Scroll",
     "scroll_to_explore": "Scroll to explore",
     "update": "Update",
-    "verified_buyer": "Verified buyer"
+    "verified_buyer": "Verified buyer",
+    "read_more": "Read more"
   },
   "newsletter": {
     "label": "Email",
@@ -603,7 +604,10 @@
     "remove": "Remove",
     "subtotal": "Subtotal",
     "title": "Bag",
-    "updated": "Bag updated"
+    "updated": "Bag updated",
+    "your_bag": "Your order",
+    "continue_shopping": "Continue shopping",
+    "login_hint_html": "Have an account? <a href=\"{{ url }}\" class=\"text-link\">Log in</a> to check out faster."
   },
   "drop": {
     "countdown_label": "Time left until the drop",
@@ -640,6 +644,24 @@
     "submit": "Search",
     "suggestions": "Suggestions",
     "title": "Search",
-    "view_all": "View all results for “{{ terms }}”"
+    "view_all": "View all results for “{{ terms }}”",
+    "article": "Article",
+    "page": "Page",
+    "no_results_hint": "Try another word or explore the collection.",
+    "intro": "Search products, pages and articles."
+  },
+  "collections": {
+    "filter": "Filter",
+    "price_from": "From",
+    "price_to": "To",
+    "price_max": "The highest price is {{ price }}",
+    "no_filters": "No filters available. Enable filters in the Search & Discovery app.",
+    "clear_all": "Clear all",
+    "show_results": "Show {{ count }} products",
+    "product_count": "{{ count }} products",
+    "product_count_one": "{{ count }} product",
+    "sort_by": "Sort by",
+    "remove_filter": "Remove filter",
+    "empty": "No products match your selection."
   }
 }

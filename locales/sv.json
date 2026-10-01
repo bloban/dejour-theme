@@ -36,7 +36,7 @@
     },
     "continue_shopping": "Fortsätt shoppa",
     "pagination": {
-      "label": "Paginering",
+      "label": "Sidnumrering",
       "page": "Sida {{ number }}",
       "next": "Nästa sida",
       "previous": "Föregående sida"
@@ -75,7 +75,8 @@
     "scroll": "Scrolla",
     "scroll_to_explore": "Scrolla för att utforska",
     "update": "Uppdatera",
-    "verified_buyer": "Verifierat köp"
+    "verified_buyer": "Verifierat köp",
+    "read_more": "Läs mer"
   },
   "newsletter": {
     "label": "E-post",
@@ -603,7 +604,10 @@
     "remove": "Ta bort",
     "subtotal": "Delsumma",
     "title": "Varukorg",
-    "updated": "Varukorgen är uppdaterad"
+    "updated": "Varukorgen är uppdaterad",
+    "your_bag": "Din beställning",
+    "continue_shopping": "Fortsätt handla",
+    "login_hint_html": "Har du ett konto? <a href=\"{{ url }}\" class=\"text-link\">Logga in</a> för att handla snabbare."
   },
   "drop": {
     "countdown_label": "Tid kvar till droppet",
@@ -640,6 +644,24 @@
     "submit": "Sök",
     "suggestions": "Förslag",
     "title": "Sök",
-    "view_all": "Visa alla resultat för ”{{ terms }}”"
+    "view_all": "Visa alla resultat för ”{{ terms }}”",
+    "article": "Artikel",
+    "page": "Sida",
+    "no_results_hint": "Prova ett annat ord eller utforska kollektionen.",
+    "intro": "Sök bland produkter, sidor och artiklar."
+  },
+  "collections": {
+    "filter": "Filtrera",
+    "price_from": "Från",
+    "price_to": "Till",
+    "price_max": "Högsta pris är {{ price }}",
+    "no_filters": "Inga filter tillgängliga. Aktivera filter i appen Search & Discovery.",
+    "clear_all": "Rensa alla",
+    "show_results": "Visa {{ count }} produkter",
+    "product_count": "{{ count }} produkter",
+    "product_count_one": "{{ count }} produkt",
+    "sort_by": "Sortera efter",
+    "remove_filter": "Ta bort filter",
+    "empty": "Inga produkter matchar ditt val."
   }
 }

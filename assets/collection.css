@@ -1,0 +1,552 @@
+/* ==========================================================================
+   DE'JOUR — kollektion, sök, kollektionslista, varukorgssida
+   ========================================================================== */
+
+/* ---------- Kollektionshero ---------- */
+.collection-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 9vw, 140px) 0 clamp(32px, 5vw, 64px);
+}
+
+.collection-hero--image {
+  min-height: 62vh;
+  min-height: 62svh;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+.collection-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.collection-hero__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(var(--c-bg-rgb), 0.95), rgba(var(--c-bg-rgb), 0.25) 60%, rgba(var(--c-bg-rgb), 0.5));
+}
+
+.collection-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.collection-hero__inner > * {
+  margin: 0;
+}
+
+.collection-hero__title {
+  font-size: calc(clamp(3rem, 10vw, 10rem) * var(--heading-scale));
+  line-height: 0.9;
+}
+
+.collection-hero__desc {
+  max-width: 620px;
+}
+
+.collection .hero__fade,
+.list-collections .hero__fade {
+  animation: fade-up 1.1s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+
+.reduce-motion .collection .hero__fade,
+.reduce-motion .list-collections .hero__fade {
+  animation: none;
+}
+
+/* ---------- Verktygsrad ---------- */
+.toolbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  margin-bottom: clamp(24px, 3vw, 40px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.toolbar__left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.toolbar__filter {
+  background-size: 0 1px;
+  padding-bottom: 2px;
+}
+
+.toolbar__filter:hover {
+  background-size: 100% 1px;
+}
+
+.toolbar__filter svg {
+  width: 16px;
+  height: 16px;
+  color: var(--c-accent);
+}
+
+.toolbar__count {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.toolbar__sort select {
+  height: 40px;
+  min-width: 0;
+  padding-left: 14px;
+  border-color: transparent;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+.toolbar__sort select:hover,
+.toolbar__sort select:focus {
+  border-color: var(--line-strong);
+}
+
+@media (max-width: 749px) {
+  .toolbar__count {
+    display: none;
+  }
+
+  .toolbar__sort select {
+    max-width: 170px;
+  }
+}
+
+facet-results {
+  display: block;
+  transition: opacity 0.4s var(--ease-soft);
+}
+
+facet-results.is-loading [data-facets-wrap] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.active-filters {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -16px 0 clamp(24px, 3vw, 40px);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  border: 1px solid rgba(var(--c-accent-rgb), 0.45);
+  color: var(--c-text);
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+
+.chip:hover {
+  border-color: var(--c-accent);
+  color: var(--c-accent-light);
+}
+
+.chip svg {
+  width: 10px;
+  height: 10px;
+}
+
+.collection__grid {
+  list-style: none;
+}
+
+.collection__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding: clamp(40px, 6vw, 96px) 0;
+}
+
+.collection__empty > * {
+  margin: 0;
+}
+
+/* ---------- Filterpanel ---------- */
+.facet-drawer .drawer__panel {
+  width: min(100%, 440px);
+}
+
+.facets {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.facet.accordion__item summary {
+  padding: 20px 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: var(--font-body-weight-medium);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+}
+
+.facet:first-child {
+  border-top: 0;
+}
+
+.facet__count {
+  color: var(--c-accent);
+}
+
+.facet__body {
+  padding: 0 0 22px;
+}
+
+.facet__list {
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+
+.facet__list--swatch {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.facet-check {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 0.92rem;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: color var(--dur-fast);
+}
+
+.facet-check:hover {
+  color: var(--c-text);
+}
+
+.facet-check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.facet-check__box {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--line-strong);
+  transition: border-color var(--dur-fast), background-color var(--dur-fast);
+}
+
+.facet-check__box svg {
+  width: 12px;
+  height: 12px;
+  color: var(--c-on-accent);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity var(--dur-fast), transform var(--dur-fast);
+}
+
+.facet-check input:checked ~ .facet-check__box {
+  border-color: var(--c-accent);
+  background: var(--c-accent);
+}
+
+.facet-check input:checked ~ .facet-check__box svg {
+  opacity: 1;
+  transform: none;
+}
+
+.facet-check input:checked ~ .facet-check__label {
+  color: var(--c-text);
+}
+
+.facet-check input:focus-visible ~ .facet-check__box,
+.facet-check input:focus-visible ~ .facet-check__swatch {
+  outline: 1px solid var(--c-accent);
+  outline-offset: 3px;
+}
+
+.facet-check__swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--swatch);
+  box-shadow:
+    0 0 0 3px var(--c-bg),
+    0 0 0 4px transparent;
+  transition: box-shadow var(--dur-fast);
+}
+
+.facet-check input:checked ~ .facet-check__swatch {
+  box-shadow:
+    0 0 0 3px var(--c-bg),
+    0 0 0 4px var(--c-accent);
+}
+
+.facet-check__image img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+}
+
+.facet-check__count {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: var(--c-muted);
+}
+
+.facet-check.is-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.facet-price {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.facet-price .field__input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.facet-price .field__input::-webkit-outer-spin-button,
+.facet-price .field__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.facet-price__hint {
+  margin: 10px 0 0;
+}
+
+.facet-drawer__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ---------- Sök ---------- */
+.search-page__form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 980px;
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color var(--dur-fast);
+}
+
+.search-page__form:focus-within {
+  border-color: var(--c-accent);
+}
+
+.search-page__input {
+  flex: 1;
+  min-width: 0;
+  height: clamp(72px, 10vw, 120px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-heading);
+  font-size: calc(clamp(2.2rem, 6vw, 5rem) * var(--heading-scale));
+  color: var(--c-text);
+}
+
+.search-page__input::placeholder {
+  color: rgba(var(--c-text-rgb), 0.28);
+}
+
+.search-page__input:focus {
+  outline: none;
+}
+
+.search-page__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.search-page__form .icon-btn svg {
+  width: 26px;
+  height: 26px;
+  color: var(--c-accent);
+}
+
+.search-page__intro {
+  padding: 24px 0 64px;
+}
+
+.text-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  padding: clamp(20px, 2.4vw, 32px);
+  border: 1px solid var(--line);
+  transition: border-color 0.6s var(--ease-out);
+}
+
+.text-card:hover {
+  border-color: rgba(var(--c-accent-rgb), 0.45);
+}
+
+.text-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h4);
+  line-height: 1.15;
+}
+
+.text-card .link {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* ---------- Kollektionslista ---------- */
+.list-collections__grid {
+  list-style: none;
+}
+
+.collection-card {
+  position: relative;
+  display: block;
+}
+
+.collection-card__media {
+  display: block;
+  aspect-ratio: 4 / 5;
+}
+
+.collection-card__media img {
+  transition: transform 1.6s var(--ease-out);
+}
+
+.has-hover .collection-card:hover .collection-card__media img {
+  transform: scale(1.05);
+}
+
+.collection-card__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(20px, 3vw, 36px);
+  background: linear-gradient(to top, rgba(var(--c-bg-rgb), 0.85), rgba(var(--c-bg-rgb), 0));
+}
+
+.collection-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h3);
+  line-height: 1;
+  color: var(--c-text);
+}
+
+/* ---------- Varukorgssida ---------- */
+.cart-page__head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(40px, 7vw, 112px) 0 clamp(24px, 3vw, 40px);
+}
+
+.cart-page__head > * {
+  margin: 0;
+}
+
+.cart-page__count {
+  font-family: var(--font-body);
+  font-size: 0.3em;
+  letter-spacing: 0.1em;
+  color: var(--c-accent);
+  vertical-align: super;
+}
+
+.cart-page__grid {
+  display: grid;
+  gap: 40px;
+}
+
+@media (min-width: 990px) {
+  .cart-page__grid {
+    grid-template-columns: minmax(0, 1.6fr) minmax(340px, 1fr);
+    gap: clamp(48px, 6vw, 112px);
+    align-items: start;
+  }
+
+  .cart-page__summary {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+}
+
+.cart-page__lines .cart-lines {
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 750px) {
+  .cart-page .cart-line {
+    grid-template-columns: 140px 1fr;
+    gap: 28px;
+    padding: 28px 0;
+  }
+
+  .cart-page .cart-line__title {
+    font-size: 1.7rem;
+  }
+}
+
+.cart-page__continue {
+  margin-top: 28px;
+}
+
+.cart-page__summary {
+  padding: clamp(22px, 3vw, 36px);
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, rgba(var(--c-text-rgb), 0.03), rgba(var(--c-text-rgb), 0) 60%);
+}
+
+.cart-page__summary .free-ship {
+  padding-top: 0;
+  margin-bottom: 20px;
+}
+
+.cart-page__dynamic {
+  margin-top: 12px;
+}
+
+.cart-page__dynamic .additional-checkout-buttons,
+.cart-page__dynamic [data-shopify-buttoncontainer] {
+  justify-content: stretch;
+}
+
+.cart-page__empty {
+  align-items: flex-start;
+  min-height: 0;
+  padding: 24px 0 64px;
+  text-align: left;
+}
