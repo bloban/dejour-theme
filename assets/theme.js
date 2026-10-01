@@ -778,6 +778,32 @@
     });
   }
 
+  // Korta, ljudlösa videor (t.ex. sociala inlägg) spelas bara när de syns
+  let videoObserver;
+  function initInviewVideos(root = document) {
+    if (!motionOK || isLite || !('IntersectionObserver' in window)) return;
+    const videos = $$('[data-inview-video] video', root);
+    if (!videos.length) return;
+    if (!videoObserver) {
+      videoObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const v = entry.target;
+            if (entry.isIntersecting) {
+              v.muted = true;
+              v.playsInline = true;
+              v.play?.().catch(() => {});
+            } else {
+              v.pause?.();
+            }
+          });
+        },
+        { threshold: 0.35 }
+      );
+    }
+    videos.forEach((v) => videoObserver.observe(v));
+  }
+
   /* ------------------------------------------------------------------
      Laddningsskärm (första besöket per session)
      ------------------------------------------------------------------ */
@@ -827,6 +853,7 @@
     initReveal(root);
     initMagnetic(root);
     initDeferredVideo(root);
+    initInviewVideos(root);
   }
 
   initLoader();

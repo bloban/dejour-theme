@@ -26,7 +26,13 @@
         "youtube": "YouTube",
         "vimeo": "Vimeo",
         "tiktok": "TikTok"
-      }
+      },
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "pinterest": "Pinterest",
+      "tiktok": "TikTok",
+      "twitter": "X",
+      "youtube": "YouTube"
     },
     "continue_shopping": "Continue shopping",
     "pagination": {
@@ -55,7 +61,21 @@
       "next_slide": "Slide right",
       "previous_slide": "Slide left",
       "name": "Slider"
-    }
+    },
+    "add_image_hint": "Add an image or video in the section settings",
+    "close": "Close",
+    "country": "Country/region",
+    "email": "Email",
+    "email_placeholder": "Your email address",
+    "language": "Language",
+    "month_names": "January,February,March,April,May,June,July,August,September,October,November,December",
+    "newsletter_legal_html": "By signing up you accept our <a href=\"{{ url }}\">privacy policy</a>. Unsubscribe anytime.",
+    "product_placeholder": "Product name",
+    "rating": "Rated {{ rating }} out of 5",
+    "scroll": "Scroll",
+    "scroll_to_explore": "Scroll to explore",
+    "update": "Update",
+    "verified_buyer": "Verified buyer"
   },
   "newsletter": {
     "label": "Email",
@@ -78,7 +98,8 @@
     "total_reviews": "total reviews",
     "star_reviews_info": "{{ rating_value }} out of {{ rating_max }} stars",
     "collapsible_content_title": "Collapsible content",
-    "complementary_products": "Complementary products"
+    "complementary_products": "Complementary products",
+    "skip_to_content": "Skip to content"
   },
   "blogs": {
     "article": {
@@ -214,7 +235,21 @@
       "sort_by_label": "Sort by:",
       "to": "To",
       "clear_filter": "Remove filter"
-    }
+    },
+    "add_to_cart": "Add to bag",
+    "added": "Added to bag",
+    "adding": "Adding …",
+    "badge_coming_soon": "Coming soon",
+    "badge_drop": "Drop",
+    "badge_new": "New",
+    "badge_previous_drop": "Previous drop",
+    "badge_sale": "Sale",
+    "from": "From",
+    "regular_price": "Regular price",
+    "released_on": "Released",
+    "sale_price": "Sale price",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable"
   },
   "templates": {
     "search": {
@@ -274,7 +309,6 @@
       "announcement": "Announcement",
       "announcement_bar": "Announcement bar"
     },
-
     "header": {
       "announcement": "Announcement",
       "menu": "Menu",
@@ -528,5 +562,66 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "archive": {
+    "editor_hint": "Pick a collection or create an automated collection with the handle 'arkiv' (condition: product tag = arkiv).",
+    "empty": "The archive grows after every drop."
+  },
+  "cart": {
+    "checkout": "Checkout",
+    "continue": "Explore the collection",
+    "decrease": "Decrease quantity for {{ product }}",
+    "increase": "Increase quantity for {{ product }}",
+    "quantity_for": "Quantity for {{ product }}",
+    "duties_and_taxes_included": "Duties and taxes included. Shipping calculated at checkout.",
+    "taxes_included": "Taxes included. Shipping calculated at checkout.",
+    "taxes_at_checkout": "Taxes and shipping calculated at checkout.",
+    "empty": "Your bag is empty.",
+    "error": "Something went wrong. Please try again.",
+    "free_shipping_label": "Progress towards free shipping",
+    "free_shipping_reached": "You've unlocked free shipping.",
+    "free_shipping_remaining_html": "You're <strong>{{ amount }}</strong> away from free shipping",
+    "note": "Note to us",
+    "note_toggle": "Add a note",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "title": "Bag",
+    "updated": "Bag updated"
+  },
+  "drop": {
+    "countdown_label": "Time left until the drop",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "days_short": "d",
+    "hours_short": "h",
+    "minutes_short": "m",
+    "seconds_short": "s",
+    "disabled_note": "Drop mode is turned off in Theme settings → Drop. This section is only visible in the editor.",
+    "invalid_date": "Check the date (YYYY-MM-DD) and time (HH:MM).",
+    "live_badge": "Live now",
+    "live_now": "The drop is live",
+    "notify_button": "Remind me",
+    "notify_success": "Done. We'll email you when the drop goes live.",
+    "releases_in": "Releases in"
+  },
+  "header": {
+    "account": "My account",
+    "log_in": "Log in",
+    "main_nav": "Main menu",
+    "menu": "Menu"
+  },
+  "search": {
+    "collections": "Collections",
+    "loading": "Searching …",
+    "no_results": "No results for “{{ terms }}”",
+    "pages": "Pages",
+    "placeholder": "What are you looking for?",
+    "products": "Products",
+    "submit": "Search",
+    "suggestions": "Suggestions",
+    "title": "Search",
+    "view_all": "View all results for “{{ terms }}”"
   }
 }

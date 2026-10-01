@@ -1,0 +1,202 @@
+{%- liquid
+  assign s = section.settings
+  assign review_blocks = section.blocks | where: 'type', 'review'
+-%}
+<section class="reviews dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="section-head__text">
+        {%- if s.eyebrow != blank -%}
+          <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 data-reveal style="--d: .08s">{{ s.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if s.rating != blank -%}
+        <div class="reviews__summary" data-reveal style="--d: .16s">
+          <span class="reviews__score">{{ s.rating | escape }}</span>
+          <div>
+            <span class="stars">
+              {%- for i in (1..5) -%}{%- render 'icon', name: 'star' -%}{%- endfor -%}
+            </span>
+            {%- if s.rating_text != blank -%}
+              <p class="text-small text-muted">{{ s.rating_text | escape }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="reviews__app" {{ block.shopify_attributes }}>{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if review_blocks.size > 0 -%}
+      <ul class="reviews__list" role="list">
+        {%- for block in review_blocks -%}
+          <li class="review" data-reveal style="--d: {{ forloop.index0 | modulo: 3 | times: 0.1 }}s" {{ block.shopify_attributes }}>
+            <span class="stars" aria-label="{{ 'general.rating' | t: rating: block.settings.rating }}">
+              {%- for i in (1..5) -%}
+                {%- if i <= block.settings.rating -%}
+                  {%- render 'icon', name: 'star' -%}
+                {%- else -%}
+                  {%- render 'icon', name: 'star-outline' -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </span>
+            <blockquote class="review__quote">{{ block.settings.quote }}</blockquote>
+            <footer class="review__meta">
+              <span class="review__author">{{ block.settings.author | escape }}</span>
+              {%- if block.settings.meta != blank -%}
+                <span class="review__detail">{{ block.settings.meta | escape }}</span>
+              {%- endif -%}
+              {%- if block.settings.verified -%}
+                <span class="review__verified">{% render 'icon', name: 'check' %}{{ 'general.verified_buyer' | t }}</span>
+              {%- endif -%}
+            </footer>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Recensioner",
+  "class": "section-reviews",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Skriv in recensioner manuellt eller lägg till ett app-block från t.ex. Judge.me eller Shopify Product Reviews."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Omdömen"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Sagt om <em>De'Jour</em>"
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Snittbetyg",
+      "default": "[FYLL I] / 5"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Text under betyget",
+      "default": "Baserat på [FYLL I] omdömen"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "review",
+      "name": "Recension",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Betyg",
+          "default": 5
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Citat",
+          "default": "<p>[FYLL I] Kundens omdöme.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Namn",
+          "default": "[FYLL I]"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Ort eller produkt",
+          "default": "Stockholm"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verifierat köp",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recensioner",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "quote": "<p>[FYLL I] Så tunn att jag glömmer att den ligger i fickan. Lädret känns otroligt exklusivt.</p>"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote": "<p>[FYLL I] Snyggaste korthållaren jag ägt. Förpackningen var en upplevelse i sig.</p>"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote": "<p>[FYLL I] Snabb leverans med PostNord och känslan är verkligen premium.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,20 @@
+{%- comment -%}
+  Delar upp text i ord och bokstäver för bokstavsanimation (ren CSS).
+  Ord hålls ihop så att radbrytningar sker mellan ord.
+  - text: texten
+  - start: startindex för fördröjningen (--i)
+{%- endcomment -%}
+{%- liquid
+  assign ci = start | default: 0
+  assign words = text | strip | split: ' '
+-%}
+{%- for word in words -%}
+  <span class="word">
+    {%- assign chars = word | split: '' -%}
+    {%- for ch in chars -%}
+      <span class="char" style="--i:{{ ci }}">{{ ch | escape }}</span>
+      {%- assign ci = ci | plus: 1 -%}
+    {%- endfor -%}
+  </span>
+  {%- unless forloop.last %} {% endunless -%}
+{%- endfor -%}

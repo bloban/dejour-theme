@@ -1,0 +1,210 @@
+{%- liquid
+  assign s = section.settings
+  assign source = s.products
+  if source == blank
+    assign source = s.collection.products
+  endif
+  assign view_all = s.button_link | default: s.collection.url
+  assign cols_mobile = s.columns_mobile | plus: 0
+  assign desk_vw = 100 | divided_by: s.columns
+  assign mob_vw = 100 | divided_by: cols_mobile
+  assign grid_sizes = '(min-width: 990px) ' | append: desk_vw | append: 'vw, ' | append: mob_vw | append: 'vw'
+-%}
+<section class="featured dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="section-head__text">
+        {%- if s.eyebrow != blank -%}
+          <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 class="h1" data-reveal style="--d: .08s">{{ s.heading }}</h2>
+        {%- endif -%}
+        {%- if s.text != blank -%}
+          <div class="lead" data-reveal style="--d: .16s">{{ s.text }}</div>
+        {%- endif -%}
+      </div>
+      {%- if s.button_label != blank and view_all != blank -%}
+        <a href="{{ view_all }}" class="btn btn--outline" data-magnetic data-reveal>
+          <span class="btn__label">{{ s.button_label | escape }} {% render 'icon', name: 'arrow-right' %}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <ul
+        class="grid featured__grid{% if s.layout == 'editorial' %} featured__grid--editorial{% endif %}"
+        role="list"
+        style="--cols: {{ s.columns }}; --cols-tablet: {{ s.columns | at_most: 3 }}; --cols-mobile: {{ s.columns_mobile }}"
+      >
+        {%- if source.size > 0 -%}
+          {%- for p in source limit: s.limit -%}
+            <li class="featured__item">
+              {%- render 'product-card',
+                card_product: p,
+                index: forloop.index0,
+                sizes: grid_sizes,
+                parallax: s.parallax,
+                context: 'collection'
+              -%}
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..4) -%}
+            <li class="featured__item">
+              <div class="card" data-reveal style="--d: {{ forloop.index0 | times: 0.08 }}s">
+                <div class="card__media">
+                  {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'card__img placeholder' }}
+                </div>
+                <div class="card__info">
+                  <div class="card__row">
+                    <h3 class="card__title">{{ 'general.product_placeholder' | t }}</h3>
+                    <span class="card__price">{{ 49900 | money }}</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Utvalda produkter",
+  "class": "section-featured",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Kollektionen"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Gjord för <em>fickan</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Kollektion"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Eller välj produkter",
+      "limit": 12
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Antal produkter",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Rutnät"
+        },
+        {
+          "value": "editorial",
+          "label": "Förskjutet (redaktionellt)"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Kolumner på desktop",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Kolumner på mobil",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "parallax",
+      "label": "Parallax på produktbilderna",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Knapptext",
+      "default": "Se alla"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Knapplänk",
+      "info": "Standard: vald kollektion."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Utvalda produkter"
+    }
+  ]
+}
+{% endschema %}

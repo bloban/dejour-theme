@@ -1,0 +1,114 @@
+{%- assign s = section.settings -%}
+<section class="statement dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container statement__inner statement--{{ s.alignment }}">
+    {%- if s.eyebrow != blank -%}
+      <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+    {%- endif -%}
+    {%- if s.text != blank -%}
+      <div class="statement__text" data-gsap="words" data-reveal="fade">{{ s.text }}</div>
+    {%- endif -%}
+    {%- if s.signature != blank or s.link_label != blank -%}
+      <div class="statement__foot" data-reveal style="--d: .15s">
+        {%- if s.signature != blank -%}
+          <span class="statement__signature">{{ s.signature | escape }}</span>
+        {%- endif -%}
+        {%- if s.link_label != blank -%}
+          <a href="{{ s.link | default: routes.root_url }}" class="link">
+            {{- s.link_label | escape -}}
+            {%- render 'icon', name: 'arrow-right' -%}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Varumärkesbudskap",
+  "class": "section-statement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Filosofi"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Budskap",
+      "info": "Kursiv text visas i guld. Orden tonas fram när man scrollar.",
+      "default": "<p>Vi tror på saker som håller. Färre kort, <em>mindre brus</em> — och en korthållare så tunn att du glömmer att den finns.</p>"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Signatur",
+      "default": "— De'Jour, Stockholm"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Länktext",
+      "default": "Läs vår historia"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Länk"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Justering",
+      "options": [
+        {
+          "value": "left",
+          "label": "Vänster"
+        },
+        {
+          "value": "center",
+          "label": "Centrerad"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "lg"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "lg"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Varumärkesbudskap"
+    }
+  ]
+}
+{% endschema %}

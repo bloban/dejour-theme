@@ -1,0 +1,128 @@
+{%- liquid
+  assign s = section.settings
+  assign text = s.text | strip
+  assign items = text | split: '—'
+  assign repeat = 4
+-%}
+{%- if text != blank -%}
+  <section
+    class="marquee marquee--{{ s.size }} marquee--{{ s.style }}{% if s.direction == 'right' %} marquee--reverse{% endif %}{% if s.borders %} marquee--bordered{% endif %} dj-section color-{{ s.color_scheme }}"
+    style="--speed: {{ s.speed }}s"
+    aria-label="{{ text | escape }}"
+  >
+    <div class="marquee__track" aria-hidden="true">
+      {%- for g in (1..2) -%}
+        <div class="marquee__group">
+          {%- for r in (1..repeat) -%}
+            {%- for item in items -%}
+              {%- assign item_text = item | strip -%}
+              {%- if item_text != blank -%}
+                <span class="marquee__item{% cycle '', ' marquee__item--alt' %}">{{ item_text | escape }}</span>
+                <span class="marquee__sep">—</span>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Löpande textband",
+  "class": "section-marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "info": "Separera fraser med —",
+      "default": "DE'JOUR — THE BLACK EDITION —"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "s",
+      "label": "Tid per varv",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Riktning",
+      "options": [
+        {
+          "value": "left",
+          "label": "Vänster"
+        },
+        {
+          "value": "right",
+          "label": "Höger"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Stil",
+      "options": [
+        {
+          "value": "mixed",
+          "label": "Fylld och kontur, växelvis"
+        },
+        {
+          "value": "filled",
+          "label": "Fylld"
+        },
+        {
+          "value": "outline",
+          "label": "Guldkontur"
+        }
+      ],
+      "default": "mixed"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Storlek",
+      "options": [
+        {
+          "value": "sm",
+          "label": "Liten"
+        },
+        {
+          "value": "md",
+          "label": "Mellan"
+        },
+        {
+          "value": "lg",
+          "label": "Stor"
+        }
+      ],
+      "default": "lg"
+    },
+    {
+      "type": "checkbox",
+      "id": "borders",
+      "label": "Linjer ovanför och under",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Löpande textband"
+    }
+  ]
+}
+{% endschema %}

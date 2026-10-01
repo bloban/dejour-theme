@@ -1,6 +1,4 @@
 {%- liquid
-  assign menu_blocks = section.blocks | where: 'type', 'menu'
-  assign text_blocks = section.blocks | where: 'type', 'text'
   assign col_count = section.blocks.size | at_least: 1
   assign wordmark = section.settings.wordmark_text | default: settings.wordmark | default: shop.name
 -%}

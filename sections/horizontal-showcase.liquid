@@ -1,0 +1,179 @@
+{%- assign s = section.settings -%}
+<section class="hscroll dj-section color-{{ s.color_scheme }}" data-gsap="horizontal">
+  <div class="hscroll__viewport" data-hscroll-viewport tabindex="0" aria-label="{{ s.heading | strip_html | escape }}">
+    <div class="hscroll__track" data-hscroll-track>
+      <div class="hscroll__intro">
+        {%- if s.eyebrow != blank -%}
+          <p class="label label--accent label--line">{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 class="h1">{{ s.heading }}</h2>
+        {%- endif -%}
+        {%- if s.text != blank -%}
+          <div class="lead">{{ s.text }}</div>
+        {%- endif -%}
+        <p class="hscroll__hint label">
+          {{- 'general.scroll_to_explore' | t -}}
+          {%- render 'icon', name: 'arrow-right' -%}
+        </p>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <article class="hscroll__panel" data-hscroll-panel {{ block.shopify_attributes }}>
+          <div class="hscroll__media media">
+            <div class="hscroll__img" data-hscroll-img>
+              {%- if block.settings.image != blank -%}
+                {%- assign img_alt = block.settings.image.alt | default: block.settings.title | strip_html -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1600
+                  | image_tag:
+                    widths: '500, 800, 1100, 1400, 1600',
+                    sizes: '(min-width: 990px) 42vw, 82vw',
+                    loading: 'lazy',
+                    alt: img_alt
+                }}
+              {%- else -%}
+                {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder' }}
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="hscroll__text">
+            {%- liquid
+              assign num = block.settings.number
+              if num == blank
+                assign num = forloop.index | prepend: '0' | slice: -2, 2
+              endif
+            -%}
+            <span class="hscroll__num gold-text">{{ num | escape }}</span>
+            <div>
+              {%- if block.settings.eyebrow != blank -%}
+                <p class="label label--accent">{{ block.settings.eyebrow | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="h2">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="text-body">{{ block.settings.text }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+      <div class="hscroll__end" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div class="hscroll__bar container" aria-hidden="true">
+    <span class="hscroll__progress"><span data-hscroll-progress></span></span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Detaljer – horisontell",
+  "class": "section-hscroll",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Hantverket"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Varje <em>millimeter</em> räknas"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>På desktop låses sektionen och detaljerna glider förbi i sidled. På mobil sveper man.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Detalj",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bild"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Nummer",
+          "info": "Lämna tomt för automatisk numrering."
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Etikett",
+          "default": "Material"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Rubrik",
+          "default": "Fullnarvsläder"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>[FYLL I] Beskriv materialet, dess ursprung och hur det åldras.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Detaljer – horisontell",
+      "blocks": [
+        {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Material",
+            "title": "Fullnarvs<em>läder</em>",
+            "text": "<p>[FYLL I] Utvalt läder som får en vacker patina med tiden.</p>"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Sömmar",
+            "title": "Handsydda <em>sömmar</em>",
+            "text": "<p>[FYLL I] Sadelsömmar som håller i åratal.</p>"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Slim-profil",
+            "title": "Bara <em>[FYLL I] mm</em>",
+            "text": "<p>[FYLL I] Rymmer upp till X kort utan att bukta fickan.</p>"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Skydd",
+            "title": "RFID-<em>skydd</em>",
+            "text": "<p>[FYLL I] Skyddar dina kort mot obehörig skanning. Ta bort om det inte stämmer.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

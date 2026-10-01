@@ -1,0 +1,148 @@
+{%- liquid
+  assign s = section.settings
+  assign archive_collection = s.collection
+  if archive_collection == blank
+    assign archive_collection = collections['arkiv']
+  endif
+-%}
+<section class="archive dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="section-head__text">
+        {%- if s.eyebrow != blank -%}
+          <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 class="h1" data-reveal style="--d: .08s">{{ s.heading }}</h2>
+        {%- endif -%}
+        {%- if s.text != blank -%}
+          <div class="lead" data-reveal style="--d: .16s">{{ s.text }}</div>
+        {%- endif -%}
+      </div>
+      {%- if archive_collection != blank and s.button_label != blank -%}
+        <a href="{{ archive_collection.url }}" class="btn btn--outline" data-magnetic data-reveal>
+          <span class="btn__label">{{ s.button_label | escape }} {% render 'icon', name: 'arrow-right' %}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if archive_collection != blank and archive_collection.products_count > 0 -%}
+      <ul class="grid" role="list" style="--cols: {{ s.columns }}; --cols-tablet: 3; --cols-mobile: 2">
+        {%- for p in archive_collection.products limit: s.limit -%}
+          <li>
+            {%- render 'product-card',
+              card_product: p,
+              index: forloop.index0,
+              mode: 'archive',
+              sizes: '(min-width: 990px) 25vw, 50vw',
+              context: 'collection'
+            -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <p class="archive__empty text-muted" data-reveal>
+        {%- if request.design_mode -%}
+          {{ 'archive.editor_hint' | t }}
+        {%- else -%}
+          {{ 'archive.empty' | t }}
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Arkivet / Tidigare drops",
+  "class": "section-archive",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Skapa en automatisk kollektion med handtaget 'arkiv' (villkor: Produkttagg = arkiv). Den används automatiskt om ingen kollektion väljs."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Arkivet"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Tidigare <em>drops</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Släppta en gång. Vissa kommer aldrig tillbaka.</p>"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Kollektion"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Antal produkter",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Kolumner på desktop",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Knapptext",
+      "default": "Hela arkivet"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Arkivet / Tidigare drops"
+    }
+  ]
+}
+{% endschema %}

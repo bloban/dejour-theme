@@ -947,6 +947,7 @@ textarea.field__input {
 .inline-form input {
   flex: 1;
   min-width: 0;
+  width: 100%;
   height: 60px;
   padding: 0;
   background: transparent;
@@ -1000,6 +1001,7 @@ textarea.field__input {
 /* Visa bara meddelanden i det formulär som skickades (#hash efter omdirigering) */
 .notify-form {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
 }
 
@@ -1638,6 +1640,7 @@ details[open] > .menu-drawer__link svg {
 .menu-drawer__secondary {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 18px;
   padding: 0 var(--gutter) 40px;
 }
@@ -2739,6 +2742,18 @@ details.accordion__item[open]::details-content {
   }
 }
 
+@media (max-width: 749px) {
+  .countdown {
+    --cd-size: clamp(2.1rem, 10.5vw, 3rem);
+    gap: 4px;
+  }
+
+  .countdown__label {
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
+  }
+}
+
 .countdown--sm {
   --cd-size: clamp(1.9rem, 6vw, 2.6rem);
   justify-content: flex-start;
@@ -2842,6 +2857,8 @@ details.accordion__item[open]::details-content {
 }
 
 .drop-hero__inner {
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2902,6 +2919,28 @@ details.accordion__item[open]::details-content {
   font-size: 0.62rem;
 }
 
+@media (max-width: 749px) {
+  .drop-banner {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .drop-banner .drop-banner__title.drop-pre {
+    display: none;
+  }
+
+  .drop-banner .countdown--xs {
+    --cd-size: 0.95rem;
+    gap: 2px;
+  }
+
+  .drop-banner .countdown--xs .countdown__card {
+    padding: 3px 4px 2px;
+  }
+}
+
 /* Drop: kompakt block */
 .drop-compact {
   display: grid;
@@ -2934,4 +2973,946 @@ details.accordion__item[open]::details-content {
   border: 1px dashed var(--c-error);
   color: var(--c-error);
   font-size: var(--fs-small);
+}
+
+/* ==========================================================================
+   SEKTIONER
+   ========================================================================== */
+
+/* ---------- 18. Media-hjälpare ---------- */
+.media-video {
+  position: absolute;
+  inset: 0;
+}
+
+.media-video > img,
+.media-video > video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-video > video {
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-out);
+}
+
+.media-video.is-playing > video {
+  opacity: 1;
+}
+
+/* ---------- 19. Hero ---------- */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero--large {
+  min-height: 85vh;
+  min-height: 85svh;
+}
+
+.hero--medium {
+  min-height: 70vh;
+  min-height: 70svh;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.hero__media-inner {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 60%;
+}
+
+.hero__media-inner > picture,
+.hero__media-inner > img,
+.hero__media-inner > svg,
+.hero__media-inner picture img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__empty {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 70% 40%, rgba(var(--c-accent-rgb), 0.14), transparent 70%),
+    radial-gradient(80% 60% at 20% 90%, rgba(var(--c-text-rgb), 0.05), transparent 70%),
+    var(--c-bg);
+}
+
+.motion-ok:not(.is-lite) .hero__media-inner--zoom {
+  animation: kenburns 32s ease-in-out infinite alternate;
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.16);
+  }
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--overlay, 0.7);
+  background: linear-gradient(
+    to top,
+    rgba(var(--c-bg-rgb), 0.96) 0%,
+    rgba(var(--c-bg-rgb), 0.45) 38%,
+    rgba(var(--c-bg-rgb), 0.12) 62%,
+    rgba(var(--c-bg-rgb), 0.55) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 36px);
+  padding-top: calc(var(--header-h) + 72px);
+  padding-bottom: clamp(64px, 10vh, 120px);
+}
+
+.hero__content > * {
+  margin: 0;
+}
+
+.hero__title {
+  margin: 0;
+}
+
+.hero__line {
+  display: block;
+}
+
+.hero__line--accent {
+  font-style: italic;
+  color: var(--c-accent);
+}
+
+@media (min-width: 990px) {
+  .hero--bottom-left .hero__line--accent {
+    padding-left: 1.1em;
+  }
+}
+
+.hero .word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hero__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+@media (min-width: 990px) {
+  .hero--bottom-left .hero__bottom {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+  }
+}
+
+.hero__sub {
+  max-width: 440px;
+}
+
+.hero__sub p {
+  margin: 0;
+}
+
+.hero--center {
+  align-items: center;
+}
+
+.hero--center .hero__content,
+.hero--bottom-center .hero__content,
+.hero--center .hero__bottom,
+.hero--bottom-center .hero__bottom {
+  align-items: center;
+  text-align: center;
+}
+
+.hero--center .btn-group,
+.hero--bottom-center .btn-group {
+  justify-content: center;
+}
+
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+@media (min-width: 990px) {
+  .hero__scroll {
+    display: flex;
+  }
+}
+
+.hero__scroll i {
+  position: relative;
+  width: 1px;
+  height: 56px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.hero__scroll i::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 40%;
+  background: var(--c-accent);
+  animation: scroll-line 2.4s var(--ease-in-out) infinite;
+}
+
+.reduce-motion .hero__scroll i::after {
+  animation: none;
+}
+
+@keyframes scroll-line {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(260%);
+  }
+}
+
+.hero__hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Rubrik som animeras in bokstav för bokstav */
+.motion-ok .hero .char {
+  display: inline-block;
+  animation: char-in 1.25s var(--ease-out) both;
+  animation-delay: calc(0.3s + var(--i, 0) * 0.045s);
+}
+
+@media (min-width: 990px) {
+  .motion-ok .hero .char {
+    animation-name: char-in-blur;
+  }
+}
+
+@keyframes char-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.45em, 0) rotate(5deg);
+  }
+}
+
+@keyframes char-in-blur {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.45em, 0) rotate(5deg);
+    filter: blur(10px);
+  }
+}
+
+.motion-ok .hero__fade {
+  animation: fade-up 1.2s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+}
+
+.show-loader:not(.loader-done) .hero .char,
+.show-loader:not(.loader-done) .hero__fade {
+  animation-play-state: paused;
+}
+
+/* ---------- 20. Löpande textband ---------- */
+.marquee {
+  overflow: hidden;
+  padding-block: clamp(18px, 2.4vw, 32px);
+}
+
+.marquee--bordered {
+  border-block: 1px solid var(--line);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--speed, 40s) linear infinite;
+}
+
+.marquee--reverse .marquee__track {
+  animation-direction: reverse;
+}
+
+.has-hover .marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.reduce-motion .marquee__track {
+  animation: none;
+}
+
+.marquee__group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marquee__item,
+.marquee__sep {
+  padding-inline: 0.3em;
+  font-family: var(--font-heading);
+  font-size: clamp(2.8rem, 8vw, 7rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.marquee--md .marquee__item,
+.marquee--md .marquee__sep {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+}
+
+.marquee--sm .marquee__item,
+.marquee--sm .marquee__sep {
+  font-size: clamp(1.3rem, 2.6vw, 2rem);
+}
+
+.marquee__sep {
+  color: var(--c-accent);
+}
+
+.marquee--outline .marquee__item,
+.marquee--mixed .marquee__item--alt {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--c-accent);
+  font-style: italic;
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ---------- 21. Varumärkesbudskap ---------- */
+.statement__inner {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 44px);
+}
+
+.statement--center {
+  align-items: center;
+  text-align: center;
+}
+
+.statement__text {
+  max-width: 1240px;
+  font-family: var(--font-heading);
+  font-size: calc(clamp(1.9rem, 4.4vw, 4.6rem) * var(--heading-scale));
+  line-height: 1.12;
+  letter-spacing: var(--heading-tracking);
+  color: var(--c-text);
+  text-wrap: pretty;
+}
+
+.statement__text p {
+  margin: 0;
+}
+
+.statement__text em {
+  font-style: italic;
+  color: var(--c-accent);
+}
+
+.statement__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 40px;
+}
+
+.statement__signature {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--c-muted);
+}
+
+/* ---------- 22. Utvalda produkter ---------- */
+.featured__grid {
+  list-style: none;
+}
+
+@media (min-width: 990px) {
+  .featured__grid--editorial .featured__item:nth-child(even) {
+    margin-top: clamp(48px, 9vw, 140px);
+  }
+}
+
+/* ---------- 23. Horisontell scroll ---------- */
+.hscroll {
+  overflow: hidden;
+  padding-block: var(--section-md);
+}
+
+.hscroll__viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hscroll__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.hscroll__viewport:focus-visible {
+  outline-offset: -2px;
+}
+
+.hscroll__track {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(16px, 2.4vw, 44px);
+  width: max-content;
+  padding-inline: var(--gutter);
+}
+
+.hscroll__intro {
+  flex: 0 0 auto;
+  width: min(82vw, 540px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  padding-right: 4vw;
+  scroll-snap-align: start;
+}
+
+.hscroll__intro > * {
+  margin: 0;
+}
+
+.hscroll__hint {
+  color: var(--c-accent);
+}
+
+.hscroll__hint svg {
+  width: 14px;
+  height: 14px;
+}
+
+.motion-ok .hscroll__hint svg {
+  animation: nudge 2s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+.hscroll__panel {
+  flex: 0 0 auto;
+  width: 78vw;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 750px) {
+  .hscroll__panel {
+    width: 52vw;
+  }
+}
+
+.hscroll__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.hscroll__img {
+  position: absolute;
+  inset: 0 -7%;
+}
+
+.hscroll__img img,
+.hscroll__img svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hscroll__img svg.placeholder {
+  fill: rgba(var(--c-text-rgb), 0.12);
+}
+
+.hscroll__text {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+  max-width: 520px;
+}
+
+.hscroll__text h3 {
+  margin: 8px 0 12px;
+}
+
+.hscroll__num {
+  font-family: var(--font-heading);
+  font-size: clamp(2.6rem, 4vw, 4.2rem);
+  line-height: 0.85;
+}
+
+.hscroll__end {
+  flex: 0 0 1px;
+}
+
+.hscroll__bar {
+  display: none;
+  margin-top: clamp(24px, 4vh, 48px);
+}
+
+.hscroll__progress {
+  position: relative;
+  display: block;
+  height: 1px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.hscroll__progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--gold-grad);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@media (min-width: 990px) {
+  .hscroll__panel {
+    width: auto;
+  }
+
+  .hscroll__media {
+    height: 58vh;
+  }
+
+  .hscroll__text {
+    width: calc(58vh * 0.8 + 40px);
+  }
+
+  .hscroll.is-pinned {
+    height: 100vh;
+    padding-block: calc(var(--header-h) * 0.5) 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hscroll.is-pinned .hscroll__viewport {
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .hscroll.is-pinned .hscroll__bar {
+    display: block;
+  }
+}
+
+/* ---------- 24. Kolumner / USP ---------- */
+.columns__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 750px) {
+  .columns__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+}
+
+@media (min-width: 990px) {
+  .columns__grid {
+    grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+    column-gap: 0;
+  }
+}
+
+.columns__item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+}
+
+.columns__item > * {
+  margin: 0;
+}
+
+@media (min-width: 990px) {
+  .columns__item {
+    padding: 8px clamp(20px, 2.5vw, 40px);
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .columns__item:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+.columns__icon svg {
+  width: 30px;
+  height: 30px;
+  color: var(--c-accent);
+}
+
+.columns__img img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.columns__num {
+  font-family: var(--font-heading);
+  font-size: 3.4rem;
+  line-height: 1;
+}
+
+.columns__title {
+  font-size: var(--fs-h4);
+}
+
+.columns__text {
+  font-size: 0.95rem;
+}
+
+/* ---------- 25. Recensioner ---------- */
+.reviews__summary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.reviews__summary p {
+  margin: 8px 0 0;
+}
+
+.reviews__score {
+  font-family: var(--font-heading);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.reviews__list {
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 84%;
+  gap: 14px;
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+
+.reviews__list::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 750px) {
+  .reviews__list {
+    grid-auto-columns: 46%;
+  }
+}
+
+@media (min-width: 990px) {
+  .reviews__list {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+}
+
+.reviews__app {
+  margin-bottom: 40px;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: clamp(24px, 3vw, 40px);
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, rgba(var(--c-text-rgb), 0.035), rgba(var(--c-text-rgb), 0) 60%);
+  scroll-snap-align: start;
+  transition: border-color 0.6s var(--ease-out);
+}
+
+.has-hover .review:hover {
+  border-color: rgba(var(--c-accent-rgb), 0.4);
+}
+
+.review__quote {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: clamp(1.3rem, 1.8vw, 1.65rem);
+  line-height: 1.35;
+  color: var(--c-text);
+}
+
+.review__quote p {
+  margin: 0;
+}
+
+.review__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.review__author {
+  color: var(--c-text);
+}
+
+.review__verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--c-accent);
+}
+
+.review__verified svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ---------- 26. Arkivet ---------- */
+.archive__empty {
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- 27. Instagram / TikTok ---------- */
+.social-feed__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (min-width: 750px) {
+  .social-feed__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (min-width: 990px) {
+  .social-feed__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.social-feed__app {
+  margin-bottom: 32px;
+}
+
+.social-tile__link {
+  display: block;
+  aspect-ratio: 4 / 5;
+}
+
+.social-tile__link img,
+.social-tile__link video {
+  transition: transform 1.4s var(--ease-out);
+}
+
+.has-hover .social-tile:hover img,
+.has-hover .social-tile:hover video {
+  transform: scale(1.06);
+}
+
+.social-tile__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 14px;
+  background: linear-gradient(to top, rgba(var(--c-bg-rgb), 0.75), rgba(var(--c-bg-rgb), 0) 55%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out);
+}
+
+.has-hover .social-tile:hover .social-tile__overlay,
+html:not(.has-hover) .social-tile__overlay {
+  opacity: 1;
+}
+
+html:not(.has-hover) .social-tile__overlay {
+  background: none;
+}
+
+.social-tile__overlay svg {
+  width: 18px;
+  height: 18px;
+  color: var(--c-text);
+}
+
+.social-tile__caption {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  color: var(--c-text);
+}
+
+html:not(.has-hover) .social-tile__caption {
+  display: none;
+}
+
+/* ---------- 28. Nyhetsbrev ---------- */
+.newsletter {
+  overflow: hidden;
+  text-align: center;
+}
+
+.newsletter__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.35;
+}
+
+.newsletter__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(var(--c-bg-rgb), 0.2), rgba(var(--c-bg-rgb), 0.9) 75%);
+}
+
+.newsletter__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.newsletter__inner > * {
+  margin: 0;
+}
+
+.newsletter__form {
+  width: min(100%, 520px);
+  text-align: left;
+}
+
+/* ---------- 29. Drop-hero (tillägg) ---------- */
+.drop-hero__media picture,
+.drop-hero__media > img,
+.drop-hero__media picture img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.drop-hero .drop-pre,
+.drop-hero .drop-live {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.drop-hero .drop-pre > *,
+.drop-hero .drop-live > * {
+  margin: 0;
+}
+
+.drop-hero__notify {
+  width: min(100%, 460px);
+  gap: 14px;
+}
+
+.drop-hero__notify .notify-form {
+  width: 100%;
+  text-align: left;
 }

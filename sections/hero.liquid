@@ -1,0 +1,302 @@
+{%- liquid
+  assign s = section.settings
+  assign heading_tag = s.heading_tag | default: 'h1'
+  assign line_one = s.heading | strip
+  assign line_two = s.heading_accent | strip
+  assign offset = line_one | size
+  assign has_media = false
+  if s.image != blank or s.video != blank
+    assign has_media = true
+  endif
+-%}
+
+<section
+  class="hero hero--{{ s.position }} hero--{{ s.height }} dj-section color-{{ s.color_scheme }}"
+  data-gsap="hero"
+  style="--overlay: {{ s.overlay_opacity | divided_by: 100.0 }}"
+>
+  <div class="hero__media" data-hero-media aria-hidden="true">
+    <div class="hero__media-inner{% if s.slow_zoom %} hero__media-inner--zoom{% endif %}">
+      {%- if s.video != blank -%}
+        <div class="media-video" data-deferred-video>
+          {%- assign poster = s.image | default: s.video.preview_image -%}
+          {%- if poster -%}
+            {{
+              poster
+              | image_url: width: 2400
+              | image_tag:
+                widths: '750, 1100, 1500, 1920, 2400',
+                sizes: '100vw',
+                loading: 'eager',
+                fetchpriority: 'high',
+                alt: ''
+            }}
+          {%- endif -%}
+          <template>
+            {{
+              s.video
+              | video_tag:
+                autoplay: true,
+                loop: true,
+                muted: true,
+                playsinline: true,
+                controls: false,
+                preload: 'none'
+            }}
+          </template>
+        </div>
+      {%- elsif s.image != blank -%}
+        <picture>
+          {%- if s.mobile_image != blank -%}
+            <source
+              media="(max-width: 749px)"
+              srcset="{{ s.mobile_image | image_url: width: 600 }} 600w, {{ s.mobile_image | image_url: width: 900 }} 900w, {{ s.mobile_image | image_url: width: 1200 }} 1200w"
+              sizes="100vw"
+            >
+          {%- endif -%}
+          {{
+            s.image
+            | image_url: width: 2400
+            | image_tag:
+              widths: '750, 1100, 1500, 1920, 2400',
+              sizes: '100vw',
+              loading: 'eager',
+              fetchpriority: 'high',
+              alt: ''
+          }}
+        </picture>
+      {%- else -%}
+        <div class="hero__empty"></div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="hero__content container" data-hero-content>
+    {%- if s.eyebrow != blank -%}
+      <p class="label label--accent label--line hero__fade" style="--d: .2s">{{ s.eyebrow | escape }}</p>
+    {%- endif -%}
+
+    {%- if line_one != blank or line_two != blank -%}
+      <{{ heading_tag }} class="hero__title h-display">
+        <span class="visually-hidden">{{ line_one | escape }} {{ line_two | escape }}</span>
+        {%- if line_one != blank -%}
+          <span class="hero__line" aria-hidden="true">{% render 'split-chars', text: line_one, start: 0 %}</span>
+        {%- endif -%}
+        {%- if line_two != blank -%}
+          <span class="hero__line hero__line--accent" aria-hidden="true">
+            {%- render 'split-chars', text: line_two, start: offset -%}
+          </span>
+        {%- endif -%}
+      </{{ heading_tag }}>
+    {%- endif -%}
+
+    <div class="hero__bottom">
+      {%- if s.subheading != blank -%}
+        <div class="hero__sub lead hero__fade" style="--d: .9s">{{ s.subheading }}</div>
+      {%- endif -%}
+
+      {%- if s.button_label != blank or s.button_label_2 != blank -%}
+        <div class="btn-group hero__fade" style="--d: 1.05s">
+          {%- if s.button_label != blank -%}
+            <a href="{{ s.button_link | default: routes.all_products_collection_url }}" class="btn btn--primary" data-magnetic>
+              <span class="btn__label">{{ s.button_label | escape }}</span>
+            </a>
+          {%- endif -%}
+          {%- if s.button_label_2 != blank -%}
+            <a href="{{ s.button_link_2 | default: routes.all_products_collection_url }}" class="btn btn--ghost" data-magnetic>
+              <span class="btn__label">{{ s.button_label_2 | escape }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if s.show_scroll -%}
+    <div class="hero__scroll" aria-hidden="true">
+      <span>{{ 'general.scroll' | t }}</span>
+      <i></i>
+    </div>
+  {%- endif -%}
+
+  {%- unless has_media -%}
+    {%- if request.design_mode -%}
+      <span class="hero__hint label">{{ 'general.add_image_hint' | t }}</span>
+    {%- endif -%}
+  {%- endunless -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Bild",
+      "info": "Den svarta korthållaren på mörk bakgrund. Minst 2400 px bred."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Bild för mobil",
+      "info": "Stående format, 4:5 eller 9:16."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "info": "Spelas utan ljud i loop. Bilden visas tills videon har laddats."
+    },
+    {
+      "type": "checkbox",
+      "id": "slow_zoom",
+      "label": "Långsam zoom",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Mörk överton",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "The Black Edition"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Rubrik, rad 1",
+      "info": "Animeras in bokstav för bokstav.",
+      "default": "Mindre är"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Rubrik, rad 2 (kursiv guld)",
+      "default": "mer."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Rubriknivå",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        }
+      ],
+      "default": "h1"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Underrubrik",
+      "default": "<p>Ultratunna korthållare i finaste läder. Gjorda för fickan, byggda för livet.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Knapp 1",
+      "default": "Handla nu"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Länk 1"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Knapp 2",
+      "default": "Vår historia"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Länk 2"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Textens placering",
+      "options": [
+        {
+          "value": "bottom-left",
+          "label": "Nere till vänster"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Nere i mitten"
+        },
+        {
+          "value": "center",
+          "label": "Centrerad"
+        }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Höjd",
+      "options": [
+        {
+          "value": "full",
+          "label": "Helskärm"
+        },
+        {
+          "value": "large",
+          "label": "Stor (85 %)"
+        },
+        {
+          "value": "medium",
+          "label": "Mellan (70 %)"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll",
+      "label": "Visa scrollindikator",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

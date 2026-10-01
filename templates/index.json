@@ -1,75 +1,337 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "The Black Edition",
+        "heading": "Mindre är",
+        "heading_accent": "mer.",
+        "subheading": "<p>Ultratunna korthållare i finaste läder. Gjorda för fickan, byggda för livet.</p>",
+        "button_label": "Handla nu",
+        "button_link": "shopify://collections/all",
+        "button_label_2": "Vår historia",
+        "button_link_2": "shopify://pages/om-oss",
+        "position": "bottom-left",
+        "height": "full",
+        "slow_zoom": true,
+        "overlay_opacity": 70,
+        "show_scroll": true,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "text": "DE'JOUR — THE BLACK EDITION —",
+        "speed": 40,
+        "direction": "left",
+        "style": "mixed",
+        "size": "lg",
+        "borders": true,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "statement": {
+      "type": "brand-statement",
+      "settings": {
+        "eyebrow": "Filosofi",
+        "text": "<p>Vi tror på saker som håller. Färre kort, <em>mindre brus</em> — och en korthållare så tunn att du glömmer att den finns.</p>",
+        "signature": "— De'Jour, Stockholm",
+        "link_label": "Läs vår historia",
+        "link": "shopify://pages/om-oss",
+        "alignment": "left",
+        "color_scheme": "scheme-1",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
+      }
+    },
+    "drop": {
+      "type": "drop-countdown",
+      "settings": {
+        "layout": "hero",
+        "use_global_date": true,
+        "show_seconds": true,
+        "eyebrow": "Drop 01 — The Black Edition",
+        "heading": "Obsidian <em>Black</em>",
+        "heading_tag": "h2",
+        "subheading": "<p>Ultratunn korthållare i helsvart. Begränsad upplaga — släpps bara en gång. [FYLL I]</p>",
+        "show_notify": true,
+        "notify_heading": "Få en påminnelse när droppet startar",
+        "notify_button": "Påminn mig",
+        "live_heading": "LIVE NU",
+        "product": "black-koi-cardholder",
+        "overlay_opacity": 85,
+        "glow": true,
+        "color_scheme": "scheme-5"
+      }
+    },
+    "featured": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "Kollektionen",
+        "heading": "Gjord för <em>fickan</em>",
+        "limit": 3,
+        "layout": "editorial",
+        "columns": 3,
+        "columns_mobile": "1",
+        "parallax": true,
+        "button_label": "Se alla",
+        "color_scheme": "scheme-1",
+        "padding_top": "lg",
+        "padding_bottom": "md",
+        "products": [
+          "black-koi-cardholder",
+          "midnight-blue-koi-cardholder",
+          "forest-green-koi-cardholder"
+        ]
+      }
+    },
+    "details": {
+      "type": "horizontal-showcase",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "panel-1": {
+          "type": "panel",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "eyebrow": "Material",
+            "title": "Fullnarvs<em>läder</em>",
+            "text": "<p>[FYLL I] Utvalt läder som får en vacker patina med tiden.</p>"
           }
         },
-        "button": {
-          "type": "buttons",
+        "panel-2": {
+          "type": "panel",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "eyebrow": "Sömmar",
+            "title": "Handsydda <em>sömmar</em>",
+            "text": "<p>[FYLL I] Sadelsömmar som håller i åratal.</p>"
+          }
+        },
+        "panel-3": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Slim-profil",
+            "title": "Bara <em>[FYLL I] mm</em>",
+            "text": "<p>[FYLL I] Rymmer upp till X kort utan att bukta fickan.</p>"
+          }
+        },
+        "panel-4": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Skydd",
+            "title": "RFID-<em>skydd</em>",
+            "text": "<p>[FYLL I] Skyddar dina kort mot obehörig skanning. Ta bort om det inte stämmer.</p>"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "panel-1",
+        "panel-2",
+        "panel-3",
+        "panel-4"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "eyebrow": "Hantverket",
+        "heading": "Varje <em>millimeter</em> räknas",
+        "text": "<p>Detaljerna du känner varje gång du tar fram den.</p>",
+        "color_scheme": "scheme-2"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "usp": {
+      "type": "columns",
+      "blocks": {
+        "usp-1": {
+          "type": "column",
+          "settings": {
+            "icon": "slim",
+            "title": "Slim design",
+            "text": "<p>[FYLL I] mm tunn. Försvinner i fickan.</p>"
+          }
+        },
+        "usp-2": {
+          "type": "column",
+          "settings": {
+            "icon": "rfid",
+            "title": "RFID-skydd",
+            "text": "<p>[FYLL I] Skyddar dina kort mot skimning.</p>"
+          }
+        },
+        "usp-3": {
+          "type": "column",
+          "settings": {
+            "icon": "truck",
+            "title": "Fri frakt över 499 kr",
+            "text": "<p>Med PostNord, 1–3 vardagar.</p>"
+          }
+        },
+        "usp-4": {
+          "type": "column",
+          "settings": {
+            "icon": "return",
+            "title": "14 dagars ångerrätt",
+            "text": "<p>Enligt distansavtalslagen.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "usp-1",
+        "usp-2",
+        "usp-3",
+        "usp-4"
+      ],
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
+        "style": "icons",
+        "columns": 4,
+        "border_top": true,
         "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "padding_top": "md",
+        "padding_bottom": "md"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>[FYLL I] Så tunn att jag glömmer att den ligger i fickan. Lädret känns otroligt exklusivt.</p>",
+            "author": "[FYLL I]",
+            "meta": "Stockholm",
+            "verified": true
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>[FYLL I] Snyggaste korthållaren jag ägt. Förpackningen var en upplevelse i sig.</p>",
+            "author": "[FYLL I]",
+            "meta": "Göteborg",
+            "verified": true
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>[FYLL I] Snabb leverans med PostNord och känslan är verkligen premium.</p>",
+            "author": "[FYLL I]",
+            "meta": "Malmö",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "review-1",
+        "review-2",
+        "review-3"
+      ],
+      "settings": {
+        "eyebrow": "Omdömen",
+        "heading": "Sagt om <em>De'Jour</em>",
+        "rating": "[FYLL I] / 5",
+        "rating_text": "Baserat på [FYLL I] omdömen",
+        "color_scheme": "scheme-1",
+        "padding_top": "lg",
+        "padding_bottom": "md"
+      }
+    },
+    "archive": {
+      "type": "archive",
+      "settings": {
+        "eyebrow": "Arkivet",
+        "heading": "Tidigare <em>drops</em>",
+        "text": "<p>Släppta en gång. Vissa kommer aldrig tillbaka.</p>",
+        "limit": 4,
+        "columns": 4,
+        "button_label": "Hela arkivet",
+        "color_scheme": "scheme-2",
+        "padding_top": "md",
+        "padding_bottom": "md"
+      }
+    },
+    "social": {
+      "type": "social-feed",
+      "blocks": {
+        "tile-1": {
+          "type": "tile",
+          "settings": {
+            "platform": "instagram"
+          }
+        },
+        "tile-2": {
+          "type": "tile",
+          "settings": {
+            "platform": "tiktok"
+          }
+        },
+        "tile-3": {
+          "type": "tile",
+          "settings": {
+            "platform": "instagram"
+          }
+        },
+        "tile-4": {
+          "type": "tile",
+          "settings": {
+            "platform": "instagram"
+          }
+        },
+        "tile-5": {
+          "type": "tile",
+          "settings": {
+            "platform": "tiktok"
+          }
+        },
+        "tile-6": {
+          "type": "tile",
+          "settings": {
+            "platform": "instagram"
+          }
+        }
+      },
+      "block_order": [
+        "tile-1",
+        "tile-2",
+        "tile-3",
+        "tile-4",
+        "tile-5",
+        "tile-6"
+      ],
+      "settings": {
+        "eyebrow": "@dejour [FYLL I]",
+        "heading": "I det <em>vilda</em>",
+        "text": "<p>Tagga #dejour för en chans att synas här.</p>",
+        "color_scheme": "scheme-1",
+        "padding_top": "md",
+        "padding_bottom": "md"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "Inner circle",
+        "heading": "Först till <em>nästa drop</em>",
+        "text": "<p>Förtur till släpp, begränsade upplagor och inget brus.</p>",
+        "button_label": "Gå med",
+        "success": "Välkommen. Vi hör av oss före nästa drop.",
+        "tags": "newsletter",
+        "color_scheme": "scheme-5",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "hero",
+    "marquee",
+    "statement",
+    "drop",
+    "featured",
+    "details",
+    "usp",
+    "reviews",
+    "archive",
+    "social",
+    "newsletter"
   ]
 }

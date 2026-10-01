@@ -1,0 +1,438 @@
+{%- liquid
+  assign s = section.settings
+
+  if s.use_global_date
+    assign drop_date = settings.drop_date | strip
+    assign drop_time = settings.drop_time | strip
+  else
+    assign drop_date = s.date | strip
+    assign drop_time = s.time | strip
+  endif
+
+  assign hide_section = false
+  if s.use_global_date and settings.drop_enabled == false
+    assign hide_section = true
+  endif
+
+  assign live_url = s.live_link
+  if live_url == blank and s.product != blank
+    assign live_url = s.product.url
+  endif
+  if live_url == blank
+    assign live_url = settings.drop_live_link | default: routes.all_products_collection_url
+  endif
+  assign live_label = s.live_button_label | default: settings.drop_live_label
+  assign tag = s.customer_tag | default: settings.drop_customer_tag
+  assign banner_link = s.banner_link
+  if banner_link == blank
+    assign banner_link = routes.root_url | append: '/pages/drop' | replace: '//', '/'
+  endif
+  assign form_id = 'DropNotify-' | append: section.id
+  assign heading_tag = s.heading_tag | default: 'h2'
+-%}
+
+{%- if hide_section == false or request.design_mode -%}
+  {%- capture info -%}{%- render 'drop-state', date: drop_date, time: drop_time -%}{%- endcapture -%}
+  {%- liquid
+    assign info = info | strip | split: '|'
+    assign state = info[0]
+    assign remaining = info[1] | plus: 0
+  -%}
+
+  {%- if hide_section and request.design_mode -%}
+    <div class="container" style="padding-block: 16px">
+      <p class="drop-editor-note">{{ 'drop.disabled_note' | t }}</p>
+    </div>
+  {%- endif -%}
+
+  {%- case s.layout -%}
+    {%- when 'banner' -%}
+      {%- unless state == 'live' and s.hide_banner_when_live -%}
+        <drop-countdown
+          class="drop-banner color-{{ s.color_scheme }}"
+          data-date="{{ drop_date | escape }}"
+          data-time="{{ drop_time | escape }}"
+          data-drop-state="{{ state }}"
+        >
+          <span class="drop-banner__title drop-pre">{{ s.eyebrow | escape }}</span>
+          <span class="drop-banner__title drop-live">
+            <span class="badge badge--solid badge--live">{{ 'drop.live_badge' | t }}</span>
+          </span>
+          <div class="drop-pre">
+            {%- render 'countdown', size: 'xs', remaining: remaining, show_seconds: s.show_seconds -%}
+          </div>
+          <a href="{{ banner_link }}" class="link drop-pre">
+            {{- s.notify_button | escape -}}
+            {%- render 'icon', name: 'arrow-right' -%}
+          </a>
+          <a href="{{ live_url }}" class="link drop-live">
+            {{- live_label | escape -}}
+            {%- render 'icon', name: 'arrow-right' -%}
+          </a>
+          {%- if state == 'invalid' and request.design_mode -%}
+            <span class="drop-editor-note">{{ 'drop.invalid_date' | t }}</span>
+          {%- endif -%}
+        </drop-countdown>
+      {%- endunless -%}
+
+    {%- when 'compact' -%}
+      <div class="dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+        <div class="container--narrow" data-reveal>
+          {%- render 'drop-compact',
+            date: drop_date,
+            time: drop_time,
+            eyebrow: s.eyebrow,
+            heading: s.heading,
+            show_notify: s.show_notify,
+            notify_button: s.notify_button,
+            tag: tag,
+            form_id: form_id,
+            live_label: live_label,
+            live_url: live_url,
+            show_seconds: s.show_seconds
+          -%}
+        </div>
+      </div>
+
+    {%- else -%}
+      <drop-countdown
+        class="drop drop--hero dj-section color-{{ s.color_scheme }}"
+        data-date="{{ drop_date | escape }}"
+        data-time="{{ drop_time | escape }}"
+        data-drop-state="{{ state }}"
+      >
+        <div class="drop-hero" style="--overlay: {{ s.overlay_opacity | divided_by: 100.0 }}">
+          <div class="drop-hero__media" aria-hidden="true">
+            {%- if s.video != blank -%}
+              <div class="media-video" data-deferred-video>
+                {%- if s.video.preview_image -%}
+                  {{
+                    s.video.preview_image
+                    | image_url: width: 2400
+                    | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', loading: 'lazy', alt: ''
+                  }}
+                {%- endif -%}
+                <template>
+                  {{
+                    s.video
+                    | video_tag:
+                      autoplay: true,
+                      loop: true,
+                      muted: true,
+                      playsinline: true,
+                      controls: false,
+                      preload: 'none'
+                  }}
+                </template>
+              </div>
+            {%- elsif s.image != blank -%}
+              <picture>
+                {%- if s.mobile_image != blank -%}
+                  <source
+                    media="(max-width: 749px)"
+                    srcset="{{ s.mobile_image | image_url: width: 750 }} 750w, {{ s.mobile_image | image_url: width: 1100 }} 1100w"
+                    sizes="100vw"
+                  >
+                {%- endif -%}
+                {{
+                  s.image
+                  | image_url: width: 2400
+                  | image_tag: widths: '750, 1100, 1500, 1920, 2400', sizes: '100vw', loading: 'lazy', alt: ''
+                }}
+              </picture>
+            {%- endif -%}
+          </div>
+
+          <div class="drop-hero__inner">
+            {%- if s.eyebrow != blank -%}
+              <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+            {%- endif -%}
+
+            {%- if state == 'invalid' and request.design_mode -%}
+              <p class="drop-editor-note">{{ 'drop.invalid_date' | t }}</p>
+            {%- endif -%}
+
+            <div class="drop-pre">
+              <{{ heading_tag }} class="drop-hero__title" data-reveal style="--d: .1s">{{ s.heading }}</{{ heading_tag }}>
+              {%- if s.subheading != blank -%}
+                <div class="lead drop-hero__sub" data-reveal style="--d: .2s">{{ s.subheading }}</div>
+              {%- endif -%}
+            </div>
+
+            <div class="drop-live">
+              <{{ heading_tag }} class="drop-hero__live-title gold-text">{{ s.live_heading | escape }}</{{ heading_tag }}>
+              {%- if s.live_text != blank -%}
+                <div class="lead drop-hero__sub">{{ s.live_text }}</div>
+              {%- endif -%}
+            </div>
+
+            <div class="drop-pre" data-reveal style="--d: .3s">
+              {%- render 'countdown', size: 'lg', glow: s.glow, remaining: remaining, show_seconds: s.show_seconds -%}
+            </div>
+
+            {%- if s.show_notify -%}
+              <div class="drop-pre drop-hero__notify" data-reveal style="--d: .4s">
+                {%- if s.notify_heading != blank -%}
+                  <p class="label">{{ s.notify_heading | escape }}</p>
+                {%- endif -%}
+                {%- render 'notify-form', form_id: form_id, tags: tag, button_label: s.notify_button, legal: true -%}
+              </div>
+            {%- endif -%}
+
+            <div class="drop-live">
+              <a href="{{ live_url }}" class="btn btn--primary btn--lg" data-magnetic>
+                <span class="btn__label">{{ live_label | escape }} {% render 'icon', name: 'arrow-right' %}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </drop-countdown>
+  {%- endcase -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Drop-nedräkning",
+  "class": "section-drop",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "hero",
+          "label": "Fullskärmshero"
+        },
+        {
+          "value": "banner",
+          "label": "Smal banner (lägg i headern för alla sidor)"
+        },
+        {
+          "value": "compact",
+          "label": "Kompakt block"
+        }
+      ],
+      "default": "hero"
+    },
+    {
+      "type": "header",
+      "content": "Tidpunkt (svensk tid)"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_global_date",
+      "label": "Använd temats droppdatum",
+      "info": "Ställs in under Temainställningar → Drop. Gäller även låsningen av köpknappen.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "date",
+      "label": "Eget datum (ÅÅÅÅ-MM-DD)",
+      "placeholder": "2026-11-27"
+    },
+    {
+      "type": "text",
+      "id": "time",
+      "label": "Eget klockslag (TT:MM)",
+      "placeholder": "18:00"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_seconds",
+      "label": "Visa sekunder",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Innehåll före droppet"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Drop 01 — The Black Edition"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Obsidian <em>Black</em>"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Rubriknivå",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1 (sidans huvudrubrik)"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Underrubrik",
+      "default": "<p>Ultratunn korthållare i helsvart. Begränsad upplaga — släpps bara en gång. [FYLL I]</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_notify",
+      "label": "Visa 'Påminn mig'",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "notify_heading",
+      "label": "Text ovanför formuläret",
+      "default": "Få en påminnelse när droppet startar"
+    },
+    {
+      "type": "text",
+      "id": "notify_button",
+      "label": "Knapptext",
+      "default": "Påminn mig"
+    },
+    {
+      "type": "text",
+      "id": "customer_tag",
+      "label": "Kundtagg",
+      "info": "Lämna tomt för att använda temats tagg (drop-svart)."
+    },
+    {
+      "type": "url",
+      "id": "banner_link",
+      "label": "Länk i bannern före droppet",
+      "info": "Standard: landningssidan /pages/drop."
+    },
+    {
+      "type": "header",
+      "content": "När droppet är live"
+    },
+    {
+      "type": "text",
+      "id": "live_heading",
+      "label": "Rubrik",
+      "default": "LIVE NU"
+    },
+    {
+      "type": "richtext",
+      "id": "live_text",
+      "label": "Text",
+      "default": "<p>Droppet är öppet. Begränsat antal — när de är slut är de slut.</p>"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Drop-produkt",
+      "info": "Knappen länkar hit om ingen egen länk anges."
+    },
+    {
+      "type": "url",
+      "id": "live_link",
+      "label": "Egen länk"
+    },
+    {
+      "type": "text",
+      "id": "live_button_label",
+      "label": "Knapptext",
+      "info": "Lämna tomt för temats text (LIVE NU – Köp här)."
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_banner_when_live",
+      "label": "Dölj bannern när droppet är live",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Bakgrund (fullskärm)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Bild"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Bild för mobil"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "info": "Ersätter bilden. Laddas efter sidan och spelas inte på svaga enheter."
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Mörk överton",
+      "default": 85
+    },
+    {
+      "type": "checkbox",
+      "id": "glow",
+      "label": "Glödande guldkant på siffrorna",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Utseende"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-5"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför (kompakt)",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför (kompakt)",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Drop-nedräkning"
+    },
+    {
+      "name": "Drop-banner",
+      "settings": {
+        "layout": "banner",
+        "color_scheme": "scheme-1"
+      }
+    }
+  ]
+}
+{% endschema %}

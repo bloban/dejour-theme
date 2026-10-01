@@ -26,7 +26,13 @@
         "youtube": "YouTube",
         "vimeo": "Vimeo",
         "tiktok": "TikTok"
-      }
+      },
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "pinterest": "Pinterest",
+      "tiktok": "TikTok",
+      "twitter": "X",
+      "youtube": "YouTube"
     },
     "continue_shopping": "Fortsätt shoppa",
     "pagination": {
@@ -55,7 +61,21 @@
       "next_slide": "Bild till höger",
       "previous_slide": "Bild till vänster",
       "name": "Bild"
-    }
+    },
+    "add_image_hint": "Lägg till en bild eller video i sektionens inställningar",
+    "close": "Stäng",
+    "country": "Land/region",
+    "email": "E-post",
+    "email_placeholder": "Din e-postadress",
+    "language": "Språk",
+    "month_names": "januari,februari,mars,april,maj,juni,juli,augusti,september,oktober,november,december",
+    "newsletter_legal_html": "Genom att anmäla dig godkänner du vår <a href=\"{{ url }}\">integritetspolicy</a>. Avsluta när du vill.",
+    "product_placeholder": "Produktnamn",
+    "rating": "Betyg {{ rating }} av 5",
+    "scroll": "Scrolla",
+    "scroll_to_explore": "Scrolla för att utforska",
+    "update": "Uppdatera",
+    "verified_buyer": "Verifierat köp"
   },
   "newsletter": {
     "label": "E-post",
@@ -78,7 +98,8 @@
     "total_reviews": "totalt antal recensioner",
     "star_reviews_info": "{{ rating_value }} av {{ rating_max }} stjärnor",
     "collapsible_content_title": "Innehåll som kan döljas",
-    "complementary_products": "Kompletterande produkter"
+    "complementary_products": "Kompletterande produkter",
+    "skip_to_content": "Hoppa till innehållet"
   },
   "blogs": {
     "article": {
@@ -214,7 +235,21 @@
       "show_more": "Visa mer",
       "show_less": "Visa mindre",
       "filter_and_operator_subtitle": "Matcha alla"
-    }
+    },
+    "add_to_cart": "Lägg i varukorgen",
+    "added": "Tillagd i varukorgen",
+    "adding": "Lägger till …",
+    "badge_coming_soon": "Kommer snart",
+    "badge_drop": "Drop",
+    "badge_new": "Nyhet",
+    "badge_previous_drop": "Tidigare drop",
+    "badge_sale": "Rea",
+    "from": "Från",
+    "regular_price": "Ordinarie pris",
+    "released_on": "Släpptes",
+    "sale_price": "Reapris",
+    "sold_out": "Slutsåld",
+    "unavailable": "Ej tillgänglig"
   },
   "templates": {
     "search": {
@@ -527,5 +562,66 @@
       "expanded": "Mottagarformulär för presentkort öppnat",
       "collapsed": "Mottagarformulär för presentkort stängt"
     }
+  },
+  "archive": {
+    "editor_hint": "Välj en kollektion eller skapa en automatisk kollektion med handtaget 'arkiv' (villkor: produkttagg = arkiv).",
+    "empty": "Arkivet fylls på efter varje drop."
+  },
+  "cart": {
+    "checkout": "Till kassan",
+    "continue": "Utforska kollektionen",
+    "decrease": "Minska antal för {{ product }}",
+    "increase": "Öka antal för {{ product }}",
+    "quantity_for": "Antal för {{ product }}",
+    "duties_and_taxes_included": "Moms och tullavgifter ingår. Frakt beräknas i kassan.",
+    "taxes_included": "Moms ingår. Frakt beräknas i kassan.",
+    "taxes_at_checkout": "Moms och frakt beräknas i kassan.",
+    "empty": "Din varukorg är tom.",
+    "error": "Något gick fel. Försök igen.",
+    "free_shipping_label": "Framsteg mot fri frakt",
+    "free_shipping_reached": "Du har fri frakt.",
+    "free_shipping_remaining_html": "Du är <strong>{{ amount }}</strong> från fri frakt",
+    "note": "Meddelande till oss",
+    "note_toggle": "Lägg till ett meddelande",
+    "remove": "Ta bort",
+    "subtotal": "Delsumma",
+    "title": "Varukorg",
+    "updated": "Varukorgen är uppdaterad"
+  },
+  "drop": {
+    "countdown_label": "Tid kvar till droppet",
+    "days": "Dagar",
+    "hours": "Timmar",
+    "minutes": "Minuter",
+    "seconds": "Sekunder",
+    "days_short": "d",
+    "hours_short": "h",
+    "minutes_short": "m",
+    "seconds_short": "s",
+    "disabled_note": "Drop-läget är avstängt i Temainställningar → Drop. Sektionen visas bara här i editorn.",
+    "invalid_date": "Kontrollera datum (ÅÅÅÅ-MM-DD) och klockslag (TT:MM).",
+    "live_badge": "Live nu",
+    "live_now": "Droppet är live",
+    "notify_button": "Påminn mig",
+    "notify_success": "Klart. Vi mejlar dig när droppet startar.",
+    "releases_in": "Släpps om"
+  },
+  "header": {
+    "account": "Mitt konto",
+    "log_in": "Logga in",
+    "main_nav": "Huvudmeny",
+    "menu": "Meny"
+  },
+  "search": {
+    "collections": "Kollektioner",
+    "loading": "Söker …",
+    "no_results": "Inga resultat för ”{{ terms }}”",
+    "pages": "Sidor",
+    "placeholder": "Vad letar du efter?",
+    "products": "Produkter",
+    "submit": "Sök",
+    "suggestions": "Förslag",
+    "title": "Sök",
+    "view_all": "Visa alla resultat för ”{{ terms }}”"
   }
 }

@@ -1,0 +1,209 @@
+{%- liquid
+  assign s = section.settings
+  assign tiles = section.blocks | where: 'type', 'tile'
+-%}
+<section class="social-feed dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="section-head__text">
+        {%- if s.eyebrow != blank -%}
+          <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if s.heading != blank -%}
+          <h2 class="h1" data-reveal style="--d: .08s">{{ s.heading }}</h2>
+        {%- endif -%}
+        {%- if s.text != blank -%}
+          <div class="lead" data-reveal style="--d: .16s">{{ s.text }}</div>
+        {%- endif -%}
+      </div>
+      <div class="btn-group" data-reveal>
+        {%- if settings.social_instagram_link != blank -%}
+          <a href="{{ settings.social_instagram_link }}" class="btn btn--outline btn--sm" target="_blank" rel="noopener">
+            <span class="btn__label">{% render 'icon', name: 'instagram' %} Instagram</span>
+          </a>
+        {%- endif -%}
+        {%- if settings.social_tiktok_link != blank -%}
+          <a href="{{ settings.social_tiktok_link }}" class="btn btn--outline btn--sm" target="_blank" rel="noopener">
+            <span class="btn__label">{% render 'icon', name: 'tiktok' %} TikTok</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="social-feed__app" {{ block.shopify_attributes }}>{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if tiles.size > 0 -%}
+      <ul class="social-feed__grid" role="list">
+        {%- for block in tiles -%}
+          {%- liquid
+            assign url = block.settings.link
+            if url == blank
+              if block.settings.platform == 'tiktok'
+                assign url = settings.social_tiktok_link
+              else
+                assign url = settings.social_instagram_link
+              endif
+            endif
+          -%}
+          <li class="social-tile" data-reveal style="--d: {{ forloop.index0 | modulo: 6 | times: 0.06 }}s" {{ block.shopify_attributes }}>
+            <a
+              href="{{ url | default: '#' }}"
+              class="social-tile__link media"
+              data-inview-video
+              {% if url != blank %}
+                target="_blank" rel="noopener"
+              {% endif %}
+            >
+              {%- if block.settings.video != blank -%}
+                {{
+                  block.settings.video
+                  | video_tag: autoplay: false, loop: true, muted: true, playsinline: true, controls: false, preload: 'none', image_size: '600x'
+                }}
+              {%- elsif block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 800
+                  | image_tag: widths: '300, 450, 600, 800', sizes: '(min-width: 990px) 17vw, 50vw', loading: 'lazy', alt: block.settings.caption
+                }}
+              {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}
+              {%- endif -%}
+              <span class="social-tile__overlay">
+                {%- render 'icon', name: block.settings.platform -%}
+                {%- if block.settings.caption != blank -%}
+                  <span class="social-tile__caption">{{ block.settings.caption | escape }}</span>
+                {%- endif -%}
+              </span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instagram / TikTok",
+  "class": "section-social",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Lägg in egna bilder/videor som länkar till inläggen, eller lägg till ett app-block för ett automatiskt flöde. Profillänkar hämtas från Temainställningar → Sociala medier."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "@dejour [FYLL I]"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "I det <em>vilda</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Tagga #dejour för en chans att synas här.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Färgschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "tile",
+      "name": "Inlägg",
+      "settings": [
+        {
+          "type": "select",
+          "id": "platform",
+          "label": "Plattform",
+          "options": [
+            {
+              "value": "instagram",
+              "label": "Instagram"
+            },
+            {
+              "value": "tiktok",
+              "label": "TikTok"
+            }
+          ],
+          "default": "instagram"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Bild"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (ersätter bilden)"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Länk till inlägget"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Bildtext"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram / TikTok",
+      "blocks": [
+        { "type": "tile", "settings": { "platform": "instagram" } },
+        { "type": "tile", "settings": { "platform": "tiktok" } },
+        { "type": "tile", "settings": { "platform": "instagram" } },
+        { "type": "tile", "settings": { "platform": "instagram" } },
+        { "type": "tile", "settings": { "platform": "tiktok" } },
+        { "type": "tile", "settings": { "platform": "instagram" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
