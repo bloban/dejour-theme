@@ -1,99 +1,96 @@
-# Dawn
+# De'Jour — Shopify-tema
 
-[![Build status](https://github.com/shopify/dawn/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Shopify/dawn/actions/workflows/ci.yml?query=branch%3Amain)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=informational)](/.github/CONTRIBUTING.md)
+Premiumtema för De'Jour, ombyggt från Dawn 16. Djupsvart, antracit och champagneguld,
+Cormorant + Inter, filmkorn, GSAP-effekter och en drop-nedräkning i centrum.
+All kärnfunktionalitet från Dawn finns kvar: varukorg, kassa, sök, varianter, filter,
+Shopify Standard Events/Actions, kundkonton och lokalisering.
 
-[Getting started](#getting-started) |
-[Staying up to date with Dawn changes](#staying-up-to-date-with-dawn-changes) |
-[Developer tools](#developer-tools) |
-[Contributing](#contributing) |
-[Code of conduct](#code-of-conduct) |
-[Theme Store submission](#theme-store-submission) |
-[License](#license)
+## Filstruktur
 
-Dawn represents a HTML-first, JavaScript-only-as-needed approach to theme development. It's Shopify's first source available theme with performance, flexibility, and [Online Store 2.0 features](https://www.shopify.com/partners/blog/shopify-online-store) built-in and acts as a reference for building Shopify themes.
-
-* **Web-native in its purest form:** Themes run on the [evergreen web](https://www.w3.org/2001/tag/doc/evergreen-web/). We leverage the latest web browsers to their fullest, while maintaining support for the older ones through progressive enhancement—not polyfills.
-* **Lean, fast, and reliable:** Functionality and design defaults to “no” until it meets this requirement. Code ships on quality. Themes must be built with purpose. They shouldn’t support each and every feature in Shopify.
-* **Server-rendered:** HTML must be rendered by Shopify servers using Liquid. Business logic and platform primitives such as translations and money formatting don’t belong on the client. Async and on-demand rendering of parts of the page is OK, but we do it sparingly as a progressive enhancement.
-* **Functional, not pixel-perfect:** The Web doesn’t require each page to be rendered pixel-perfect by each browser engine. Using semantic markup, progressive enhancement, and clever design, we ensure that themes remain functional regardless of the browser.
-
-You can find a more detailed version of our theme code principles in the [contribution guide](https://github.com/Shopify/dawn/blob/main/.github/CONTRIBUTING.md#theme-code-principles).
-
-## Getting started
-We recommend using Dawn as a starting point for theme development. [Learn more on Shopify.dev](https://shopify.dev/themes/getting-started/create).
-
-> If you're building a theme for the Shopify Theme Store, then you can use Dawn as a starting point. However, the theme that you submit needs to be [substantively different from Dawn](https://shopify.dev/themes/store/requirements#uniqueness) so that it provides added value for merchants. Learn about the [ways that you can use Dawn](https://shopify.dev/themes/tools/dawn#ways-to-use-dawn).
-
-Please note that the main branch may include code for features not yet released. The "stable" version of Dawn is available in the theme store.
-
-## Staying up to date with Dawn changes
-
-Say you're building a new theme off Dawn but you still want to be able to pull in the latest changes, you can add a remote `upstream` pointing to this Dawn repository.
-
-1. Navigate to your local theme folder.
-2. Verify the list of remotes and validate that you have both an `origin` and `upstream`:
-```sh
-git remote -v
 ```
-3. If you don't see an `upstream`, you can add one that points to Shopify's Dawn repository:
-```sh
-git remote add upstream https://github.com/Shopify/dawn.git
-```
-4. Pull in the latest Dawn changes into your repository:
-```sh
-git fetch upstream
-git pull upstream main
+layout/      theme.liquid, password.liquid
+sections/    alla sektioner (se nedan) + header-group.json, footer-group.json
+snippets/    head-meta, head-styles, theme-config, product-card, price, countdown,
+             drop-state, drop-compact, notify-form, buy-box, variant-picker,
+             product-gallery, filter-drawer, results-toolbar, cart-line, icon …
+templates/   index, product, collection, collection.arkiv, search, cart,
+             list-collections, page, page.about, page.faq, page.contact,
+             page.shipping, page.terms, page.privacy, page.drop, 404, blog,
+             article, password, gift_card
+assets/      dejour.css (designsystem), product.css, collection.css,
+             theme.js (kärna), product.js, facets.js, motion.js (GSAP)
+config/      settings_schema.json, settings_data.json
+locales/     sv.json + en.default.json (svenska och engelska)
 ```
 
-## Developer tools
+## Sektioner
 
-There are a number of really useful tools that the Shopify Themes team uses during development. Dawn is already set up to work with these tools.
+| Sektion | Används till |
+| --- | --- |
+| `drop-countdown` | Nedräkning: fullskärmshero, smal banner (header) eller kompakt block |
+| `hero` | Fullskärmshero med bild/video, långsam zoom, rubrik som animeras bokstav för bokstav |
+| `marquee` | Löpande textband "DE'JOUR — THE BLACK EDITION —" |
+| `brand-statement` | Kort varumärkesbudskap, orden tonas fram vid scroll |
+| `featured-products` | Utvalda produkter med parallax |
+| `horizontal-showcase` | Detaljer (material, sömmar, slim-profil) i horisontell scroll |
+| `columns` | USP:er och värderingar |
+| `testimonials` | Recensioner (manuella eller app-block) |
+| `archive` | Arkivet / Tidigare drops |
+| `social-feed` | Instagram/TikTok |
+| `newsletter` | Nyhetsbrev (Shopifys kundformulär med taggar) |
+| `main-product` | Produktsida: galleri, zoom, 3D, färgprover, drop-lås, bevakning, dragspel |
+| `related-products` | "Passar bra med" |
+| `main-collection` | Kollektion med filter och sortering (även arkivläge) |
+| `page-hero`, `image-with-text`, `rich-text`, `faq`, `contact`, `info-list`, `legal-text`, `drop-teasers`, `main-404` | Innehållssidor |
 
-### Shopify CLI
+## Förhandsgranska i Shopify
 
-[Shopify CLI](https://github.com/Shopify/shopify-cli) helps you build Shopify themes faster and is used to automate and enhance your local development workflow. It comes bundled with a suite of commands for developing Shopify themes—everything from working with themes on a Shopify store (e.g. creating, publishing, deleting themes) or launching a development server for local theme development.
+Koppla branchen som ett opublicerat tema: **Webbshop → Teman → Lägg till tema →
+Anslut från GitHub** och välj repot och branchen. Det publicerade temat påverkas inte.
 
-You can follow this [quick start guide for theme developers](https://shopify.dev/docs/themes/tools/cli) to get started.
+## Att ställa in i Shopify-admin
 
-### Theme Check
+1. **Droppet** — Temainställningar → Drop: datum (ÅÅÅÅ-MM-DD) och klockslag (TT:MM) i
+   svensk tid. Ge drop-produkten taggen `drop` (Obsidian Black har i dag taggen
+   `kommer-snart`, som bara ger etiketten "Kommer snart").
+2. **Arkivet** — Skapa en automatisk kollektion med handtaget `arkiv`
+   (villkor: Produkttagg är lika med `arkiv`) och välj mallen `arkiv`.
+   Flytta produkter till arkivet genom att ge dem taggen `arkiv`.
+3. **Sidor** — Skapa sidorna och välj mall:
+   `om-oss` → *about*, `faq` → *faq*, `contact` → *contact* (finns redan),
+   `frakt-och-returer` → *shipping*, `kopvillkor` → *terms*,
+   `integritetspolicy` → *privacy*, `drop` → *drop*.
+4. **Menyer** — Lägg till sidorna i huvudmenyn och sidfotsmenyn.
+5. **Bilder** — Ladda upp hero-bild/video (den svarta korthållaren), bilder till
+   detaljsektionen, teaserbilder och sociala inlägg i temaeditorn.
+6. **Filter och "Passar bra med"** — Appen Search & Discovery: aktivera filter
+   (färg, tillgänglighet, pris) och ange kompletterande produkter.
+7. **Fri frakt-gräns** — Temainställningar → Varukorg (standard 499 kr). Gränsen
+   måste också finnas i fraktinställningarna.
+8. **Fyll i** alla texter markerade med `[FYLL I]`.
 
-We recommend using [Theme Check](https://github.com/shopify/theme-check) as a way to validate and lint your Shopify themes.
+### Metafält (valfria)
 
-We've added Theme Check to Dawn's [list of VS Code extensions](/.vscode/extensions.json) so if you're using Visual Studio Code as your code editor of choice, you'll be prompted to install the [Theme Check VS Code](https://marketplace.visualstudio.com/items?itemName=Shopify.theme-check-vscode) extension upon opening VS Code after you've forked and cloned Dawn.
+| Metafält | Typ | Effekt |
+| --- | --- | --- |
+| `custom.release_date` | Datum | Släppdatum i arkivet |
+| `custom.swatch_color` | Färg | Färgprov för produkten |
+| `custom.color_name` | Text | Färgnamn bredvid färgproverna |
+| `custom.color_siblings` | Lista med produkter | Färgsyskon (separata produkter i andra färger) |
+| `reviews.rating` / `reviews.rating_count` | Fylls av recensionsappar | Stjärnor på produktsidan |
 
-You can also run it from a terminal with the following Shopify CLI command:
+## Bra att veta
 
-```bash
-shopify theme check
-```
-
-### Continuous Integration
-
-Dawn uses [GitHub Actions](https://github.com/features/actions) to maintain the quality of the theme. [This is a starting point](https://github.com/Shopify/dawn/blob/main/.github/workflows/ci.yml) and what we suggest to use in order to ensure you're building better themes. Feel free to build off of it!
-
-#### Shopify/lighthouse-ci-action
-
-We love fast websites! Which is why we created [Shopify/lighthouse-ci-action](https://github.com/Shopify/lighthouse-ci-action). This runs a series of [Google Lighthouse](https://developers.google.com/web/tools/lighthouse) audits for the home, product and collections pages on a store to ensure code that gets added doesn't degrade storefront performance over time.
-
-#### Shopify/theme-check-action
-
-Dawn runs [Theme Check](#Theme-Check) on every commit via [Shopify/theme-check-action](https://github.com/Shopify/theme-check-action).
-
-## Contributing
-
-Want to make commerce better for everyone by contributing to Dawn? We'd love your help! Please read our [contributing guide](https://github.com/Shopify/dawn/blob/main/.github/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build for Dawn.
-
-## Code of conduct
-
-All developers who wish to contribute through code or issues, please first read our [Code of Conduct](https://github.com/Shopify/dawn/blob/main/.github/CODE_OF_CONDUCT.md).
-
-## Theme Store submission
-
-The [Shopify Theme Store](https://themes.shopify.com/) is the place where Shopify merchants find the themes that they'll use to showcase and support their business. As a theme partner, you can create themes for the Shopify Theme Store and reach an international audience of an ever-growing number of entrepreneurs.
-
-Ensure that you follow the list of [theme store requirements](https://shopify.dev/themes/store/requirements) if you're interested in becoming a [Shopify Theme Partner](https://themes.shopify.com/services/themes/guidelines) and building themes for the Shopify platform.
-
-## License
-
-Copyright (c) 2021-present Shopify Inc. See [LICENSE](/LICENSE.md) for further details.
+- **Drop-låset** döljer köpknappen i webbläsaren fram till droppet och växlar till
+  "LIVE NU – Köp här" utan omladdning. Det är ett lås i gränssnittet. Håll lagret på 0
+  eller schemalägg publiceringen om ingen ska kunna köpa via direktanrop före droppet.
+- **Påminn mig / Bevaka** använder Shopifys kundformulär med taggarna `drop-svart`
+  respektive `bevaka` + `bevaka-<produkthandtag>`. Kunden får samtycke till
+  marknadsföring. Finns e-postadressen redan som kund kan Shopify låta bli att lägga
+  till taggen.
+- **Effekter**: GSAP och ScrollTrigger laddas från jsDelivr (med cdnjs som reserv)
+  först när sidan är färdigladdad. De laddas inte alls vid "minska rörelse" eller på
+  svaga enheter. Rubrikanimationen, flip-siffrorna, guldglansen och scroll-reveal
+  är ren CSS/JS utan bibliotek.
+- **Språk**: svenska (`sv.json`) och engelska (`en.default.json`, även reserv för
+  andra språk som är publicerade i butiken).
