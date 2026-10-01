@@ -249,7 +249,24 @@
     "released_on": "Släpptes",
     "sale_price": "Reapris",
     "sold_out": "Slutsåld",
-    "unavailable": "Ej tillgänglig"
+    "unavailable": "Ej tillgänglig",
+    "open_media": "Öppna bild {{ index }} i helskärm",
+    "view_3d": "Visa i 3D",
+    "view_in_space": "Visa i ditt rum",
+    "play_video": "Spela video",
+    "gallery": "Produktbilder",
+    "color": "Färg",
+    "tax_included": "Inkl. moms",
+    "tax_excluded": "Exkl. moms",
+    "shipping_calculated": "Frakt beräknas i kassan",
+    "decrease": "Minska antal",
+    "increase": "Öka antal",
+    "quantity": "Antal",
+    "restock_title": "Bevaka om den kommer tillbaka",
+    "restock_text": "Slutsåld just nu. Lämna din e-post så hör vi av oss om den kommer tillbaka.",
+    "restock_short": "Bevaka",
+    "add_short": "Köp",
+    "recommendations_hint": "Rekommendationer visas här i butiken. Ställ in kompletterande produkter i appen Search & Discovery eller välj produkter manuellt."
   },
   "templates": {
     "search": {
@@ -604,7 +621,8 @@
     "live_now": "Droppet är live",
     "notify_button": "Påminn mig",
     "notify_success": "Klart. Vi mejlar dig när droppet startar.",
-    "releases_in": "Släpps om"
+    "releases_in": "Släpps om",
+    "notify_text": "Få ett mejl i samma sekund som droppet öppnar."
   },
   "header": {
     "account": "Mitt konto",

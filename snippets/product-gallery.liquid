@@ -1,0 +1,159 @@
+{%- comment -%}
+  Produktgalleri: svep på mobil, rutnät på desktop, zoom vid hovring,
+  ljuslåda vid klick, video och 3D-modeller (Shopify model-viewer).
+  - product
+  - section_id
+  - zoom: true/false
+  - layout: 'grid' eller 'stack'
+  - ratio: 'natural', 'portrait' eller 'square'
+{%- endcomment -%}
+{%- liquid
+  assign media_count = product.media.size
+  assign current = product.selected_or_first_available_variant
+  assign featured_id = current.featured_media.id | default: product.featured_media.id
+-%}
+<product-gallery
+  class="pgallery pgallery--{{ layout }} pgallery--ratio-{{ ratio | default: 'portrait' }}{% if media_count <= 1 %} pgallery--single{% endif %}"
+  data-section="{{ section_id }}"
+  data-zoom="{{ zoom }}"
+>
+  <ul class="pgallery__list" role="list" data-gallery-list>
+    {%- for media in product.media -%}
+      {%- liquid
+        assign alt = media.alt | default: product.title
+        assign is_first = false
+        if media.id == featured_id
+          assign is_first = true
+        endif
+        assign loading = 'lazy'
+        if forloop.first
+          assign loading = 'eager'
+        endif
+      -%}
+      <li
+        class="pgallery__item{% if is_first %} is-active{% endif %}"
+        data-media-id="{{ media.id }}"
+        data-index="{{ forloop.index0 }}"
+      >
+        {%- case media.media_type -%}
+          {%- when 'image' -%}
+            <button
+              type="button"
+              class="pgallery__media"
+              data-lightbox-open="{{ forloop.index0 }}"
+              aria-label="{{ 'products.open_media' | t: index: forloop.index }}"
+              style="--ratio: {{ media.aspect_ratio | default: 0.8 }}"
+            >
+              {%- if forloop.first -%}
+                {{
+                  media
+                  | image_url: width: 2000
+                  | image_tag:
+                    widths: '500, 750, 1000, 1300, 1600, 2000',
+                    sizes: '(min-width: 990px) 58vw, 100vw',
+                    loading: 'eager',
+                    fetchpriority: 'high',
+                    alt: alt
+                }}
+              {%- else -%}
+                {{
+                  media
+                  | image_url: width: 2000
+                  | image_tag:
+                    widths: '500, 750, 1000, 1300, 1600, 2000',
+                    sizes: '(min-width: 990px) 29vw, 100vw',
+                    loading: loading,
+                    alt: alt
+                }}
+              {%- endif -%}
+            </button>
+
+          {%- when 'model' -%}
+            <product-model class="pgallery__media pgallery__media--model" style="--ratio: 1">
+              {{
+                media.preview_image
+                | image_url: width: 1600
+                | image_tag: widths: '500, 800, 1200, 1600', sizes: '(min-width: 990px) 29vw, 100vw', loading: 'lazy', alt: alt
+              }}
+              <button type="button" class="pgallery__overlay-btn" data-load-model>
+                {%- render 'icon', name: 'cube' -%}
+                <span>{{ 'products.view_3d' | t }}</span>
+              </button>
+              <template>
+                {{ media | model_viewer_tag: image_size: '1600x', reveal: 'interaction', toggleable: true, data-model-id: media.id }}
+              </template>
+            </product-model>
+            <button
+              type="button"
+              class="pgallery__xr btn btn--ghost btn--sm"
+              data-shopify-xr
+              data-shopify-model3d-id="{{ media.id }}"
+              data-shopify-title="{{ product.title | escape }}"
+              data-shopify-xr-hidden
+            >
+              <span class="btn__label">{% render 'icon', name: 'cube' %}{{ 'products.view_in_space' | t }}</span>
+            </button>
+
+          {%- when 'video', 'external_video' -%}
+            <deferred-media class="pgallery__media pgallery__media--video" style="--ratio: {{ media.aspect_ratio | default: 1.78 }}">
+              {{
+                media.preview_image
+                | image_url: width: 1600
+                | image_tag: widths: '500, 800, 1200, 1600', sizes: '(min-width: 990px) 29vw, 100vw', loading: 'lazy', alt: alt
+              }}
+              <button type="button" class="pgallery__overlay-btn" data-load-media>
+                {%- render 'icon', name: 'play' -%}
+                <span>{{ 'products.play_video' | t }}</span>
+              </button>
+              <template>
+                {%- if media.media_type == 'video' -%}
+                  {{ media | video_tag: image_size: '1600x', autoplay: true, loop: true, controls: true, playsinline: true, preload: 'none' }}
+                {%- elsif media.host == 'youtube' -%}
+                  {{ media | external_video_url: autoplay: true, loop: true, playlist: media.external_id | external_video_tag: loading: 'lazy' }}
+                {%- else -%}
+                  {{ media | external_video_url: autoplay: true, loop: true | external_video_tag: loading: 'lazy' }}
+                {%- endif -%}
+              </template>
+            </deferred-media>
+        {%- endcase -%}
+      </li>
+    {%- else -%}
+      <li class="pgallery__item">
+        <div class="pgallery__media" style="--ratio: 0.8">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+
+  {%- if media_count > 1 -%}
+    <div class="pgallery__counter label" aria-hidden="true">
+      <span data-gallery-current>1</span> / {{ media_count }}
+    </div>
+    <div class="pgallery__progress" aria-hidden="true"><span data-gallery-progress style="--count: {{ media_count }}"></span></div>
+  {%- endif -%}
+
+  {%- if zoom -%}
+    <dialog id="Lightbox-{{ section_id }}" class="drawer lightbox" aria-label="{{ 'products.gallery' | t }}">
+      <div class="drawer__panel lightbox__panel">
+        <button type="button" class="icon-btn lightbox__close" data-close aria-label="{{ 'general.close' | t }}">
+          {%- render 'icon', name: 'close' -%}
+        </button>
+        <ul class="lightbox__list" role="list">
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+              {%- assign alt = media.alt | default: product.title -%}
+              <li data-lightbox-index="{{ forloop.index0 }}">
+                {{
+                  media
+                  | image_url: width: 2400
+                  | image_tag: widths: '800, 1200, 1600, 2000, 2400', sizes: '100vw', loading: 'lazy', alt: alt
+                }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </dialog>
+  {%- endif -%}
+</product-gallery>

@@ -3,101 +3,208 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "vendor": {
-          "type": "text",
+        "title": {
+          "type": "title",
           "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "uppercase"
+            "show_eyebrow": true
           }
         },
-        "title": {
-          "type": "title"
-        },
         "price": {
-          "type": "price"
+          "type": "price",
+          "settings": {
+            "show_tax": true
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
         },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
+            "siblings_label": "Färg"
           }
-        },
-        "quantity_selector": {
-          "type": "quantity_selector"
         },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "show_quantity": true,
+            "show_dynamic_checkout": true
           }
         },
-        "description": {
-          "type": "description"
-        },
-        "share": {
-          "type": "share",
+        "usps": {
+          "type": "usp_list",
           "settings": {
-            "share_label": "Share"
+            "icon_1": "truck",
+            "text_1": "Fri frakt över 499 kr med PostNord",
+            "icon_2": "return",
+            "text_2": "14 dagars ångerrätt",
+            "icon_3": "lock",
+            "text_3": "Säker och krypterad betalning"
+          }
+        },
+        "acc_details": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Detaljer & mått",
+            "icon": "ruler",
+            "source": "custom",
+            "content": "<ul><li>Mått: [FYLL I] × [FYLL I] mm</li><li>Tjocklek: [FYLL I] mm</li><li>Rymmer: [FYLL I] kort + sedlar</li><li>Vikt: [FYLL I] g</li></ul>",
+            "open": false
+          }
+        },
+        "acc_material": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Material & skötsel",
+            "icon": "leather",
+            "source": "custom",
+            "content": "<p>[FYLL I] Fullnarvsläder med handsydda kanter. Torka av med en mjuk, torr trasa. Undvik väta och direkt solljus.</p>",
+            "open": false
+          }
+        },
+        "acc_shipping": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Frakt & returer",
+            "icon": "truck",
+            "source": "custom",
+            "content": "<p>Vi skickar med PostNord inom 1–2 arbetsdagar. Leveranstid 1–3 arbetsdagar inom Sverige. Fri frakt över 499 kr.</p><p>Du har 14 dagars ångerrätt enligt distansavtalslagen. <a href=\"/pages/frakt-och-returer\">Läs mer om frakt och returer</a>.</p>",
+            "open": false
           }
         }
       },
       "block_order": [
-        "vendor",
         "title",
         "price",
-        "variant_picker",
-        "quantity_selector",
-        "buy_buttons",
+        "rating",
         "description",
-        "share"
+        "variant_picker",
+        "buy_buttons",
+        "usps",
+        "acc_details",
+        "acc_material",
+        "acc_shipping"
       ],
       "settings": {
-        "enable_sticky_info": true,
+        "gallery_layout": "grid",
+        "media_ratio": "portrait",
+        "enable_zoom": true,
+        "sticky_info": true,
+        "show_sticky_buy": true,
         "color_scheme": "scheme-1",
-        "media_position": "left",
-        "gallery_layout": "stacked",
-        "media_size": "large",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "image_zoom": "lightbox",
-        "mobile_thumbnails": "hide",
-        "hide_variants": true,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": "md"
       }
     },
-    "disclosures": {
-      "type": "disclosures",
+    "marquee": {
+      "type": "marquee",
       "settings": {
-        "padding_top": 36,
-        "padding_bottom": 0
+        "text": "DE'JOUR — THE BLACK EDITION —",
+        "speed": 50,
+        "direction": "left",
+        "style": "mixed",
+        "size": "md",
+        "borders": true,
+        "color_scheme": "scheme-1"
       }
     },
-    "related-products": {
+    "details": {
+      "type": "horizontal-showcase",
+      "blocks": {
+        "panel-1": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Material",
+            "title": "Fullnarvs<em>läder</em>",
+            "text": "<p>[FYLL I] Utvalt läder som får en vacker patina med tiden.</p>"
+          }
+        },
+        "panel-2": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Sömmar",
+            "title": "Handsydda <em>sömmar</em>",
+            "text": "<p>[FYLL I] Sadelsömmar som håller i åratal.</p>"
+          }
+        },
+        "panel-3": {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "Slim-profil",
+            "title": "Bara <em>[FYLL I] mm</em>",
+            "text": "<p>[FYLL I] Rymmer upp till X kort utan att bukta fickan.</p>"
+          }
+        }
+      },
+      "block_order": ["panel-1", "panel-2", "panel-3"],
+      "settings": {
+        "eyebrow": "Hantverket",
+        "heading": "Detaljerna du <em>känner</em>",
+        "text": "<p>Varje korthållare är gjord för att bli bättre med åren.</p>",
+        "color_scheme": "scheme-2"
+      }
+    },
+    "reviews": {
+      "type": "testimonials",
+      "blocks": {
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>[FYLL I] Så tunn att jag glömmer att den ligger i fickan.</p>",
+            "author": "[FYLL I]",
+            "meta": "Stockholm",
+            "verified": true
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>[FYLL I] Lädret känns otroligt exklusivt och sömmarna är perfekta.</p>",
+            "author": "[FYLL I]",
+            "meta": "Göteborg",
+            "verified": true
+          }
+        },
+        "review-3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "<p>[FYLL I] Snabb leverans och en förpackning värd att spara.</p>",
+            "author": "[FYLL I]",
+            "meta": "Malmö",
+            "verified": true
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3"],
+      "settings": {
+        "eyebrow": "Omdömen",
+        "heading": "Vad kunderna <em>säger</em>",
+        "rating": "[FYLL I] / 5",
+        "rating_text": "Baserat på [FYLL I] omdömen",
+        "color_scheme": "scheme-1",
+        "padding_top": "lg",
+        "padding_bottom": "md"
+      }
+    },
+    "related": {
       "type": "related-products",
       "settings": {
-        "heading": "You may also like",
-        "heading_size": "h2",
-        "products_to_show": 4,
-        "columns_desktop": 4,
+        "eyebrow": "Komplettera",
+        "heading": "Passar bra <em>med</em>",
+        "limit": 4,
+        "columns": 4,
         "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 36,
-        "padding_bottom": 28
+        "padding_top": "md",
+        "padding_bottom": "lg"
       }
     }
   },
-  "order": [
-    "main",
-    "disclosures",
-    "related-products"
-  ]
+  "order": ["main", "marquee", "details", "reviews", "related"]
 }

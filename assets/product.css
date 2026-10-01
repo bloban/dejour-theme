@@ -1,0 +1,688 @@
+/* ==========================================================================
+   DE'JOUR — produktsida
+   ========================================================================== */
+
+.product {
+  padding-top: 16px;
+}
+
+@media (min-width: 990px) {
+  .product {
+    padding-top: 40px;
+  }
+}
+
+.product__grid {
+  display: grid;
+  gap: 28px;
+}
+
+@media (min-width: 990px) {
+  .product__grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(360px, 1fr);
+    gap: clamp(40px, 5vw, 104px);
+    align-items: start;
+  }
+}
+
+.product__info {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  min-width: 0;
+}
+
+@media (min-width: 990px) {
+  .product__info--sticky {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+}
+
+.product__block {
+  margin: 0;
+}
+
+.product__head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product__head > * {
+  margin: 0;
+}
+
+.product__title {
+  margin: 0;
+  font-size: calc(clamp(2.4rem, 4.4vw, 4.4rem) * var(--heading-scale));
+  line-height: 0.98;
+}
+
+.product__archive {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.product__price {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: -8px;
+}
+
+.product__price .price {
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+}
+
+.product__tax {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--c-muted);
+}
+
+.product__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-body);
+}
+
+.product__desc {
+  font-size: 0.95rem;
+}
+
+/* ---------- Galleri ---------- */
+.pgallery {
+  position: relative;
+}
+
+.pgallery__list {
+  list-style: none;
+  display: flex;
+  margin-inline: calc(var(--gutter) * -1);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.pgallery__list::-webkit-scrollbar {
+  display: none;
+}
+
+.pgallery__item {
+  position: relative;
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+}
+
+.pgallery__media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ratio, 0.8);
+  overflow: hidden;
+  background: var(--c-surface);
+  padding: 0;
+  border: 0;
+}
+
+.pgallery--ratio-portrait .pgallery__media {
+  aspect-ratio: 4 / 5;
+}
+
+.pgallery--ratio-square .pgallery__media {
+  aspect-ratio: 1 / 1;
+}
+
+button.pgallery__media {
+  cursor: zoom-in;
+}
+
+.pgallery__media > img,
+.pgallery__media > svg,
+.pgallery__media > video,
+.pgallery__media > iframe,
+.pgallery__media > model-viewer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+}
+
+.pgallery__media > img {
+  transform-origin: var(--zx, 50%) var(--zy, 50%);
+  transition: transform 0.7s var(--ease-out);
+}
+
+.pgallery__media.is-zooming > img {
+  transform: scale(2);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.pgallery__overlay-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  transform: translate(-50%, -50%);
+  font-size: var(--fs-label);
+  font-weight: var(--font-body-weight-medium);
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+  color: var(--c-text);
+  background: rgba(var(--c-bg-rgb), 0.55);
+  border: 1px solid rgba(var(--c-accent-rgb), 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: border-color var(--dur-fast);
+}
+
+.pgallery__overlay-btn:hover {
+  border-color: var(--c-accent);
+}
+
+.pgallery__overlay-btn svg {
+  width: 18px;
+  height: 18px;
+  color: var(--c-accent);
+}
+
+.is-loaded > .pgallery__overlay-btn,
+.is-loaded > img {
+  display: none;
+}
+
+.pgallery__xr {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 3;
+}
+
+.pgallery__xr[data-shopify-xr-hidden] {
+  display: none;
+}
+
+.pgallery__counter {
+  position: absolute;
+  right: 14px;
+  bottom: 18px;
+  z-index: 2;
+  padding: 6px 10px;
+  background: rgba(var(--c-bg-rgb), 0.55);
+  color: var(--c-text);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.pgallery__progress {
+  position: relative;
+  height: 1px;
+  margin-top: 14px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.pgallery__progress span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(100% / var(--count, 1));
+  background: var(--c-accent);
+  transform: translateX(calc(var(--index, 0) * 100%));
+  transition: transform 0.5s var(--ease-out);
+}
+
+@media (min-width: 990px) {
+  .pgallery__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .pgallery--stack .pgallery__list,
+  .pgallery--single .pgallery__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pgallery__item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .pgallery__counter,
+  .pgallery__progress {
+    display: none;
+  }
+}
+
+/* Ljuslåda */
+.lightbox .lightbox__panel {
+  left: 0;
+  width: 100%;
+  border: 0;
+  background: var(--c-bg);
+  transform: translateY(24px);
+  opacity: 0;
+  transition:
+    transform 0.6s var(--ease-out),
+    opacity 0.5s var(--ease-out);
+}
+
+.lightbox.is-open .lightbox__panel {
+  transform: none;
+  opacity: 1;
+}
+
+.lightbox__list {
+  list-style: none;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: grid;
+  gap: 8px;
+  padding: 0;
+}
+
+.lightbox__list img {
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 990px) {
+  .lightbox__list {
+    justify-items: center;
+    padding: 24px 0;
+  }
+
+  .lightbox__list img {
+    width: min(100vw - 160px, 1400px);
+  }
+}
+
+.lightbox__close {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  background: rgba(var(--c-bg-rgb), 0.6);
+  border-radius: 50%;
+}
+
+/* ---------- Variantväljare ---------- */
+.vpicker {
+  display: grid;
+  gap: 22px;
+}
+
+.vpicker__group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.vpicker__group + .vpicker__group,
+.vpicker__group--siblings + .vpicker {
+  margin-top: 22px;
+}
+
+.vpicker__legend {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 0;
+}
+
+.vpicker__value {
+  font-size: var(--fs-small);
+  color: var(--text-body);
+}
+
+.vpicker__values {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.swatch {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 4px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color var(--dur-fast);
+}
+
+.swatch__color {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--swatch, #2a2a2a);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+.swatch:hover {
+  border-color: var(--line-strong);
+}
+
+.swatch.is-active,
+input:checked + .swatch {
+  border-color: var(--c-accent);
+}
+
+input:focus-visible + .swatch,
+input:focus-visible + label {
+  outline: 1px solid var(--c-accent);
+  outline-offset: 3px;
+}
+
+.swatch.is-unavailable::after,
+.is-unavailable > .swatch::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 50%;
+  height: 1px;
+  background: var(--c-text);
+  transform: rotate(-45deg);
+  opacity: 0.7;
+}
+
+.pill label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  height: 46px;
+  padding: 0 18px;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast),
+    color var(--dur-fast);
+}
+
+.pill label:hover {
+  border-color: rgba(var(--c-accent-rgb), 0.6);
+}
+
+.pill input:checked + label {
+  border-color: var(--c-accent);
+  color: var(--c-accent-light);
+  box-shadow: inset 0 0 0 1px var(--c-accent);
+}
+
+.pill.is-unavailable label {
+  color: var(--c-muted);
+  text-decoration: line-through;
+}
+
+/* ---------- Köpruta ---------- */
+.buy {
+  display: grid;
+  gap: 14px;
+}
+
+.buy-form {
+  display: grid;
+  gap: 12px;
+}
+
+.buy-form__row {
+  display: flex;
+  gap: 10px;
+}
+
+.buy-form__add {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 749px) {
+  .buy-form__add {
+    padding: 0 1.2em;
+    letter-spacing: 0.18em;
+  }
+}
+
+.qty--lg {
+  height: 62px;
+  flex-shrink: 0;
+}
+
+.qty--lg button {
+  width: 42px;
+}
+
+.buy-form__terms:empty {
+  display: none;
+}
+
+.buy-form__terms shopify-payment-terms {
+  font-size: 0.75rem;
+  color: var(--c-muted);
+}
+
+/* Snabbkassa (Shop Pay m.fl.) i temats stil */
+.buy-form__dynamic .shopify-payment-button__button {
+  display: block;
+  width: 100%;
+  min-height: 54px;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.buy-form__dynamic .shopify-payment-button__button--unbranded {
+  background: transparent !important;
+  border: 1px solid var(--line-strong) !important;
+  color: var(--c-text) !important;
+  font-family: var(--font-body) !important;
+  font-weight: var(--font-body-weight-medium) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.24em !important;
+  text-transform: uppercase;
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+
+.buy-form__dynamic .shopify-payment-button__button--unbranded:hover:not([disabled]) {
+  border-color: var(--c-accent) !important;
+  color: var(--c-accent-light) !important;
+}
+
+.buy-form__dynamic .shopify-payment-button__more-options {
+  margin-top: 10px;
+  font-size: 0.72rem;
+  color: var(--c-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.restock {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: rgba(var(--c-text-rgb), 0.02);
+}
+
+.restock > * {
+  margin: 0;
+}
+
+.restock .label svg {
+  width: 14px;
+  height: 14px;
+}
+
+.buy-drop {
+  display: block;
+}
+
+.buy-drop__pre {
+  display: grid;
+  gap: 16px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid rgba(var(--c-accent-rgb), 0.38);
+  background: linear-gradient(160deg, rgba(var(--c-accent-rgb), 0.09), rgba(var(--c-accent-rgb), 0) 60%);
+}
+
+.buy-drop__pre > * {
+  margin: 0;
+}
+
+.buy-drop__live {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+
+.buy-drop__live > *:not(.badge) {
+  width: 100%;
+}
+
+/* ---------- Trygghetspunkter ---------- */
+.p-usps {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.82rem;
+  color: var(--text-body);
+}
+
+.p-usps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.p-usps svg {
+  width: 18px;
+  height: 18px;
+  color: var(--c-accent);
+}
+
+/* ---------- Dragspel på produktsidan ---------- */
+.accordion--product {
+  border-top: 0;
+}
+
+.accordion--product + .accordion--product {
+  margin-top: -26px;
+}
+
+.accordion--product .accordion__item {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.accordion--product + .accordion--product .accordion__item {
+  border-top: 0;
+}
+
+.accordion__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.accordion__title svg {
+  width: 16px;
+  height: 16px;
+  color: var(--c-accent);
+}
+
+.accordion--product .accordion__content {
+  font-size: 0.92rem;
+}
+
+/* ---------- Fast köpknapp (mobil) ---------- */
+.sticky-buy {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+  background: rgba(var(--c-bg-rgb), 0.9);
+  border-top: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  transform: translateY(110%);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.sticky-buy.is-visible {
+  transform: none;
+}
+
+@media (min-width: 990px) {
+  .sticky-buy {
+    display: none;
+  }
+}
+
+.sticky-buy__media {
+  flex: 0 0 40px;
+  aspect-ratio: 4 / 5;
+}
+
+.sticky-buy__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sticky-buy__title {
+  overflow: hidden;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sticky-buy__price {
+  font-size: 0.75rem;
+  color: var(--text-body);
+}
+
+.sticky-buy .btn {
+  flex-shrink: 0;
+}
+
+/* ---------- Passar bra med ---------- */
+.shopify-section.is-empty {
+  display: none;
+}

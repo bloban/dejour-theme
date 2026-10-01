@@ -1,0 +1,135 @@
+{%- comment -%}
+  Köpruta: produktformulär, snabbkassa, slutsåld-bevakning och drop-lås.
+  - product
+  - section_id
+  - show_quantity
+  - show_dynamic_checkout
+{%- endcomment -%}
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign form_id = 'ProductForm-' | append: section_id
+  assign restock_id = 'Restock-' | append: section_id
+  assign drop_form_id = 'DropNotify-' | append: section_id
+  assign rule = current.quantity_rule
+
+  assign tags_down = product.tags | join: '|' | downcase | split: '|'
+  assign drop_tag = settings.drop_product_tag | strip | downcase
+  assign is_drop = false
+  if settings.drop_enabled and drop_tag != blank and tags_down contains drop_tag
+    assign is_drop = true
+  endif
+
+  assign prefix = settings.notify_tag_prefix | default: 'bevaka' | strip
+  assign restock_tags = prefix | append: ', ' | append: prefix | append: '-' | append: product.handle
+
+  if is_drop
+    capture drop_info
+      render 'drop-state', date: settings.drop_date, time: settings.drop_time
+    endcapture
+    assign drop_info = drop_info | strip | split: '|'
+    assign drop_state = drop_info[0]
+    assign drop_remaining = drop_info[1] | plus: 0
+    if drop_state == 'invalid'
+      assign is_drop = false
+    endif
+  endif
+-%}
+
+{%- capture buy_form -%}
+  {%- if product.available -%}
+    <product-form class="buy-form-wrap" data-section="{{ section_id }}">
+      {%- form 'product', product, id: form_id, class: 'buy-form', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ current.id }}" disabled data-variant-id>
+        <div class="buy-form__row">
+          {%- if show_quantity -%}
+            <div class="qty qty--lg">
+              <button type="button" data-qty-btn="minus" aria-label="{{ 'products.decrease' | t }}">
+                {%- render 'icon', name: 'minus' -%}
+              </button>
+              <input
+                type="number"
+                inputmode="numeric"
+                name="quantity"
+                value="{{ rule.min | default: 1 }}"
+                min="{{ rule.min | default: 1 }}"
+                step="{{ rule.increment | default: 1 }}"
+                {% if rule.max != null %}
+                  max="{{ rule.max }}"
+                {% endif %}
+                aria-label="{{ 'products.quantity' | t }}"
+              >
+              <button type="button" data-qty-btn="plus" aria-label="{{ 'products.increase' | t }}">
+                {%- render 'icon', name: 'plus' -%}
+              </button>
+            </div>
+          {%- endif -%}
+          <button
+            type="submit"
+            name="add"
+            class="btn btn--primary btn--lg buy-form__add"
+            data-add-button
+            {% unless current.available %}
+              disabled
+            {% endunless %}
+          >
+            <span class="btn__label" data-add-label>
+              {%- if current.available -%}
+                {{ 'products.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.sold_out' | t }}
+              {%- endif -%}
+            </span>
+          </button>
+        </div>
+
+        {%- if show_dynamic_checkout -%}
+          <div class="buy-form__dynamic" data-dynamic-checkout{% unless current.available %} hidden{% endunless %}>
+            {{ form | payment_button }}
+          </div>
+        {%- endif -%}
+
+        <div class="buy-form__terms">{{ form | payment_terms }}</div>
+
+        <p class="form-msg form-msg--error" data-form-error role="alert" hidden>
+          {%- render 'icon', name: 'error' -%}
+          <span data-form-error-text></span>
+        </p>
+      {%- endform -%}
+    </product-form>
+  {%- endif -%}
+
+  <div class="restock" data-restock{% if current.available %} hidden{% endif %}>
+    <p class="label label--accent">{% render 'icon', name: 'bell' %}{{ 'products.restock_title' | t }}</p>
+    <p class="text-small text-body">{{ 'products.restock_text' | t }}</p>
+    {%- render 'notify-form',
+      form_id: restock_id,
+      tags: restock_tags,
+      button_label: '',
+      success: ''
+    -%}
+  </div>
+{%- endcapture -%}
+
+<div class="buy" data-buy>
+  {%- if is_drop -%}
+    <drop-countdown
+      class="buy-drop"
+      data-date="{{ settings.drop_date | strip | escape }}"
+      data-time="{{ settings.drop_time | strip | escape }}"
+      data-drop-state="{{ drop_state }}"
+    >
+      <div class="drop-pre buy-drop__pre">
+        <p class="label label--accent">{{ 'drop.releases_in' | t }}</p>
+        {%- render 'countdown', size: 'sm', glow: true, remaining: drop_remaining -%}
+        <p class="text-small text-body">{{ 'drop.notify_text' | t }}</p>
+        {%- render 'notify-form', form_id: drop_form_id, tags: settings.drop_customer_tag -%}
+      </div>
+      <div class="drop-live buy-drop__live">
+        <span class="badge badge--solid badge--live">{{ 'drop.live_badge' | t }}</span>
+        {{ buy_form }}
+      </div>
+    </drop-countdown>
+  {%- else -%}
+    {{ buy_form }}
+  {%- endif -%}
+</div>

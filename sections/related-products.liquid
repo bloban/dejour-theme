@@ -1,255 +1,137 @@
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-price.css' | asset_url | stylesheet_tag }}
-{{ 'section-related-products.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign s = section.settings
+  assign manual = s.products
+  assign desk_vw = 100 | divided_by: s.columns
+  assign grid_sizes = '(min-width: 990px) ' | append: desk_vw | append: 'vw, 50vw'
+-%}
 
-{% if section.settings.image_shape == 'blob' %}
-  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
+{%- capture head -%}
+  <div class="section-head section-head--split">
+    <div class="section-head__text">
+      {%- if s.eyebrow != blank -%}
+        <p class="label label--accent label--line" data-reveal>{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 data-reveal style="--d: .08s">{{ s.heading }}</h2>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endcapture -%}
 
-{%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
-{%- endstyle -%}
-
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <product-recommendations
-    class="related-products page-width section-{{ section.id }}-padding isolate{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.products_to_show }}"
-    data-section-id="{{ section.id }}"
-    data-product-id="{{ product.id }}"
-  >
-    {% if recommendations.performed and recommendations.products_count > 0 %}
-      <h2 class="related-products__heading inline-richtext {{ section.settings.heading_size }}">
-        {{ section.settings.heading }}
-      </h2>
-      <ul
-        class="grid product-grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down"
-        role="list"
-      >
-        {% assign skip_card_product_styles = false %}
-        {% for recommendation in recommendations.products %}
-          <li class="grid__item">
-            {% render 'card-product',
-              card_product: recommendation,
-              media_aspect_ratio: section.settings.image_ratio,
-              image_shape: section.settings.image_shape,
-              show_secondary_image: section.settings.show_secondary_image,
-              show_vendor: section.settings.show_vendor,
-              show_rating: section.settings.show_rating,
-              skip_styles: skip_card_product_styles,
-              product_view_context: 'recommendation'
-            %}
-          </li>
-          {%- assign skip_card_product_styles = true -%}
-        {% endfor %}
+<section class="related dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
+  <div class="container">
+    {%- if manual.size > 0 -%}
+      {{ head }}
+      <ul class="grid" role="list" style="--cols: {{ s.columns }}; --cols-tablet: 3; --cols-mobile: 2">
+        {%- for p in manual limit: s.limit -%}
+          <li>{% render 'product-card', card_product: p, index: forloop.index0, sizes: grid_sizes, context: 'recommendation' %}</li>
+        {%- endfor -%}
       </ul>
-    {% endif %}
-  </product-recommendations>
-  {% if section.settings.image_shape == 'arch' %}
-    {{ 'mask-arch.svg' | inline_asset_content }}
-  {%- endif -%}
-</div>
+    {%- else -%}
+      <product-recommendations
+        data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ s.limit }}"
+        data-intent="complementary"
+      >
+        <div data-recs-content>
+          {%- if recommendations.performed? and recommendations.products_count > 0 -%}
+            {{ head }}
+            <ul class="grid" role="list" style="--cols: {{ s.columns }}; --cols-tablet: 3; --cols-mobile: 2">
+              {%- for p in recommendations.products -%}
+                <li>{% render 'product-card', card_product: p, index: forloop.index0, sizes: grid_sizes, context: 'recommendation' %}</li>
+              {%- endfor -%}
+            </ul>
+          {%- elsif request.design_mode -%}
+            {{ head }}
+            <p class="text-muted text-small">{{ 'products.recommendations_hint' | t }}</p>
+          {%- endif -%}
+        </div>
+      </product-recommendations>
+    {%- endif -%}
+  </div>
+</section>
 
 {% schema %}
 {
-  "name": "t:sections.related-products.name",
-  "tag": "section",
-  "class": "section",
+  "name": "Passar bra med",
+  "class": "section-related",
+  "enabled_on": {
+    "templates": ["product"]
+  },
   "settings": [
     {
       "type": "paragraph",
-      "content": "t:sections.related-products.settings.paragraph__1.content"
+      "content": "Visar kompletterande produkter från appen Search & Discovery, annars liknande produkter. Du kan också välja produkter manuellt."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etikett",
+      "default": "Komplettera"
     },
     {
       "type": "inline_richtext",
       "id": "heading",
-      "default": "t:sections.related-products.settings.paragraph__1.default",
-      "label": "t:sections.related-products.settings.heading.label"
+      "label": "Rubrik",
+      "default": "Passar bra <em>med</em>"
     },
     {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        {
-          "value": "h2",
-          "label": "t:sections.all.heading_size.options__1.label"
-        },
-        {
-          "value": "h1",
-          "label": "t:sections.all.heading_size.options__2.label"
-        },
-        {
-          "value": "h0",
-          "label": "t:sections.all.heading_size.options__3.label"
-        },
-        {
-          "value": "hxl",
-          "label": "t:sections.all.heading_size.options__4.label"
-        },
-        {
-          "value": "hxxl",
-          "label": "t:sections.all.heading_size.options__5.label"
-        }
-      ],
-      "default": "h1",
-      "label": "t:sections.all.heading_size.label"
+      "type": "product_list",
+      "id": "products",
+      "label": "Välj produkter manuellt",
+      "limit": 8
     },
     {
       "type": "range",
-      "id": "products_to_show",
+      "id": "limit",
       "min": 2,
-      "max": 10,
+      "max": 8,
       "step": 1,
-      "default": 4,
-      "label": "t:sections.related-products.settings.products_to_show.label"
+      "label": "Antal produkter",
+      "default": 4
     },
     {
       "type": "range",
-      "id": "columns_desktop",
-      "min": 1,
-      "max": 6,
+      "id": "columns",
+      "min": 2,
+      "max": 4,
       "step": 1,
-      "default": 4,
-      "label": "t:sections.related-products.settings.columns_desktop.label"
-    },
-    {
-      "type": "select",
-      "id": "columns_mobile",
-      "default": "2",
-      "label": "t:sections.related-products.settings.columns_mobile.label",
-      "options": [
-        {
-          "value": "1",
-          "label": "t:sections.related-products.settings.columns_mobile.options__1.label"
-        },
-        {
-          "value": "2",
-          "label": "t:sections.related-products.settings.columns_mobile.options__2.label"
-        }
-      ]    
+      "label": "Kolumner på desktop",
+      "default": 4
     },
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "info": "t:sections.all.colors.has_cards_info",
+      "label": "Färgschema",
       "default": "scheme-1"
     },
     {
-      "type": "header",
-      "content": "t:sections.related-products.settings.header__2.content"
-    },
-    {
       "type": "select",
-      "id": "image_ratio",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.related-products.settings.image_ratio.options__1.label"
-        },
-        {
-          "value": "portrait",
-          "label": "t:sections.related-products.settings.image_ratio.options__2.label"
-        },
-        {
-          "value": "square",
-          "label": "t:sections.related-products.settings.image_ratio.options__3.label"
-        }
-      ],
-      "default": "adapt",
-      "label": "t:sections.related-products.settings.image_ratio.label"
-    },
-    {
-      "type": "select",
-      "id": "image_shape",
-      "options": [
-        {
-          "value": "default",
-          "label": "t:sections.all.image_shape.options__1.label"
-        },
-        {
-          "value": "arch",
-          "label": "t:sections.all.image_shape.options__2.label"
-        },
-        {
-          "value": "blob",
-          "label": "t:sections.all.image_shape.options__3.label"
-        },
-        {
-          "value": "chevronleft",
-          "label": "t:sections.all.image_shape.options__4.label"
-        },
-        {
-          "value": "chevronright",
-          "label": "t:sections.all.image_shape.options__5.label"
-        },
-        {
-          "value": "diamond",
-          "label": "t:sections.all.image_shape.options__6.label"
-        },
-        {
-          "value": "parallelogram",
-          "label": "t:sections.all.image_shape.options__7.label"
-        },
-        {
-          "value": "round",
-          "label": "t:sections.all.image_shape.options__8.label"
-        }
-      ],
-      "default": "default",
-      "label": "t:sections.all.image_shape.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "t:sections.related-products.settings.show_secondary_image.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "default": false,
-      "label": "t:sections.related-products.settings.show_vendor.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_rating",
-      "default": false,
-      "label": "t:sections.related-products.settings.show_rating.label",
-      "info": "t:sections.related-products.settings.show_rating.info"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
       "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
+      "label": "Avstånd ovanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
+      "label": "Avstånd nedanför",
+      "options": [
+        { "value": "none", "label": "Inget" },
+        { "value": "sm", "label": "Litet" },
+        { "value": "md", "label": "Mellan" },
+        { "value": "lg", "label": "Stort" }
+      ],
+      "default": "md"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Passar bra med"
     }
   ]
 }

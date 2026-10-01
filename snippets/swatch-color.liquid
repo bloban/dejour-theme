@@ -1,0 +1,33 @@
+{%- comment -%}
+  Reservfärg för färgprover när Shopifys egna färgprover/metafält saknas.
+  Matchar svenska och engelska färgnamn i t.ex. produkt- eller variantnamn.
+  - name: text att matcha
+{%- endcomment -%}
+{%- liquid
+  assign n = name | downcase
+  assign c = '#2a2a2a'
+  if n contains 'svart' or n contains 'black' or n contains 'obsidian' or n contains 'onyx' or n contains 'noir'
+    assign c = '#101010'
+  elsif n contains 'blå' or n contains 'blue' or n contains 'midnight' or n contains 'navy'
+    assign c = '#1c2742'
+  elsif n contains 'grön' or n contains 'green' or n contains 'forest' or n contains 'olive'
+    assign c = '#1f3a2b'
+  elsif n contains 'brun' or n contains 'brown' or n contains 'cognac' or n contains 'tan' or n contains 'hazel'
+    assign c = '#7a4b2a'
+  elsif n contains 'röd' or n contains 'red' or n contains 'burgundy' or n contains 'bordeaux' or n contains 'wine'
+    assign c = '#5c1a22'
+  elsif n contains 'grå' or n contains 'grey' or n contains 'gray' or n contains 'graphite' or n contains 'slate'
+    assign c = '#5d5f62'
+  elsif n contains 'vit' or n contains 'white' or n contains 'ivory' or n contains 'cream'
+    assign c = '#ece6da'
+  elsif n contains 'beige' or n contains 'sand' or n contains 'camel'
+    assign c = '#c3a57f'
+  elsif n contains 'guld' or n contains 'gold' or n contains 'champagne'
+    assign c = '#c9a96e'
+  elsif n contains 'silver'
+    assign c = '#b9b9b9'
+  elsif n contains 'rosa' or n contains 'pink' or n contains 'rose'
+    assign c = '#c99a9e'
+  endif
+  echo c
+-%}

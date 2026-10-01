@@ -249,7 +249,24 @@
     "released_on": "Released",
     "sale_price": "Sale price",
     "sold_out": "Sold out",
-    "unavailable": "Unavailable"
+    "unavailable": "Unavailable",
+    "open_media": "Open image {{ index }} in full screen",
+    "view_3d": "View in 3D",
+    "view_in_space": "View in your space",
+    "play_video": "Play video",
+    "gallery": "Product images",
+    "color": "Colour",
+    "tax_included": "Tax included",
+    "tax_excluded": "Tax excluded",
+    "shipping_calculated": "Shipping calculated at checkout",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "quantity": "Quantity",
+    "restock_title": "Notify me if it returns",
+    "restock_text": "Sold out right now. Leave your email and we'll let you know if it returns.",
+    "restock_short": "Notify me",
+    "add_short": "Buy",
+    "recommendations_hint": "Recommendations appear here in the store. Set complementary products in the Search & Discovery app or pick products manually."
   },
   "templates": {
     "search": {
@@ -604,7 +621,8 @@
     "live_now": "The drop is live",
     "notify_button": "Remind me",
     "notify_success": "Done. We'll email you when the drop goes live.",
-    "releases_in": "Releases in"
+    "releases_in": "Releases in",
+    "notify_text": "Get an email the second the drop opens."
   },
   "header": {
     "account": "My account",

@@ -1,0 +1,153 @@
+{%- comment -%}
+  Variantväljare med färgprover. Visar även "färgsyskon" — separata
+  produkter i andra färger — som länkade färgprover.
+  - product
+  - section_id
+  - siblings: lista med produkter (valfri)
+  - siblings_label: rubrik för syskonen
+{%- endcomment -%}
+{%- liquid
+  assign color_names = 'färg,farbe,color,colour,kulör' | split: ','
+  assign sib_label = 'products.color' | t
+  if siblings_label != blank
+    assign sib_label = siblings_label
+  endif
+-%}
+
+{%- if siblings.size > 1 -%}
+  <div class="vpicker__group vpicker__group--siblings">
+    <p class="vpicker__legend">
+      <span class="label label--accent">{{ sib_label | escape }}</span>
+      <span class="vpicker__value">{{ product.metafields.custom.color_name.value | default: product.title }}</span>
+    </p>
+    <ul class="vpicker__values" role="list">
+      {%- for sibling in siblings -%}
+        {%- liquid
+          assign sib_color = sibling.metafields.custom.swatch_color.value
+          if sib_color == blank
+            capture sib_color
+              render 'swatch-color', name: sibling.title
+            endcapture
+          endif
+          assign sib_name = sibling.metafields.custom.color_name.value | default: sibling.title
+          assign is_current = false
+          if sibling.id == product.id
+            assign is_current = true
+          endif
+        -%}
+        <li>
+          <a
+            href="{{ sibling.url }}"
+            class="swatch{% if is_current %} is-active{% endif %}{% unless sibling.available %} is-unavailable{% endunless %}"
+            title="{{ sib_name | escape }}"
+            {% if is_current %}
+              aria-current="true"
+            {% endif %}
+          >
+            <span class="swatch__color" style="--swatch: {{ sib_color | strip }}"></span>
+            <span class="visually-hidden">{{ sib_name | escape }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{%- unless product.has_only_default_variant -%}
+  <variant-picker
+    class="vpicker"
+    data-section="{{ section_id }}"
+    data-product-id="{{ product.id }}"
+    data-product-title="{{ product.title | escape }}"
+    data-product-handle="{{ product.handle }}"
+    data-currency="{{ cart.currency.iso_code }}"
+  >
+    {%- for option in product.options_with_values -%}
+      {%- liquid
+        assign option_down = option.name | downcase
+        assign is_color = false
+        if color_names contains option_down
+          assign is_color = true
+        endif
+        if option.values.first.swatch
+          assign is_color = true
+        endif
+      -%}
+      <fieldset class="vpicker__group" data-option-index="{{ forloop.index0 }}">
+        <legend class="vpicker__legend">
+          <span class="label label--accent">{{ option.name | escape }}</span>
+          <span class="vpicker__value" data-selected-value>{{ option.selected_value | escape }}</span>
+        </legend>
+        <div class="vpicker__values">
+          {%- for value in option.values -%}
+            {%- assign input_id = section_id | append: '-opt' | append: option.position | append: '-' | append: forloop.index0 -%}
+            {%- if is_color -%}
+              {%- liquid
+                assign swatch_style = ''
+                if value.swatch.image
+                  assign swatch_img = value.swatch.image | image_url: width: 80
+                  assign swatch_style = 'url(' | append: swatch_img | append: ') center / cover'
+                elsif value.swatch.color
+                  assign swatch_style = value.swatch.color
+                else
+                  capture swatch_style
+                    render 'swatch-color', name: value.name
+                  endcapture
+                endif
+              -%}
+              <span class="vpicker__swatch{% unless value.available %} is-unavailable{% endunless %}">
+                <input
+                  type="radio"
+                  class="visually-hidden"
+                  id="{{ input_id }}"
+                  name="{{ section_id }}-{{ option.position }}"
+                  value="{{ value | escape }}"
+                  {% if value.selected %}
+                    checked
+                  {% endif %}
+                >
+                <label for="{{ input_id }}" class="swatch" title="{{ value | escape }}">
+                  <span class="swatch__color" style="--swatch: {{ swatch_style | strip }}"></span>
+                  <span class="visually-hidden">{{ value | escape }}</span>
+                </label>
+              </span>
+            {%- else -%}
+              <span class="pill{% unless value.available %} is-unavailable{% endunless %}">
+                <input
+                  type="radio"
+                  class="visually-hidden"
+                  id="{{ input_id }}"
+                  name="{{ section_id }}-{{ option.position }}"
+                  value="{{ value | escape }}"
+                  {% if value.selected %}
+                    checked
+                  {% endif %}
+                >
+                <label for="{{ input_id }}">{{ value | escape }}</label>
+              </span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+
+    <script type="application/json" data-variants>
+      [
+        {%- for variant in product.variants -%}
+          {
+            "id": {{ variant.id }},
+            "title": {{ variant.title | json }},
+            "available": {{ variant.available | json }},
+            "options": {{ variant.options | json }},
+            "price": {{ variant.price | json }},
+            "price_fmt": {{ variant.price | money | json }},
+            "compare": {{ variant.compare_at_price | default: 0 | json }},
+            "compare_fmt": {{ variant.compare_at_price | money | json }},
+            "media": {{ variant.featured_media.id | default: 0 | json }},
+            "sku": {{ variant.sku | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    </script>
+  </variant-picker>
+{%- endunless -%}
