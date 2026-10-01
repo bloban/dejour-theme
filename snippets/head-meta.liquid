@@ -49,7 +49,7 @@
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) d.classList.add('has-hover');
     {%- if settings.loader_enabled and request.design_mode == false %}
     try {
-      if (!reduce && !sessionStorage.getItem('dj-visited')) d.classList.add('show-loader');
+      if (!reduce && !lite && window.matchMedia('(min-width: 990px)').matches && !sessionStorage.getItem('dj-visited')) d.classList.add('show-loader');
     } catch (e) {}
     {%- endif %}
     setTimeout(function () {

@@ -78,7 +78,7 @@
       "page_gutter": 56,
       "grain_enabled": true,
       "grain_opacity": 7,
-      "loader_enabled": true,
+      "loader_enabled": false,
       "page_transitions": true,
       "reveal_enabled": true,
       "gsap_enabled": true,

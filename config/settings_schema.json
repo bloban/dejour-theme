@@ -256,7 +256,8 @@
         "type": "checkbox",
         "id": "loader_enabled",
         "label": "Laddningsskärm med logga vid första besöket",
-        "default": true
+        "info": "Visas bara på dator. Sänker sidhastigheten något (Lighthouse).",
+        "default": false
       },
       {
         "type": "checkbox",

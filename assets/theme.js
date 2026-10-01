@@ -760,7 +760,7 @@
      ------------------------------------------------------------------ */
   function initDeferredVideo(root = document) {
     $$('[data-deferred-video]', root).forEach((wrap) => {
-      if (wrap._video || isLite) return;
+      if (wrap._video || isLite || window.matchMedia('(max-width: 749px)').matches) return;
       wrap._video = true;
       const tpl = $('template', wrap);
       if (!tpl) return;

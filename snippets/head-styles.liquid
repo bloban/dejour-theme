@@ -63,6 +63,25 @@
 
 {{ 'dejour.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Sidspecifik CSS hämtas tidigt i <head> (sektionens egen länk återanvänder den).
+{%- endcomment -%}
+{%- liquid
+  case template.name
+    when 'product'
+      assign page_css = 'product.css'
+    when 'collection', 'search', 'cart', 'list-collections'
+      assign page_css = 'collection.css'
+    when 'page', '404', 'blog', 'article', 'password'
+      assign page_css = 'pages.css'
+    else
+      assign page_css = blank
+  endcase
+-%}
+{%- if page_css != blank -%}
+  {{ page_css | asset_url | stylesheet_tag: preload: true }}
+{%- endif -%}
+
 {%- unless heading_font.system? -%}
   {% comment %}theme-check-disable AssetPreload{% endcomment %}
   <link rel="preload" as="font" href="{{ heading_font | font_url }}" type="font/woff2" crossorigin>

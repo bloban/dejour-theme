@@ -1033,6 +1033,12 @@ body:not(:has(.notify-form:target)) .notify-form .form-msg {
   background-size: 220px 220px;
 }
 
+@media (max-width: 989px) {
+  .has-grain::after {
+    content: none;
+  }
+}
+
 @media (min-width: 990px) {
   .motion-ok:not(.is-lite) .has-grain::after {
     animation: grain 1.6s steps(5) infinite;
@@ -3057,8 +3063,10 @@ details.accordion__item[open]::details-content {
     var(--c-bg);
 }
 
-.motion-ok:not(.is-lite) .hero__media-inner--zoom {
-  animation: kenburns 32s ease-in-out infinite alternate;
+@media (min-width: 990px) {
+  .motion-ok:not(.is-lite) .hero__media-inner--zoom {
+    animation: kenburns 32s ease-in-out infinite alternate;
+  }
 }
 
 @keyframes kenburns {
@@ -3226,20 +3234,21 @@ details.accordion__item[open]::details-content {
 /* Rubrik som animeras in bokstav för bokstav */
 .motion-ok .hero .char {
   display: inline-block;
-  animation: char-in 1.25s var(--ease-out) both;
-  animation-delay: calc(0.3s + var(--i, 0) * 0.045s);
+  animation: char-in 0.9s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 0.03s);
 }
 
 @media (min-width: 990px) {
   .motion-ok .hero .char {
-    animation-name: char-in-blur;
+    animation: char-in-blur 1.25s var(--ease-out) both;
+    animation-delay: calc(0.3s + var(--i, 0) * 0.045s);
   }
 }
 
+/* Mobil: bara rörelse, ingen tonad start – rubriken räknas som synlig direkt */
 @keyframes char-in {
   from {
-    opacity: 0;
-    transform: translate3d(0, 0.45em, 0) rotate(5deg);
+    transform: translate3d(0, 0.3em, 0);
   }
 }
 
