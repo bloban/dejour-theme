@@ -1,3 +1,4 @@
+{{ 'pages.css' | asset_url | stylesheet_tag }}
 {%- assign s = section.settings -%}
 <section class="page-content dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
   <div class="container--text">

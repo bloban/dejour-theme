@@ -16,5 +16,5 @@
       {%- assign ci = ci | plus: 1 -%}
     {%- endfor -%}
   </span>
-  {%- unless forloop.last %} {% endunless -%}
+  {%- unless forloop.last -%}{{ ' ' }}{%- endunless -%}
 {%- endfor -%}

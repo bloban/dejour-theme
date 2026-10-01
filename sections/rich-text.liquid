@@ -1,3 +1,4 @@
+{{ 'pages.css' | asset_url | stylesheet_tag }}
 {%- assign s = section.settings -%}
 <section class="richtext dj-section color-{{ s.color_scheme }} pt-{{ s.padding_top }} pb-{{ s.padding_bottom }}">
   <div class="{% if s.width == 'narrow' %}container--text{% else %}container--narrow{% endif %} richtext__inner richtext--{{ s.alignment }}">

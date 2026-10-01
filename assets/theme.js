@@ -821,10 +821,10 @@
       }
       setTimeout(() => html.classList.remove('show-loader'), 1000);
     };
-    const minVisible = 1300;
+    const minVisible = 900;
     const ready = () => setTimeout(finish, Math.max(0, minVisible - performance.now()));
     onLoad(ready);
-    setTimeout(finish, Math.max(400, 2600 - performance.now()));
+    setTimeout(finish, Math.max(300, 1800 - performance.now()));
   }
 
   /* ------------------------------------------------------------------
@@ -836,14 +836,22 @@
     if (!$('[data-gsap]')) return;
     if (DJ._motionRequested) return;
     DJ._motionRequested = true;
-    onLoad(() =>
+    // Effekterna är scrollstyrda — ladda GSAP först när besökaren interagerar,
+    // så att det aldrig konkurrerar med sidladdningen.
+    const events = ['scroll', 'pointerdown', 'pointermove', 'touchstart', 'keydown', 'wheel'];
+    let fired = false;
+    const go = () => {
+      if (fired) return;
+      fired = true;
+      events.forEach((ev) => window.removeEventListener(ev, go, { passive: true }));
       idle(() => {
         const s = document.createElement('script');
         s.src = m.script;
         s.async = true;
         document.head.appendChild(s);
-      })
-    );
+      });
+    };
+    onLoad(() => events.forEach((ev) => window.addEventListener(ev, go, { passive: true, once: true })));
   }
 
   /* ------------------------------------------------------------------

@@ -6,6 +6,7 @@
     {% render 'head-meta' %}
     {{ content_for_header }}
     {% render 'head-styles' %}
+    {{ 'pages.css' | asset_url | stylesheet_tag }}
   </head>
 
   <body class="template-gift-card{% if settings.grain_enabled %} has-grain{% endif %}">
