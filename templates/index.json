@@ -1,11 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
+        "slow_zoom": true,
+        "overlay_opacity": 70,
         "eyebrow": "The Black Edition",
         "heading": "Mindre är",
         "heading_accent": "mer.",
+        "heading_tag": "h1",
         "subheading": "<p>Ultratunna korthållare i finaste läder. Gjorda för fickan, byggda för livet.</p>",
         "button_label": "Handla nu",
         "button_link": "shopify://collections/all",
@@ -13,8 +25,6 @@
         "button_link_2": "shopify://pages/om-oss",
         "position": "bottom-left",
         "height": "full",
-        "slow_zoom": true,
-        "overlay_opacity": 70,
         "show_scroll": true,
         "color_scheme": "scheme-1"
       }
@@ -50,6 +60,8 @@
       "settings": {
         "layout": "hero",
         "use_global_date": true,
+        "date": "",
+        "time": "",
         "show_seconds": true,
         "eyebrow": "Drop 01 — The Black Edition",
         "heading": "Obsidian <em>Black</em>",
@@ -58,11 +70,19 @@
         "show_notify": true,
         "notify_heading": "Få en påminnelse när droppet startar",
         "notify_button": "Påminn mig",
+        "customer_tag": "",
+        "banner_link": "",
         "live_heading": "LIVE NU",
+        "live_text": "<p>Droppet är öppet. Begränsat antal — när de är slut är de slut.</p>",
         "product": "black-koi-cardholder",
+        "live_link": "",
+        "live_button_label": "",
+        "hide_banner_when_live": false,
         "overlay_opacity": 85,
         "glow": true,
-        "color_scheme": "scheme-5"
+        "color_scheme": "scheme-5",
+        "padding_top": "md",
+        "padding_bottom": "md"
       }
     },
     "featured": {
@@ -70,20 +90,23 @@
       "settings": {
         "eyebrow": "Kollektionen",
         "heading": "Gjord för <em>fickan</em>",
+        "text": "",
+        "collection": "",
+        "products": [
+          "black-koi-cardholder",
+          "midnight-blue-koi-cardholder",
+          "forest-green-koi-cardholder"
+        ],
         "limit": 3,
         "layout": "editorial",
         "columns": 3,
         "columns_mobile": "1",
         "parallax": true,
         "button_label": "Se alla",
+        "button_link": "",
         "color_scheme": "scheme-1",
         "padding_top": "lg",
-        "padding_bottom": "md",
-        "products": [
-          "black-koi-cardholder",
-          "midnight-blue-koi-cardholder",
-          "forest-green-koi-cardholder"
-        ]
+        "padding_bottom": "md"
       }
     },
     "details": {
@@ -92,6 +115,8 @@
         "panel-1": {
           "type": "panel",
           "settings": {
+            "image": "shopify://shop_images/Generated_Image_October_05_2026_-_4_03PM.jpg",
+            "number": "",
             "eyebrow": "Material",
             "title": "Fullnarvs<em>läder</em>",
             "text": "<p>[FYLL I] Utvalt läder som får en vacker patina med tiden.</p>"
@@ -100,6 +125,7 @@
         "panel-2": {
           "type": "panel",
           "settings": {
+            "number": "",
             "eyebrow": "Sömmar",
             "title": "Handsydda <em>sömmar</em>",
             "text": "<p>[FYLL I] Sadelsömmar som håller i åratal.</p>"
@@ -108,6 +134,7 @@
         "panel-3": {
           "type": "panel",
           "settings": {
+            "number": "",
             "eyebrow": "Slim-profil",
             "title": "Bara <em>[FYLL I] mm</em>",
             "text": "<p>[FYLL I] Rymmer upp till X kort utan att bukta fickan.</p>"
@@ -116,6 +143,7 @@
         "panel-4": {
           "type": "panel",
           "settings": {
+            "number": "",
             "eyebrow": "Skydd",
             "title": "RFID-<em>skydd</em>",
             "text": "<p>[FYLL I] Skyddar dina kort mot obehörig skanning. Ta bort om det inte stämmer.</p>"
@@ -143,7 +171,9 @@
           "settings": {
             "icon": "slim",
             "title": "Slim design",
-            "text": "<p>[FYLL I] mm tunn. Försvinner i fickan.</p>"
+            "text": "<p>[FYLL I] mm tunn. Försvinner i fickan.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
         "usp-2": {
@@ -151,7 +181,9 @@
           "settings": {
             "icon": "rfid",
             "title": "RFID-skydd",
-            "text": "<p>[FYLL I] Skyddar dina kort mot skimning.</p>"
+            "text": "<p>[FYLL I] Skyddar dina kort mot skimning.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
         "usp-3": {
@@ -159,7 +191,9 @@
           "settings": {
             "icon": "truck",
             "title": "Fri frakt över 499 kr",
-            "text": "<p>Med PostNord, 1–3 vardagar.</p>"
+            "text": "<p>Med PostNord, 1–3 vardagar.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
         "usp-4": {
@@ -167,7 +201,9 @@
           "settings": {
             "icon": "return",
             "title": "14 dagars ångerrätt",
-            "text": "<p>Enligt distansavtalslagen.</p>"
+            "text": "<p>Enligt distansavtalslagen.</p>",
+            "link_label": "",
+            "link": ""
           }
         }
       },
@@ -178,6 +214,10 @@
         "usp-4"
       ],
       "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "text": "",
+        "center_heading": false,
         "style": "icons",
         "columns": 4,
         "border_top": true,
@@ -241,6 +281,7 @@
         "eyebrow": "Arkivet",
         "heading": "Tidigare <em>drops</em>",
         "text": "<p>Släppta en gång. Vissa kommer aldrig tillbaka.</p>",
+        "collection": "",
         "limit": 4,
         "columns": 4,
         "button_label": "Hela arkivet",
@@ -255,37 +296,49 @@
         "tile-1": {
           "type": "tile",
           "settings": {
-            "platform": "instagram"
+            "platform": "instagram",
+            "link": "",
+            "caption": ""
           }
         },
         "tile-2": {
           "type": "tile",
           "settings": {
-            "platform": "tiktok"
+            "platform": "tiktok",
+            "link": "",
+            "caption": ""
           }
         },
         "tile-3": {
           "type": "tile",
           "settings": {
-            "platform": "instagram"
+            "platform": "instagram",
+            "link": "",
+            "caption": ""
           }
         },
         "tile-4": {
           "type": "tile",
           "settings": {
-            "platform": "instagram"
+            "platform": "instagram",
+            "link": "",
+            "caption": ""
           }
         },
         "tile-5": {
           "type": "tile",
           "settings": {
-            "platform": "tiktok"
+            "platform": "tiktok",
+            "link": "",
+            "caption": ""
           }
         },
         "tile-6": {
           "type": "tile",
           "settings": {
-            "platform": "instagram"
+            "platform": "instagram",
+            "link": "",
+            "caption": ""
           }
         }
       },
