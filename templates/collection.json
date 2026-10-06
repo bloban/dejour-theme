@@ -22,7 +22,7 @@
         "enable_sorting": true,
         "archive_mode": false,
         "color_scheme": "scheme-1",
-        "padding_bottom": "lg"
+        "padding_bottom": "md"
       }
     },
     "usp": {
