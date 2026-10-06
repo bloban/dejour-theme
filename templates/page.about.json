@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -5,7 +14,7 @@
       "settings": {
         "eyebrow": "Om De'Jour",
         "heading": "Färre kort. <em>Mindre brus.</em>",
-        "text": "<p>[FYLL I] En mening om varför De'Jour finns.</p>",
+        "text": "<p>De'Jour finns för dig som vill bära mindre. En korthållare, ett fåtal kort och inget som skaver i fickan.<br/><br/></p>",
         "size": "lg",
         "alignment": "left",
         "color_scheme": "scheme-1"
@@ -15,9 +24,10 @@
       "type": "brand-statement",
       "settings": {
         "eyebrow": "Vår filosofi",
-        "text": "<p>Vi började med en fråga: varför ska det man bär varje dag vara <em>tjockt, högljutt och tillfälligt</em>? [FYLL I]</p>",
-        "signature": "— [FYLL I], grundare",
+        "text": "<p>Vi började med en fråga: varför ska det man bär varje dag vara <em>tjockt och tillfälligt?</em></p><p><br/>Vårt svar blev en korthållare på 4 mm, i äkta läder, som släpps i små upplagor och görs för att användas i åratal.</p>",
+        "signature": "— De'Jour",
         "link_label": "",
+        "link": "",
         "alignment": "left",
         "color_scheme": "scheme-1",
         "padding_top": "md",
@@ -27,13 +37,14 @@
     "story-1": {
       "type": "image-with-text",
       "settings": {
+        "ratio": "4 / 5",
+        "layout": "image-left",
         "number": "01",
         "eyebrow": "Början",
         "heading": "Född ur en <em>enkel idé</em>",
         "text": "<p>[FYLL I] Berätta hur De'Jour startade — vem, var och varför.</p>",
-        "ratio": "4 / 5",
-        "layout": "image-left",
         "button_label": "",
+        "button_link": "",
         "color_scheme": "scheme-1",
         "padding_top": "md",
         "padding_bottom": "md"
@@ -42,12 +53,12 @@
     "story-2": {
       "type": "image-with-text",
       "settings": {
+        "ratio": "4 / 5",
+        "layout": "image-right",
         "number": "02",
         "eyebrow": "Hantverket",
         "heading": "Gjord för att <em>hålla</em>",
         "text": "<p>[FYLL I] Material, tillverkning och detaljerna som gör skillnad.</p>",
-        "ratio": "4 / 5",
-        "layout": "image-right",
         "button_label": "Se kollektionen",
         "button_link": "shopify://collections/all",
         "color_scheme": "scheme-1",
@@ -63,7 +74,9 @@
           "settings": {
             "icon": "none",
             "title": "Hantverk",
-            "text": "<p>[FYLL I] Varför ni väljer material och tillverkare med omsorg.</p>"
+            "text": "<p>[FYLL I] Varför ni väljer material och tillverkare med omsorg.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
         "column-2": {
@@ -71,7 +84,9 @@
           "settings": {
             "icon": "none",
             "title": "Hållbarhet",
-            "text": "<p>[FYLL I] Hur ni tänker kring livslängd, läder och förpackning.</p>"
+            "text": "<p>[FYLL I] Hur ni tänker kring livslängd, läder och förpackning.</p>",
+            "link_label": "",
+            "link": ""
           }
         },
         "column-3": {
@@ -79,7 +94,9 @@
           "settings": {
             "icon": "none",
             "title": "Tidlös design",
-            "text": "<p>[FYLL I] Varför ni gör färre, bättre produkter.</p>"
+            "text": "<p>[FYLL I] Varför ni gör färre, bättre produkter.</p>",
+            "link_label": "",
+            "link": ""
           }
         }
       },
@@ -91,6 +108,8 @@
       "settings": {
         "eyebrow": "Värderingar",
         "heading": "Det vi <em>står för</em>",
+        "text": "",
+        "center_heading": false,
         "style": "numbers",
         "columns": 3,
         "border_top": false,
