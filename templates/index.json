@@ -12,6 +12,7 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "mobile_image": "shopify://shop_images/0F149B9B-8090-4002-9DEB-370A26359586.jpg",
         "slow_zoom": true,
         "overlay_opacity": 70,
         "eyebrow": "The Black Edition",

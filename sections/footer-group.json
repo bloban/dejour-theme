@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "Sidfot",
   "type": "footer",
@@ -23,7 +32,7 @@
           "type": "text",
           "settings": {
             "heading": "Kundservice",
-            "text": "<p>[FYLL I e-post]<br>Vardagar 9–17</p>"
+            "text": "<p>[FYLL I e-post]<br/>Vardagar 9–17</p>"
           }
         }
       },
@@ -40,6 +49,8 @@
         "newsletter_success": "Tack! Du står nu på listan.",
         "show_social": true,
         "show_wordmark": true,
+        "wordmark_text": "",
+        "legal_menu": "",
         "show_localization": true,
         "show_payment": true,
         "show_powered_by": false,
