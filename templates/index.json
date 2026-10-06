@@ -140,7 +140,7 @@
             "number": "",
             "eyebrow": "Slim-profil",
             "title": "Bara<em> 4 mm</em>",
-            "text": "<p>Rymmer upp till 6 kort utan att bukta fickan.</p>"
+            "text": "<p>10 × 7 cm. Så tunn att du glömmer vilken ficka den ligger i.</p>"
           }
         },
         "panel-4": {
@@ -148,8 +148,8 @@
           "settings": {
             "number": "",
             "eyebrow": "Skydd",
-            "title": "RFID-<em>skydd</em>",
-            "text": "<p>[FYLL I] Skyddar dina kort mot obehörig skanning. Ta bort om det inte stämmer.</p>"
+            "title": "<em>Fack</em>",
+            "text": "<p>Fyra kortfack och en mittficka för sedlar. Inget mer, inget mindre.</p>"
           }
         }
       },
