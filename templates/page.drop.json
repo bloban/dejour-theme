@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "drop": {
@@ -5,20 +14,29 @@
       "settings": {
         "layout": "hero",
         "use_global_date": true,
+        "date": "",
+        "time": "",
         "show_seconds": true,
-        "eyebrow": "Drop 01 — The Black Edition",
+        "eyebrow": "The Black Edition — The Black Edition",
         "heading": "Obsidian <em>Black</em>",
         "heading_tag": "h1",
         "subheading": "<p>Ultratunn korthållare i helsvart. Begränsad upplaga — släpps bara en gång. [FYLL I]</p>",
         "show_notify": true,
         "notify_heading": "Få en påminnelse när droppet startar",
         "notify_button": "Påminn mig",
+        "customer_tag": "",
+        "banner_link": "",
         "live_heading": "LIVE NU",
         "live_text": "<p>Droppet är öppet. Begränsat antal — när de är slut är de slut.</p>",
         "product": "black-koi-cardholder",
+        "live_link": "",
+        "live_button_label": "",
+        "hide_banner_when_live": false,
         "overlay_opacity": 85,
         "glow": true,
-        "color_scheme": "scheme-5"
+        "color_scheme": "scheme-5",
+        "padding_top": "md",
+        "padding_bottom": "md"
       }
     },
     "teasers": {
@@ -67,6 +85,7 @@
         "panel-1": {
           "type": "panel",
           "settings": {
+            "number": "",
             "eyebrow": "Material",
             "title": "Helsvart <em>läder</em>",
             "text": "<p>[FYLL I]</p>"
@@ -75,6 +94,7 @@
         "panel-2": {
           "type": "panel",
           "settings": {
+            "number": "",
             "eyebrow": "Sömmar",
             "title": "Ton i <em>ton</em>",
             "text": "<p>[FYLL I]</p>"
@@ -83,6 +103,7 @@
         "panel-3": {
           "type": "panel",
           "settings": {
+            "number": "",
             "eyebrow": "Upplaga",
             "title": "Bara <em>[FYLL I] ex</em>",
             "text": "<p>[FYLL I] Numrerade exemplar.</p>"
