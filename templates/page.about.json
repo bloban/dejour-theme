@@ -55,6 +55,7 @@
     "story-2": {
       "type": "image-with-text",
       "settings": {
+        "image": "shopify://shop_images/svarta_med_vatten_droppa_pa.jpg",
         "ratio": "4 / 5",
         "layout": "image-right",
         "number": "02",
