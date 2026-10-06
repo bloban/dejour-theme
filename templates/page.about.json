@@ -117,8 +117,8 @@
         "columns": 3,
         "border_top": false,
         "color_scheme": "scheme-2",
-        "padding_top": "lg",
-        "padding_bottom": "lg"
+        "padding_top": "sm",
+        "padding_bottom": "sm"
       }
     },
     "marquee": {
