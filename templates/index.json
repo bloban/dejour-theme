@@ -41,20 +41,6 @@
         "color_scheme": "scheme-1"
       }
     },
-    "statement": {
-      "type": "brand-statement",
-      "settings": {
-        "eyebrow": "Filosofi",
-        "text": "<p>Vi tror på saker som håller. Färre kort, <em>mindre brus</em> — och en korthållare så tunn att du glömmer att den finns.</p>",
-        "signature": "— De'Jour, Stockholm",
-        "link_label": "Läs vår historia",
-        "link": "shopify://pages/om-oss",
-        "alignment": "left",
-        "color_scheme": "scheme-1",
-        "padding_top": "lg",
-        "padding_bottom": "lg"
-      }
-    },
     "drop": {
       "type": "drop-countdown",
       "settings": {
@@ -84,6 +70,20 @@
         "color_scheme": "scheme-5",
         "padding_top": "md",
         "padding_bottom": "md"
+      }
+    },
+    "statement": {
+      "type": "brand-statement",
+      "settings": {
+        "eyebrow": "Filosofi",
+        "text": "<p>Vi tror på saker som håller. Färre kort, <em>mindre brus</em> — och en korthållare så tunn att du glömmer att den finns.</p>",
+        "signature": "— De'Jour, Stockholm",
+        "link_label": "Läs vår historia",
+        "link": "shopify://pages/om-oss",
+        "alignment": "left",
+        "color_scheme": "scheme-1",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
       }
     },
     "featured": {
@@ -380,10 +380,10 @@
   "order": [
     "hero",
     "marquee",
-    "statement",
     "drop",
     "featured",
     "details",
+    "statement",
     "usp",
     "reviews",
     "archive",
