@@ -147,8 +147,8 @@
           "type": "panel",
           "settings": {
             "number": "",
-            "eyebrow": "Skydd",
-            "title": "<em>Fack</em>",
+            "eyebrow": "fack",
+            "title": "Allt du <em>behöver</em>",
             "text": "<p>Fyra kortfack och en mittficka för sedlar. Inget mer, inget mindre.</p>"
           }
         }
