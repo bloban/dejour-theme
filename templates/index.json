@@ -64,26 +64,13 @@
         "live_link": "",
         "live_button_label": "",
         "hide_banner_when_live": false,
+        "mobile_image": "shopify://shop_images/en_bild_pa_ladan.jpg",
         "video": "shopify://files/videos/video emd koi loop från claude.mp4",
-        "overlay_opacity": 85,
+        "overlay_opacity": 80,
         "glow": true,
         "color_scheme": "scheme-5",
         "padding_top": "md",
         "padding_bottom": "md"
-      }
-    },
-    "statement": {
-      "type": "brand-statement",
-      "settings": {
-        "eyebrow": "Filosofi",
-        "text": "<p>Vi tror på saker som håller. Färre kort, <em>mindre brus</em> — och en korthållare så tunn att du glömmer att den finns.</p>",
-        "signature": "— De'Jour, Stockholm",
-        "link_label": "Läs vår historia",
-        "link": "shopify://pages/om-oss",
-        "alignment": "left",
-        "color_scheme": "scheme-1",
-        "padding_top": "lg",
-        "padding_bottom": "lg"
       }
     },
     "featured": {
@@ -164,6 +151,20 @@
         "heading": "Varje <em>millimeter</em> räknas",
         "text": "<p>Detaljerna du känner varje gång du tar fram den.</p>",
         "color_scheme": "scheme-2"
+      }
+    },
+    "statement": {
+      "type": "brand-statement",
+      "settings": {
+        "eyebrow": "Filosofi",
+        "text": "<p>Vi tror på saker som håller. Färre kort, <em>mindre brus</em> — och en korthållare så tunn att du glömmer att den finns.</p>",
+        "signature": "— De'Jour, Stockholm",
+        "link_label": "Läs vår historia",
+        "link": "shopify://pages/om-oss",
+        "alignment": "left",
+        "color_scheme": "scheme-1",
+        "padding_top": "lg",
+        "padding_bottom": "lg"
       }
     },
     "usp": {
