@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,6 +15,7 @@
         "eyebrow": "Kontakt",
         "heading": "Hör av <em>dig</em>",
         "text": "<p>Frågor om en beställning, ett drop eller något helt annat? Vi finns här.</p>",
+        "image": "shopify://shop_images/svarta_med_vatten_droppa_pa_a9849730-d5fb-43c4-acde-d6776430ae3c.jpg",
         "size": "sm",
         "alignment": "left",
         "color_scheme": "scheme-1"
@@ -19,7 +29,8 @@
           "settings": {
             "icon": "mail",
             "label": "E-post",
-            "value": "[FYLL I e-post]"
+            "value": "[FYLL I e-post]",
+            "link": ""
           }
         },
         "detail-2": {
@@ -27,7 +38,8 @@
           "settings": {
             "icon": "clock",
             "label": "Kundservice",
-            "value": "Vardagar 9–17"
+            "value": "Vardagar 9–17",
+            "link": ""
           }
         },
         "detail-3": {
@@ -35,7 +47,8 @@
           "settings": {
             "icon": "pin",
             "label": "Företag",
-            "value": "[FYLL I företagsnamn, org.nr och ort]"
+            "value": "[FYLL I företagsnamn, org.nr och ort]",
+            "link": ""
           }
         }
       },
