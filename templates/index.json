@@ -93,7 +93,7 @@
         "button_label": "Se alla",
         "button_link": "",
         "color_scheme": "scheme-1",
-        "padding_top": "lg",
+        "padding_top": "none",
         "padding_bottom": "md"
       }
     },
