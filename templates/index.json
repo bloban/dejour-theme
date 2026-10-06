@@ -88,7 +88,7 @@
         "limit": 3,
         "layout": "editorial",
         "columns": 3,
-        "columns_mobile": "1",
+        "columns_mobile": "2",
         "parallax": true,
         "button_label": "Se alla",
         "button_link": "",
