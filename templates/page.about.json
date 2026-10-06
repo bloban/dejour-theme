@@ -142,6 +142,7 @@
         "button_label": "Gå med",
         "success": "Välkommen. Vi hör av oss före nästa drop.",
         "tags": "newsletter",
+        "image": "shopify://shop_images/en_bild_pa_ladan.jpg",
         "color_scheme": "scheme-5",
         "padding_top": "lg",
         "padding_bottom": "lg"
