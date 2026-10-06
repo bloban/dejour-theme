@@ -42,7 +42,7 @@
         "number": "01",
         "eyebrow": "Början",
         "heading": "Född ur en <em>enkel idé</em>",
-        "text": "<p>[FYLL I] Berätta hur De'Jour startade — vem, var och varför.</p>",
+        "text": "<p><br/>De'Jour startades av två vänner i Stockholm år 2025 som var trötta på plånböcker fulla av saker de aldrig använde. Vi ritade den korthållare vi själva ville ha: tunn, enkel och med ett koi-mönster som känns under tummen. De två första färgerna sålde slut. Det sa oss att fler ville samma sak.<br/><br/></p>",
         "button_label": "",
         "button_link": "",
         "color_scheme": "scheme-1",
@@ -58,7 +58,7 @@
         "number": "02",
         "eyebrow": "Hantverket",
         "heading": "Gjord för att <em>hålla</em>",
-        "text": "<p>[FYLL I] Material, tillverkning och detaljerna som gör skillnad.</p>",
+        "text": "<p><br/>Varje korthållare är gjord i äkta läder med en koi präglad över hela framsidan, bland vågor och blommor. Svart tråd, täta stygn och raka linjer håller formen år efter år. Måtten är 10 × 7 cm och 4 mm, med fyra kortfack och en mittficka för sedlar.<br/><br/></p>",
         "button_label": "Se kollektionen",
         "button_link": "shopify://collections/all",
         "color_scheme": "scheme-1",
@@ -74,7 +74,7 @@
           "settings": {
             "icon": "none",
             "title": "Hantverk",
-            "text": "<p>[FYLL I] Varför ni väljer material och tillverkare med omsorg.</p>",
+            "text": "<p><br/>Vi lägger tiden på det som syns och känns: lädret, präglingen och sömmarna. Varje detalj ska tåla att användas varje dag.<br/><br/></p>",
             "link_label": "",
             "link": ""
           }
@@ -84,7 +84,7 @@
           "settings": {
             "icon": "none",
             "title": "Hållbarhet",
-            "text": "<p>[FYLL I] Hur ni tänker kring livslängd, läder och förpackning.</p>",
+            "text": "<p><br/>Det mest hållbara är det du inte behöver byta ut. Därför gör vi en produkt som ska hålla länge och släpper den i begränsade upplagor i stället för att överproducera.<br/><br/></p>",
             "link_label": "",
             "link": ""
           }
@@ -94,7 +94,7 @@
           "settings": {
             "icon": "none",
             "title": "Tidlös design",
-            "text": "<p>[FYLL I] Varför ni gör färre, bättre produkter.</p>",
+            "text": "<p></p><p>Trender går över. Därför ritar vi en form som inte behöver bytas ut, och släpper bara det vi själva skulle bära.<br/><br/></p>",
             "link_label": "",
             "link": ""
           }
